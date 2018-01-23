@@ -31,8 +31,8 @@
             this.bt_Sure = new System.Windows.Forms.Button();
             this.bt_cancel = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tb_StockListStr = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -69,15 +69,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "库存列表详细";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "料框编码";
-            // 
             // tb_StockListStr
             // 
             this.tb_StockListStr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -86,6 +77,15 @@
             this.tb_StockListStr.Name = "tb_StockListStr";
             this.tb_StockListStr.Size = new System.Drawing.Size(281, 62);
             this.tb_StockListStr.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "料框编码";
             // 
             // label2
             // 
@@ -105,8 +105,6 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bt_cancel);
             this.Controls.Add(this.bt_Sure);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MinimizeBox = false;
             this.Name = "AddStockListView";
             this.Text = "添加库存列表";
             this.groupBox1.ResumeLayout(false);
@@ -120,8 +118,8 @@
         private System.Windows.Forms.Button bt_Sure;
         private System.Windows.Forms.Button bt_cancel;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_StockListStr;
-        private System.Windows.Forms.Label label2;
     }
 }

@@ -16,7 +16,9 @@ namespace ASRSStorManage
         public string GsTaskStatus { get; set; }
         public string Batch { get; set; }
         //add 20180112
+        public bool IsCheck { get; set; }
         public string MaterialBoxCode { get; set; }
+
     }
   public enum ExtendFormCate
   {

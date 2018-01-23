@@ -555,6 +555,22 @@ namespace AsrsStorDBAcc.DAL
             //    return null;
             //}
         }
+
+        public int GetOutAllowCount(long houseID, int rowth)
+        {
+            string sqlStr = "select count(GoodsSiteID) from GoodsSite where StoreHouseID ="
+                 + houseID + " and GsEnabled =1 and GoodsSiteRow = " + rowth + " and GoodsSiteTaskStatus ='出库允许'";
+            DataSet ds = DbHelperSQL.Query(sqlStr);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                return int.Parse(ds.Tables[0].Rows[0][0].ToString());
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public int GetGsLockCount(long houseID, int rowth)
         {
             string sqlStr = "select count(GoodsSiteStatus) from GoodsSite where StoreHouseID ="

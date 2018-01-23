@@ -26,23 +26,24 @@ namespace ASRSStorManage
         private void button1_Click(object sender, EventArgs e)
         {
             string reStr = "";
+            AsrsStorDBAcc.PubConstant.ConnectionString = @"Data Source =.;Initial Catalog=AoyouWMSDB;User ID=sa;Password=123456;";
             StorageManager sm = new StorageManager();
-            sm.Initialize(ref reStr);
-            CellCoordModel cell = new CellCoordModel(1, 1,5);
+            //sm.Initialize(ref reStr);
+            CellCoordModel cell = new CellCoordModel(1, 1, 5);
             //EnumGSEnabledStatus gsSta = EnumGSEnabledStatus.禁用;
             //sm.GetCellEnabledStatus("A库房", cell, ref gsSta);
             //sm.UpdateCellStatus("A库房", cell, EnumCellStatus.满位, EnumGSTaskStatus.完成, ref reStr);
            // sm.UpdateGSOper("A库房", cell, EnumGSOperate.入库, ref reStr);
-           // sm.CellRequire("A库房", ref cell, ref reStr);
+            sm.CellRequire("C1库房", "OCV常温区", ref cell, ref reStr);
            // EnumCellStatus cellSta = EnumCellStatus.满位;
            // EnumGSTaskStatus taskStas = EnumGSTaskStatus.锁定;
            // sm.GetCellStatus("A库房", cell, ref cellSta, ref taskStas);
-            string[] ssf = new string[2];
-            ssf[0] = "tb123";
-            ssf[1] = "tb345";
-          sm.AddStack("A库房", cell,"1234567", ssf, ref reStr);
-            sm.UpdateCellStatus("A库房", cell, EnumCellStatus.满位, EnumGSTaskStatus.锁定, ref reStr);
-           // sm.CellRequire("A库房", ref cell, ref reStr);
+            //string[] ssf = new string[2];
+            //ssf[0] = "tb123";
+            //ssf[1] = "tb345";
+            //sm.AddStack("A库房", cell,"1234567", ssf, ref reStr);
+            //sm.UpdateCellStatus("A库房", cell, EnumCellStatus.满位, EnumGSTaskStatus.锁定, ref reStr);
+            //sm.CellRequire("A1库房", ref cell, ref reStr);
            // List<CellCoordModel> cellList = new List<CellCoordModel>();
            // sm.GetAllowLeftHouseGs("A库房", ref cellList, ref reStr);
 
@@ -56,10 +57,12 @@ namespace ASRSStorManage
            // sm.UpdateGsStatus("A库房", cell, EnumCellStatus.空料框, ref reStr);
            // sm.UpdateGsTaskStatus("A库房", cell, EnumGSTaskStatus.出库允许, ref reStr);
 
+            //StockManaView smv = new StockManaView("库存");
+            //smv.ShowDialog();
            //List<string> stockList = new List<string>();
            //sm.GetStockDetail("A库房", new CellCoordModel(1, 1, 5), ref stockList);
-            StorageView storageView = new StorageView("库存管理");
-            storageView.ShowDialog();
+            //StorageView storageView = new StorageView("库存管理");
+            //storageView.ShowDialog();
             //StorageView sv = new StorageView("wer");
             //sv.ShowDialog();
            

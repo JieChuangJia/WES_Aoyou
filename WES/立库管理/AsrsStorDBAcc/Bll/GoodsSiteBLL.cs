@@ -417,10 +417,11 @@ namespace AsrsStorDBAcc.BLL
         }
         public DataTable GetModelListByTaskSta(long storeHouseID, string gsTaskStatus)
         {
-            string sqlStr = "select *  from GoodsSite ,Stock,StockList,StoreHouse where GoodsSite.GoodsSiteID =Stock.GoodsSiteID and Stock.StockID = StockList.StockID and StoreHouse.StoreHouseID = GoodsSite.StoreHouseID ";
+            //string sqlStr = "select *  from GoodsSite ,Stock,StockList,StoreHouse where GoodsSite.GoodsSiteID =Stock.GoodsSiteID and Stock.StockID = StockList.StockID and StoreHouse.StoreHouseID = GoodsSite.StoreHouseID ";
+            //sqlStr += " and  GoodsSite.GoodsSiteTaskStatus = '" + gsTaskStatus + "' and StoreHouse.StoreHouseID = " + storeHouseID + " and GsEnabled = 1";
+            string sqlStr = "select *  from GoodsSite ,StoreHouse where StoreHouse.StoreHouseID = GoodsSite.StoreHouseID ";
             sqlStr += " and  GoodsSite.GoodsSiteTaskStatus = '" + gsTaskStatus + "' and StoreHouse.StoreHouseID = " + storeHouseID + " and GsEnabled = 1";
-
-            sqlStr += " order by StockList.InHouseTime asc ";
+            //sqlStr += " order by StockList.InHouseTime asc ";
 
             DataSet ds = DbHelperSQL.Query(sqlStr);
             if (ds != null && ds.Tables.Count > 0)
@@ -459,6 +460,11 @@ namespace AsrsStorDBAcc.BLL
          {
              return dal.GetForbitGsCount(houseID, rowth);
          }
+
+        public int GetOutAllowCount(long houseID, int rowth)
+        {
+            return dal.GetOutAllowCount(houseID, rowth);
+        }
 
         public bool SetSingleGsArea(long houseID, long houseAreaID, string gsName)
         {

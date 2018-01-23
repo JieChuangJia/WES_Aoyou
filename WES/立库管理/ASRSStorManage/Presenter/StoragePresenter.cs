@@ -44,6 +44,7 @@ namespace ASRSStorManage.Presenter
             gsStatusColor[EnumCellStatus.满位.ToString()] = Color.Green;
             gsStatusColor[EnumGSEnabledStatus.禁用.ToString()] = Color.Red;
             gsStatusColor[EnumGSTaskStatus.锁定.ToString()] = Color.Blue;
+            gsStatusColor[EnumGSTaskStatus.出库允许.ToString()] = Color.Blue;
 
             IniAreaColorDic();
             string rstr="";
@@ -510,6 +511,7 @@ namespace ASRSStorManage.Presenter
             int idleNum = bllGs.GetIdleGsCount(houseID, rowth);
             int taskLockNum = bllGs.GetGsLockCount(houseID, rowth);
             int forbitNum = bllGs.GetForbitGsCount(houseID, rowth);
+            int outAllowNum = bllGs.GetOutAllowCount(houseID, rowth);
 
             //for (int i = 0; i < gsLockNum.Rows.Count; i++)
             //{
@@ -528,7 +530,7 @@ namespace ASRSStorManage.Presenter
             //    // taskLockNum += int.Parse(dtStatusNum.Rows[i][3].ToString());
             //    //  forbitNum += int.Parse(dtStatusNum.Rows[i][4].ToString());
             //}
-            this.view.RefreshGSStatsuNum(nullBoxNum, productNum, idleNum, taskLockNum, forbitNum);
+            this.view.RefreshGSStatsuNum(nullBoxNum, productNum, idleNum, taskLockNum, forbitNum, outAllowNum);
         }
         public void GetGSDetail(long goodsSiteID)
         {
@@ -632,6 +634,14 @@ namespace ASRSStorManage.Presenter
                 { }
 
                 
+            }
+            if (gsModel.GoodsSiteTaskStatus == EnumGSTaskStatus.出库允许.ToString())
+            {
+                pos.Style = 2;
+            }
+            else
+            {
+                pos.Style = 1;
             }
 
             if(pos.Enbled == false)

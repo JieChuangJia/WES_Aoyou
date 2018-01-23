@@ -63,6 +63,9 @@
             this.tsmi_StartPos = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_EndPos = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lb_OutAllowNum = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.lb_ForbitNum = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -82,9 +85,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgv_GoodsSiteDetail = new System.Windows.Forms.DataGridView();
+            this.StockListID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_ProductBatch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.goodsSiteID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TrayID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gsStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.updateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_StayHouseTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cms_DeleteStockList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_DeleteStockList = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_AddStockList = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_ModifyCode = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.gb_LogicGs = new System.Windows.Forms.GroupBox();
@@ -97,15 +109,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.pl_InnerParent = new System.Windows.Forms.Panel();
             this.pl_ExterProParent = new System.Windows.Forms.Panel();
-            this.tsmi_ModifyCode = new System.Windows.Forms.ToolStripMenuItem();
-            this.StockListID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_ProductBatch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.goodsSiteID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TrayID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gsStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.updateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_StayHouseTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.cms_Property.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -398,6 +401,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lb_OutAllowNum);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.lb_ForbitNum);
             this.groupBox3.Controls.Add(this.label5);
@@ -416,12 +422,38 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(422, 3);
+            this.groupBox3.Location = new System.Drawing.Point(388, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(283, 120);
+            this.groupBox3.Size = new System.Drawing.Size(334, 120);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "统计";
+            // 
+            // lb_OutAllowNum
+            // 
+            this.lb_OutAllowNum.AutoSize = true;
+            this.lb_OutAllowNum.Location = new System.Drawing.Point(300, 85);
+            this.lb_OutAllowNum.Name = "lb_OutAllowNum";
+            this.lb_OutAllowNum.Size = new System.Drawing.Size(11, 12);
+            this.lb_OutAllowNum.TabIndex = 19;
+            this.lb_OutAllowNum.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(280, 54);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "出库允许";
+            // 
+            // label15
+            // 
+            this.label15.Image = ((System.Drawing.Image)(resources.GetObject("label15.Image")));
+            this.label15.Location = new System.Drawing.Point(291, 28);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(30, 17);
+            this.label15.TabIndex = 17;
             // 
             // label14
             // 
@@ -578,7 +610,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(413, 120);
+            this.groupBox2.Size = new System.Drawing.Size(379, 120);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "货位详情";
@@ -603,8 +635,48 @@
             this.dgv_GoodsSiteDetail.RowHeadersVisible = false;
             this.dgv_GoodsSiteDetail.RowTemplate.Height = 23;
             this.dgv_GoodsSiteDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_GoodsSiteDetail.Size = new System.Drawing.Size(407, 100);
+            this.dgv_GoodsSiteDetail.Size = new System.Drawing.Size(373, 100);
             this.dgv_GoodsSiteDetail.TabIndex = 0;
+            // 
+            // StockListID
+            // 
+            this.StockListID.HeaderText = "库存列表编号";
+            this.StockListID.Name = "StockListID";
+            // 
+            // col_ProductBatch
+            // 
+            this.col_ProductBatch.HeaderText = "产品批次";
+            this.col_ProductBatch.Name = "col_ProductBatch";
+            // 
+            // goodsSiteID
+            // 
+            this.goodsSiteID.HeaderText = "货位编号";
+            this.goodsSiteID.Name = "goodsSiteID";
+            // 
+            // TrayID
+            // 
+            this.TrayID.HeaderText = "料框条码";
+            this.TrayID.Name = "TrayID";
+            // 
+            // GsName
+            // 
+            this.GsName.HeaderText = "货位名称";
+            this.GsName.Name = "GsName";
+            // 
+            // gsStatus
+            // 
+            this.gsStatus.HeaderText = "货位状态";
+            this.gsStatus.Name = "gsStatus";
+            // 
+            // updateTime
+            // 
+            this.updateTime.HeaderText = "更新时间";
+            this.updateTime.Name = "updateTime";
+            // 
+            // col_StayHouseTime
+            // 
+            this.col_StayHouseTime.HeaderText = "在库时间";
+            this.col_StayHouseTime.Name = "col_StayHouseTime";
             // 
             // cms_DeleteStockList
             // 
@@ -619,16 +691,23 @@
             // tsmi_DeleteStockList
             // 
             this.tsmi_DeleteStockList.Name = "tsmi_DeleteStockList";
-            this.tsmi_DeleteStockList.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_DeleteStockList.Size = new System.Drawing.Size(100, 22);
             this.tsmi_DeleteStockList.Text = "删除";
             this.tsmi_DeleteStockList.Click += new System.EventHandler(this.tsmi_DeleteStockList_Click);
             // 
             // tsmi_AddStockList
             // 
             this.tsmi_AddStockList.Name = "tsmi_AddStockList";
-            this.tsmi_AddStockList.Size = new System.Drawing.Size(152, 22);
+            this.tsmi_AddStockList.Size = new System.Drawing.Size(100, 22);
             this.tsmi_AddStockList.Text = "添加";
             this.tsmi_AddStockList.Click += new System.EventHandler(this.tsmi_AddStockList_Click);
+            // 
+            // tsmi_ModifyCode
+            // 
+            this.tsmi_ModifyCode.Name = "tsmi_ModifyCode";
+            this.tsmi_ModifyCode.Size = new System.Drawing.Size(100, 22);
+            this.tsmi_ModifyCode.Text = "修改";
+            this.tsmi_ModifyCode.Click += new System.EventHandler(this.tsmi_ModifyCode_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -649,8 +728,8 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 289F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 340F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox3, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.gb_LogicGs, 2, 0);
@@ -665,9 +744,9 @@
             // gb_LogicGs
             // 
             this.gb_LogicGs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gb_LogicGs.Location = new System.Drawing.Point(711, 3);
+            this.gb_LogicGs.Location = new System.Drawing.Point(728, 3);
             this.gb_LogicGs.Name = "gb_LogicGs";
-            this.gb_LogicGs.Size = new System.Drawing.Size(204, 120);
+            this.gb_LogicGs.Size = new System.Drawing.Size(187, 120);
             this.gb_LogicGs.TabIndex = 10;
             this.gb_LogicGs.TabStop = false;
             this.gb_LogicGs.Text = "逻辑货区颜色图例";
@@ -685,6 +764,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gb_Model);
+            this.splitContainer1.Panel2.Enabled = false;
             this.splitContainer1.Panel2MinSize = 1;
             this.splitContainer1.Size = new System.Drawing.Size(918, 354);
             this.splitContainer1.SplitterDistance = 888;
@@ -733,12 +813,13 @@
             this.gb_Model.TabIndex = 2;
             this.gb_Model.TabStop = false;
             this.gb_Model.Text = "模块";
+            this.gb_Model.Visible = false;
             // 
             // bt_InnerExpend
             // 
             this.bt_InnerExpend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bt_InnerExpend.Image = ((System.Drawing.Image)(resources.GetObject("bt_InnerExpend.Image")));
-            this.bt_InnerExpend.Location = new System.Drawing.Point(6, 14);
+            this.bt_InnerExpend.Location = new System.Drawing.Point(9, 0);
             this.bt_InnerExpend.Name = "bt_InnerExpend";
             this.bt_InnerExpend.Size = new System.Drawing.Size(23, 23);
             this.bt_InnerExpend.TabIndex = 0;
@@ -794,53 +875,6 @@
             this.pl_ExterProParent.Name = "pl_ExterProParent";
             this.pl_ExterProParent.Size = new System.Drawing.Size(21, 167);
             this.pl_ExterProParent.TabIndex = 2;
-            // 
-            // tsmi_ModifyCode
-            // 
-            this.tsmi_ModifyCode.Name = "tsmi_ModifyCode";
-            this.tsmi_ModifyCode.Size = new System.Drawing.Size(152, 22);
-            this.tsmi_ModifyCode.Text = "修改";
-            this.tsmi_ModifyCode.Click += new System.EventHandler(this.tsmi_ModifyCode_Click);
-            // 
-            // StockListID
-            // 
-            this.StockListID.HeaderText = "库存列表编号";
-            this.StockListID.Name = "StockListID";
-            // 
-            // col_ProductBatch
-            // 
-            this.col_ProductBatch.HeaderText = "产品批次";
-            this.col_ProductBatch.Name = "col_ProductBatch";
-            // 
-            // goodsSiteID
-            // 
-            this.goodsSiteID.HeaderText = "货位编号";
-            this.goodsSiteID.Name = "goodsSiteID";
-            // 
-            // TrayID
-            // 
-            this.TrayID.HeaderText = "料框条码";
-            this.TrayID.Name = "TrayID";
-            // 
-            // GsName
-            // 
-            this.GsName.HeaderText = "货位名称";
-            this.GsName.Name = "GsName";
-            // 
-            // gsStatus
-            // 
-            this.gsStatus.HeaderText = "货位状态";
-            this.gsStatus.Name = "gsStatus";
-            // 
-            // updateTime
-            // 
-            this.updateTime.HeaderText = "更新时间";
-            this.updateTime.Name = "updateTime";
-            // 
-            // col_StayHouseTime
-            // 
-            this.col_StayHouseTime.HeaderText = "在库时间";
-            this.col_StayHouseTime.Name = "col_StayHouseTime";
             // 
             // StorageView
             // 
@@ -957,5 +991,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gsStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn updateTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_StayHouseTime;
+        private System.Windows.Forms.Label lb_OutAllowNum;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label15;
     }
 }

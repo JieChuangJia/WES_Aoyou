@@ -26,7 +26,7 @@ namespace ASRSStorManage.View
         private delegate void RefreshDataInvoke();
         private delegate  void RefreshPosInvoke(List<Positions> posList);
         private delegate void RefreshGSDetailInvoke(List<View_StockModel> stockList);
-        private delegate void RefreshGSStatsuNumInvoke(int nullFrameNum, int productNum, int nullNum, int taskLockNum, int forbitNum);
+        private delegate void RefreshGSStatsuNumInvoke(int nullFrameNum, int productNum, int nullNum, int taskLockNum, int forbitNum, int outAllowNum);
         public StorageView(string captionTxt)
             : base(captionTxt)
         {
@@ -315,7 +315,7 @@ namespace ASRSStorManage.View
         /// <param name="nullFrameNum">空料框数量</param>
         /// <param name="productNum">有货数量</param>
         /// <param name="nullNum">空货位数量</param>
-        public void RefreshGSStatsuNum(int nullFrameNum, int productNum, int nullNum, int taskLockNum, int forbitNum)
+        public void RefreshGSStatsuNum(int nullFrameNum, int productNum, int nullNum, int taskLockNum, int forbitNum,int outAllowNum)
         {
          
             if( this.lb_NullFrameNum.InvokeRequired
@@ -323,10 +323,11 @@ namespace ASRSStorManage.View
                   ||this.lb_NullGsNum.InvokeRequired
                   ||this.lb_TaskLock.InvokeRequired
                   ||this.lb_ForbitNum.InvokeRequired
+                  ||this.lb_OutAllowNum.InvokeRequired
                 )
             {
                 RefreshGSStatsuNumInvoke rgsnumi = new RefreshGSStatsuNumInvoke(RefreshGSStatsuNum);
-                this.Invoke(rgsnumi, new object[5] { nullFrameNum, productNum, nullNum, taskLockNum, forbitNum });
+                this.Invoke(rgsnumi, new object[6] { nullFrameNum, productNum, nullNum, taskLockNum, forbitNum, outAllowNum });
             }
             else
             {
@@ -335,6 +336,7 @@ namespace ASRSStorManage.View
                 this.lb_NullGsNum.Text = nullNum.ToString();
                 this.lb_TaskLock.Text = taskLockNum.ToString();
                 this.lb_ForbitNum.Text = forbitNum.ToString();
+                this.lb_OutAllowNum.Text = outAllowNum.ToString();
             }
         
         }

@@ -77,7 +77,6 @@ namespace ASRSStorManage.View
             IniStoreHouse();
             IniGSStatus();
             IniGSTaskStatus();
-            IniBoxCode();
 
             this.presenter.BindRCLData(this.cb_StoreHouse.Text);
             this.presenter.BindProBatchesData(this.cb_StoreHouse.Text);
@@ -184,16 +183,6 @@ namespace ASRSStorManage.View
             if (this.cb_GSTaskType.Items.Count > 0)
             {
                 this.cb_GSTaskType.SelectedIndex = 0;
-            }
-        }
-
-        private void IniBoxCode()
-        {
-            this.cb_BoxCode.Items.Clear();
-            this.cb_BoxCode.Items.Add("所有");
-            if (this.cb_BoxCode.Items.Count > 0)
-            {
-                this.cb_BoxCode.SelectedIndex = 0;
             }
         }
 
@@ -389,7 +378,7 @@ namespace ASRSStorManage.View
         {
 
             this.presenter.QueryStock(this.cb_StoreHouse.Text, this.cb_HouseArea.Text,this.cb_StockRow.Text, this.cb_StockColumn.Text, this.cb_StockLayer.Text
-                , this.cb_GSStatus.Text, this.cb_GSTaskType.Text,this.cb_ProductBatch.Text,this.cb_BoxCode.Text);
+                , this.cb_GSStatus.Text, this.cb_GSTaskType.Text,this.cb_ProductBatch.Text,this.cb_boxCode.Checked,this.tb_BoxCode.Text);
         }
 
         private void dgv_StockInfor_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -725,6 +714,8 @@ namespace ASRSStorManage.View
             queryStockParamModel.GsStatus = this.cb_GSStatus.Text;
             queryStockParamModel.GsTaskStatus = this.cb_GSTaskType.Text;
             queryStockParamModel.Batch = this.cb_ProductBatch.Text;
+            queryStockParamModel.IsCheck = this.cb_boxCode.Checked;
+            queryStockParamModel.MaterialBoxCode = this.tb_BoxCode.Text;
             this.presenter.QueryProductCount(queryStockParamModel);
         }
  
@@ -744,16 +735,6 @@ namespace ASRSStorManage.View
 
         }
 
-        private void 货位启用ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void 货位禁用ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tsmi_ModifyCode_Click(object sender, EventArgs e)
         {
             if (this.parentPNP.RoleID > 2)
@@ -766,25 +747,20 @@ namespace ASRSStorManage.View
                 return;
             }
             int currRow = this.dgv_StockInfor.CurrentRow.Index;
-       
-             BindingSource bs = new BindingSource();
-             bs = (BindingSource)this.dgv_StockInfor.DataSource;
-             DataTable stockList = (DataTable)bs.DataSource;
 
-             string stockID = stockList.Rows[currRow]["库存ID"].ToString();
-             string codestr = stockList.Rows[currRow]["料框条码"].ToString();
+            BindingSource bs = new BindingSource();
+            bs = (BindingSource)this.dgv_StockInfor.DataSource;
+            DataTable stockList = (DataTable)bs.DataSource;
+
+            string stockID = stockList.Rows[currRow]["库存ID"].ToString();
+            string codestr = stockList.Rows[currRow]["料框条码"].ToString();
             AddStockListView aslv = new AddStockListView();
             aslv.SetCode(codestr);
             aslv.ShowDialog();
             if (aslv.IsSure == true)
             {
-                this.presenter.ModifyStockList(stockID,codestr, aslv.StockListStr);
+                this.presenter.ModifyStockList(stockID, codestr, aslv.StockListStr);
             }
-        }
-
-        private void 修改ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
  
  

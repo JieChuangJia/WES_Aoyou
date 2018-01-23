@@ -185,9 +185,9 @@ namespace AsrsStorDBAcc.BLL
             return dal.GetBatches(houseID, houseAreaID);
         }
         public DataTable GetData(string houseName,string houseArea, string rowth,
-             string colth, string layerth, string gsStatus, string gsTaskSta, string proBatch,string materialBoxCode)
+             string colth, string layerth, string gsStatus, string gsTaskSta, string proBatch,bool isChecked,string materialBoxCode)
         {
-            return dal.GetData(houseName, houseArea, rowth, colth, layerth, gsStatus, gsTaskSta, proBatch, materialBoxCode);
+            return dal.GetData(houseName, houseArea, rowth, colth, layerth, gsStatus, gsTaskSta, proBatch,isChecked, materialBoxCode);
         }
         #endregion  ExtensionMethod
     }

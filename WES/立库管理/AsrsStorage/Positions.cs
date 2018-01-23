@@ -179,7 +179,12 @@ namespace Storage
             get { return this.enbled; }
             set { this.enbled = value; }
         }
-      
+        private int style = 0;
+        public int Style
+        {
+            get { return this.style; }
+            set { this.style = value; }
+        }
         /// <summary>
         /// 复制对象只复制数据结构不复制引用
         /// </summary>

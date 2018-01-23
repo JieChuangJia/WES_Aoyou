@@ -25,6 +25,7 @@ namespace ASRSStorManage.Presenter
         string currProBatch = "所有";
         //add 20180112
         string materialBoxCode = "所有";
+        bool isChecked = false;
         IAsrsManageToCtl iStorageManager;
         IAsrsCtlToManage iControl;
         StockManaView view;
@@ -149,14 +150,14 @@ namespace ASRSStorManage.Presenter
                 this.iStorageManager.AddGSOperRecord(gsList[i].HouseName, new CellCoordModel(gsList[i].Rowth, gsList[i].Colth, gsList[i].Layerth), EnumGSOperateType.手动修改状态, operteDetail, ref reStr);
 
 
-                QueryStock(this.currHouseName, this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta, this.currProBatch, this.materialBoxCode);
+                QueryStock(this.currHouseName, this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta, this.currProBatch,this.isChecked, this.materialBoxCode);
                 this.view.AddLog("库存管理", operteDetail, LogInterface.EnumLoglevel.提示);
             }
         }
       
-        public void QueryStock(string houseName, string houseArea,string rowth, string colth, string layerth, string gsStatus, string gsTaskSta,string proBatch,string materialBoxCode)
+        public void QueryStock(string houseName, string houseArea,string rowth, string colth, string layerth, string gsStatus, string gsTaskSta,string proBatch,bool isChecked,string materialBoxCode)
         {
-            DataTable stockView = bllViewStock.GetData(houseName, houseArea, rowth, colth, layerth, gsStatus, gsTaskSta, proBatch, materialBoxCode);
+            DataTable stockView = bllViewStock.GetData(houseName, houseArea, rowth, colth, layerth, gsStatus, gsTaskSta, proBatch,isChecked, materialBoxCode);
             DataTable stockMerge = stockView.Clone();
             if(stockView==null)
             {
@@ -222,7 +223,8 @@ namespace ASRSStorManage.Presenter
             this.gsStatus = gsStatus;
             this.gsTaskSta = gsTaskSta;
             this.currProBatch = proBatch;
-         
+            this.materialBoxCode = materialBoxCode;
+            this.isChecked = isChecked;
         }
         public void DeleteStock(List<long> stockIDList)
         {
@@ -255,7 +257,7 @@ namespace ASRSStorManage.Presenter
                 this.view.AddLog("库存管理", "手动删除货位，同时更新货位状态" + operteDetail + "成功！", LogInterface.EnumLoglevel.提示);
 
             }
-            QueryStock(this.currHouseName,this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.materialBoxCode);
+            QueryStock(this.currHouseName,this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.isChecked,this.materialBoxCode);
             this.view.ClearStockDetailView();
         
         }
@@ -271,7 +273,7 @@ namespace ASRSStorManage.Presenter
         {
             QueryStockParamModel queryStockModel = (QueryStockParamModel)obj;
             DataTable stockView = bllViewStock.GetData(queryStockModel.HouseName,queryStockModel.HouseArea, queryStockModel.Rowth
-                , queryStockModel.Colth, queryStockModel.Layerth, queryStockModel.GsStatus, queryStockModel.GsTaskStatus, queryStockModel.Batch, queryStockModel.MaterialBoxCode);
+                , queryStockModel.Colth, queryStockModel.Layerth, queryStockModel.GsStatus, queryStockModel.GsTaskStatus, queryStockModel.Batch,queryStockModel.IsCheck, queryStockModel.MaterialBoxCode);
             List<string> palletList = new List<string>();
             for(int i=0;i<stockView.Rows.Count;i++)
             {
@@ -330,7 +332,7 @@ namespace ASRSStorManage.Presenter
               
             }
            //出完后库要再次查询防止重复出库
-            QueryStock(this.currHouseName,this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.materialBoxCode);
+            QueryStock(this.currHouseName,this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.isChecked,this.materialBoxCode);
         
             this.view.RefreshStorageView();
         }
@@ -364,7 +366,7 @@ namespace ASRSStorManage.Presenter
            
             }
             //出完后库要再次查询防止重复出库
-            QueryStock(this.currHouseName,this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.materialBoxCode);
+            QueryStock(this.currHouseName,this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.isChecked,this.materialBoxCode);
         }
         /// <summary>
         /// 库存模块出厂设置，数据表格式化到初始值，清除库存，更新货位信息
@@ -374,7 +376,7 @@ namespace ASRSStorManage.Presenter
             string reStr = "";
             bllGs.GsReturnFac();
             bllStock.DeleteAll();
-            QueryStock(this.currHouseName, this.currHouseArea,this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.materialBoxCode);
+            QueryStock(this.currHouseName, this.currHouseArea,this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta,this.currProBatch,this.isChecked,this.materialBoxCode);
             this.view.AddLog("库存管理", "恢复出厂设置成功!", LogInterface.EnumLoglevel.提示);
             this.iStorageManager.AddGSOperRecord(this.currHouseName,new CellCoordModel(1,1,1),EnumGSOperateType.出厂设置,"恢复出厂设置",ref reStr);
         }
@@ -430,7 +432,7 @@ namespace ASRSStorManage.Presenter
             this.view.AddLog("库存管理", "库存料框条码由："+oldCode + "手动修改为：" + newCode , LogInterface.EnumLoglevel.提示);
             
             //RefreshStockList(long.Parse(stockID));
-            QueryStock(this.currHouseName, this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta, this.currProBatch, this.materialBoxCode);
+            QueryStock(this.currHouseName, this.currHouseArea, this.currRowth, this.currColth, this.currLayerth, this.gsStatus, this.gsTaskSta, this.currProBatch,this.isChecked, this.materialBoxCode);
         }
         public void AddStockList(string stockID,string boxCodeList)
         {

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Collections;
+using AsrsModel;
 
 namespace Storage
 {
@@ -183,6 +184,7 @@ namespace Storage
                         posTemp.Visible = true;
                         posTemp.Color = this.dataSour[i].Color;
                         posTemp.BorderColor = this.dataSour[i].BorderColor;
+                        posTemp.Style = this.dataSour[i].Style;
                     }
                     int controlWidth = this.columns * (pos.Width + this.columnInterval) + startPoint.X + 30;
                     int controlHeigt = this.layers * (pos.Height + this.layerInterval) + startPoint.Y + 55;
@@ -306,6 +308,7 @@ namespace Storage
                             this.FillRect(graphics, pos.PosRect, pos.Color);
                             this.FillBorder(graphics,  pos);
                             this.DrawStrRect(graphics, pos);
+                            this.DrawRectInRect(graphics, pos);
                         }
                         else
                         {
@@ -408,6 +411,18 @@ namespace Storage
             graphics.DrawLine(linePen, startPoint2, endPoint2);
 
             linePen.Dispose();
+
+        }
+
+        private void DrawRectInRect(Graphics graphics, Positions pos)
+        {
+            if (pos.Style == 2)
+            {
+                Rectangle temp = new Rectangle(pos.PosRect.X + 8, pos.PosRect.Y + 5, pos.PosRect.Width - 16, pos.PosRect.Height - 10);
+                SolidBrush brush = new SolidBrush(Color.Blue);
+                graphics.FillRectangle(brush, temp);
+            }
+          
 
         }
         /// <summary>

@@ -656,7 +656,7 @@ namespace AsrsStorDBAcc.DAL
         }
 
         public DataTable GetData(string houseName,string houseArea, string rowth,
-           string colth, string layerth, string gsStatus, string gsTaskSta, string proBatch,string materialBoxCode)
+           string colth, string layerth, string gsStatus, string gsTaskSta, string proBatch,bool isChecked,string materialBoxCode)
         {
             //string sqlStr = " SELECT B.StockID as 库存ID, B.StoreHouseName as 库房名称, B.GoodsSiteName as 货位名称, B.GoodsSitePos as 货位位置 ,B.MeterialBatch as 产品批次,"
             //+"B.GoodsSiteRow as 排, B.GoodsSiteColumn as 列,B.GoodsSiteLayer as 层,B.GoodsSiteStatus as 货位状态 ,"
@@ -709,10 +709,11 @@ namespace AsrsStorDBAcc.DAL
             {
                 sqlStr += " and GoodsSiteTaskStatus = '" + gsTaskSta + "'";
             }
-            if (materialBoxCode != "所有")
+            if(isChecked == true)
             {
                 sqlStr += " and MeterialboxCode = '" + materialBoxCode + "'";
             }
+
             sqlStr += " order by StockID asc";
             DataSet ds = DbHelperSQL.Query(sqlStr);
             if (ds != null && ds.Tables.Count > 0)
