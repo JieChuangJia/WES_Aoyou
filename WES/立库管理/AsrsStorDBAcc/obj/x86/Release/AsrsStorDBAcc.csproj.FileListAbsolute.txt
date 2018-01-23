@@ -61,3 +61,12 @@ E:\NpWork\others\遨优\代码\ty\recty\WES-0123-1\WES3\立库管理\AsrsStorDBA
 E:\NpWork\others\遨优\代码\ty\recty\WES-0123-1\WES3\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.csprojResolveAssemblyReference.cache
 E:\NpWork\others\遨优\代码\ty\recty\WES-0123-1\WES3\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.dll
 E:\NpWork\others\遨优\代码\ty\recty\WES-0123-1\WES3\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.pdb
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsStorDBAcc.dll
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsStorDBAcc.pdb
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsInterface.dll
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsModel.dll
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsInterface.pdb
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsModel.pdb
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.csprojResolveAssemblyReference.cache
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.dll
+E:\NpWork\others\遨优\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.pdb

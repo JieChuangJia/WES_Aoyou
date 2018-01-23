@@ -145,6 +145,10 @@ namespace ASRSStorManage.Presenter
                 }
                 bllGs.UpdateGSStatusByRCL(gsList[i].HouseName, gsList[i].Rowth, gsList[i].Colth, gsList[i].Layerth, (EnumCellStatus)Enum.Parse(typeof(EnumCellStatus), gsStatus));
                 bllGs.UpdateGsTaskStatusByRCL(gsList[i].HouseName, gsList[i].Rowth, gsList[i].Colth, gsList[i].Layerth, (EnumGSTaskStatus)Enum.Parse(typeof(EnumGSTaskStatus), gsTaskStatus));
+                if (gsTaskStatus == EnumGSTaskStatus.出库允许.ToString())
+                {
+                    bllGs.UpdateOperateByRCL(gsList[i].HouseName, gsList[i].Rowth, gsList[i].Colth, gsList[i].Layerth, EnumGSOperate.出库);
+                }
                 string operteDetail = "[" + oldgsm.GoodsSiteName + "]货位状态由《" + oldgsm.GoodsSiteStatus + "》变更为《" + gsStatus + "》；" + "货位任务状态由《" + oldgsm.GoodsSiteTaskStatus + "》变更为《" + gsTaskStatus + "》";
 
                 this.iStorageManager.AddGSOperRecord(gsList[i].HouseName, new CellCoordModel(gsList[i].Rowth, gsList[i].Colth, gsList[i].Layerth), EnumGSOperateType.手动修改状态, operteDetail, ref reStr);

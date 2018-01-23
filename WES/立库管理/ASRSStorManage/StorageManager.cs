@@ -131,6 +131,41 @@ namespace ASRSStorManage
          
             return true;
         }
+        public bool CellRequireByRow(string houseName, string logicAreaName, int row, ref CellCoordModel cellCoord, ref string reStr)
+        {
+
+            View_GoodsSiteModel viewGSModel = bllViewGoodsSite.GetModelByHouseAndAreaName(houseName, logicAreaName);
+            if (viewGSModel == null)
+            {
+                reStr = "不存在'" + houseName + "'库房！" + logicAreaName + "分区！";
+                return false;
+            }
+            int requireCellRule = 1;//默认是从最小列开始
+            XmlNode houseCfgNode = xmlOper.GetNodeByName("StoreHouse", houseName);
+            if (houseCfgNode != null)
+            {
+                XmlNode requireCellRuleNode = houseCfgNode.SelectSingleNode("RequireCellRule");
+                if (requireCellRuleNode != null)
+                {
+                    int.TryParse(requireCellRuleNode.InnerText.Trim(), out requireCellRule);
+                }
+            }
+            View_GoodsSiteModel gsModel = bllViewGoodsSite.ApplyGoodsSiteByRow(houseName, logicAreaName, row,requireCellRule);
+            if (gsModel == null)
+            {
+                reStr = "没有货位可申请！";
+                return false;
+            }
+            else
+            {
+                cellCoord = new CellCoordModel(gsModel.GoodsSiteRow, gsModel.GoodsSiteColumn, gsModel.GoodsSiteLayer);
+
+                reStr = "货位申请成功";
+            }
+
+            return true;
+        }
+
 
         /// <summary>
         /// 获取库存货位剩余量
