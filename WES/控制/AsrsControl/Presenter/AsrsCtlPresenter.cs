@@ -184,7 +184,7 @@ namespace AsrsControl
             //2 控制节点初始化
             //解析配置文件
             
-         
+ 
             if (!ParseCtlnodes(CtlnodeRoot, ref reStr))
             {
                

@@ -150,6 +150,7 @@ namespace AsrsControl
                 currentTaskDescribe = "设备故障";
                 return true;
             }
+            
             switch (currentTaskPhase)
             {
                 case 0:
@@ -398,6 +399,10 @@ namespace AsrsControl
                 {
                     errInfo = string.Format("故障发生：无定义的故障码{0}", errCode);
                 }
+            }
+            if(this.db2Vals[1] ==4)
+            {
+                errInfo = "手动操作状态";
             }
             status[0] = errInfo;// string.Format("故障码:{0}", db2Vals[0]);
             if(this.currentTask != null && taskParamModel != null)

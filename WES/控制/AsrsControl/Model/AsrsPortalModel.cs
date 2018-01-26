@@ -212,6 +212,14 @@ namespace AsrsControl
         {
             int step =0;
             int weight = 0;
+            if (!MesAcc.GetStep(palletID, out step, ref reStr))
+            {
+                return -1;
+            }
+            if(palletBuffer.Count()>0)
+            {
+                weight = 100000;
+            }
             /*
             string batchName="";
             if(this.palletBuffer.Count()>0)
@@ -231,10 +239,7 @@ namespace AsrsControl
                     }
                 }
             }
-            if(!MesAcc.GetStep(palletID,out step,ref reStr))
-            {
-                return -1;
-            }*/
+           */
             AsrsModel.EnumLogicArea storeAreaZone = AsrsModel.EnumLogicArea.注液高温区; 
             storeAreaZone = asrsCtlModel.GetAreaToCheckin(step);//(AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); //AsrsModel.EnumLogicArea.注液高温区; //此处需要根据步号判断
             
@@ -323,15 +328,7 @@ namespace AsrsControl
                 {
                     return false;
                 }
-                asrsTaskType = bindedTaskInput;
-                //判断第一个料框是否空筐
-                if(EmptyPalletInputEnabled && palletBuffer.Count()>0)
-                {
-                    if(productOnlineBll.GetModel(palletBuffer[0]) == null)
-                    {
-                        asrsTaskType = SysCfg.EnumAsrsTaskType.空筐入库;
-                    }
-                }
+     
                 if (asrsTaskType == SysCfg.EnumAsrsTaskType.产品入库)
                 {
                     if (this.PortinBufCapacity > 1)
@@ -393,7 +390,6 @@ namespace AsrsControl
                                 if (this.Db2Vals[j] != 2)
                                 {
                                     return false;
-
                                 }
                             }
                             return true;

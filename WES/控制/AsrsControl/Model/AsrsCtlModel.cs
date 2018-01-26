@@ -491,7 +491,8 @@ namespace AsrsControl
                  asrsResManage.GetLogicAreaName(houseName,cell,ref logicArea);
                  if (!asrsResManage.GetOutBatch(houseName, logicArea.ToString(), ref checkOutBatch, ref reStr))
                  {
-                     continue;
+                     //continue;
+                     checkOutBatch = "";
                  }
                 List<string> palletList = new List<string>();
                 asrsResManage.GetStockDetail(this.houseName, cell, ref palletList);
@@ -839,19 +840,38 @@ namespace AsrsControl
                 }
                
                 SysCfg.EnumAsrsTaskType taskType = port.BindedTaskInput;
+                //判断第一个料框是否空筐
+                if (port.EmptyPalletInputEnabled && port.PalletBuffer.Count() > 0)
+                {
+                    int palletStep = 0;
+                    if (!MesAcc.GetStep(port.PalletBuffer[0], out palletStep, ref reStr))
+                    {
+                        continue;
+                    }
+                    if(palletStep==0)
+                    {
+                        taskType = SysCfg.EnumAsrsTaskType.空筐入库;
+                    }
+                  
+                }
+
                 string palletID = "";
                 if(port.AsrsInputEnabled(ref taskType))
                 {
                     EnumLogicArea checkinArea = EnumLogicArea.注液高温区;
                     string[] cellGoods = null;
-                   
+                    if(port.PalletBuffer.Count>0)
+                    {
+                        cellGoods = port.PalletBuffer.ToArray();
+                    }
+                    
                     if(taskType == SysCfg.EnumAsrsTaskType.空筐入库)
                     {
                         checkinArea = EnumLogicArea.空筐区;
                     }
                     else
                     {
-                        cellGoods = port.PalletBuffer.ToArray();
+                       
                         if(cellGoods.Count()<1)
                         {
                             continue;
@@ -886,12 +906,16 @@ namespace AsrsControl
                             port.Db1ValsToSnd[0] = 2;
 
                         }
-                        string logStr = "自动清空入口缓存数据";
-                        foreach(string pallet in cellGoods)
+                        if(cellGoods != null && cellGoods.Count()>0)
                         {
-                            logStr += (pallet + ",");
+                            string logStr = "自动清空入口缓存数据";
+                            foreach (string pallet in cellGoods)
+                            {
+                                logStr += (pallet + ",");
+                            }
+                            logRecorder.AddDebugLog(nodeName, logStr);
                         }
-                        logRecorder.AddDebugLog(nodeName, logStr);
+                       
                     }
                     else
                     {
@@ -910,7 +934,11 @@ namespace AsrsControl
         {
             foreach(AsrsPortalModel port in ports)
             {
-                if(port.BindedTaskOutput != SysCfg.EnumAsrsTaskType.空筐出库 && (!port.EmptyPalletInputEnabled))
+                if(port.PortCata == 1)
+                {
+                    continue;
+                }
+                if(port.BindedTaskOutput != SysCfg.EnumAsrsTaskType.空筐出库)
                 {
                     continue;
                 }
@@ -1719,7 +1747,15 @@ namespace AsrsControl
                             }
 
                             //2 更新库存状态
-                            this.asrsResManage.AddEmptyMeterialBox(this.houseName, taskParamModel.CellPos1, ref reStr);
+                          
+                            if(taskParamModel.InputCellGoods != null && taskParamModel.InputCellGoods.Count()>0)
+                            {
+                                this.asrsResManage.AddStack(this.houseName, taskParamModel.CellPos1, "", taskParamModel.InputCellGoods, ref reStr);
+                            }
+                            else
+                            {
+                                this.asrsResManage.AddEmptyMeterialBox(this.houseName, taskParamModel.CellPos1, ref reStr);
+                            }
 
                             //3 更新出入库操作状态
                             this.asrsResManage.UpdateGSOper(this.houseName, taskParamModel.CellPos1, EnumGSOperate.无, ref reStr);

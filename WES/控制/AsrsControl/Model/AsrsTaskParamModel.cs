@@ -66,7 +66,11 @@ namespace AsrsControl
                     case SysCfg.EnumAsrsTaskType.空筐入库:
                         {
                             //空筐入库
-                         
+                            if (taskParamArray.Count() > 3)
+                            {
+                                string strGoods = taskParamArray[3];
+                                this.inputCellGoods = strGoods.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                            }
                            
                             break;
                         }
@@ -93,7 +97,11 @@ namespace AsrsControl
                     case SysCfg.EnumAsrsTaskType.空筐出库:
                         {
                             //空筐出库
-                       
+                            if (taskParamArray.Count() > 3)
+                            {
+                                string strGoods = taskParamArray[3];
+                                this.inputCellGoods = strGoods.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                            }
                             break;
 
                         }
