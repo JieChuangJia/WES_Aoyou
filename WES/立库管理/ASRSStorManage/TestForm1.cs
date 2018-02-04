@@ -30,6 +30,9 @@ namespace ASRSStorManage
             StorageManager sm = new StorageManager();
             //sm.Initialize(ref reStr);
             CellCoordModel cell = new CellCoordModel(1, 1, 5);
+            string res= sm.IsProductCodeInStore("A1库房", "TP2124840", ref reStr);
+            if(res == "")
+            { }
             //EnumGSEnabledStatus gsSta = EnumGSEnabledStatus.禁用;
             //sm.GetCellEnabledStatus("A库房", cell, ref gsSta);
             //sm.UpdateCellStatus("A库房", cell, EnumCellStatus.满位, EnumGSTaskStatus.完成, ref reStr);

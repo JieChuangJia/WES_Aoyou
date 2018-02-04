@@ -115,7 +115,6 @@ E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\bin\Release\AsrsS
 E:\Projects\遨优电池ERP\代码\WES\立库管理\ASRSStorManage\bin\Release\ASRSStorManage.exe.config
 E:\Projects\遨优电池ERP\代码\WES\立库管理\ASRSStorManage\obj\x86\Release\ASRSStorManage.exe
 E:\Projects\遨优电池ERP\代码\WES\立库管理\ASRSStorManage\obj\x86\Release\ASRSStorManage.pdb
-E:\Projects\遨优电池ERP\代码\WES\立库管理\ASRSStorManage\bin\Release\GoogsSiteCfg.xml
 E:\Projects\遨优电池ERP\代码\WES\立库管理\ASRSStorManage\bin\Release\ASRSStorManage.exe
 E:\Projects\遨优电池ERP\代码\WES\立库管理\ASRSStorManage\bin\Release\ASRSStorManage.pdb
 E:\Projects\遨优电池ERP\代码\WES\立库管理\ASRSStorManage\bin\Release\AsrsInterface.dll

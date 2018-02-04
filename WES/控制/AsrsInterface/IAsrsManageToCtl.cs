@@ -234,5 +234,15 @@ namespace AsrsInterface
         /// <param name="batch">批次</param>
         /// <returns>执行状态</returns>
         bool GetOutBatch(string houseName, string houseAreaName, ref string batch,ref string reStr);
+
+        /// <summary>
+        /// 产品条码是否在库
+        /// </summary>
+        /// <param name="houseName">库房名称</param>
+        /// <param name="productCode">产品二维码</param>
+        /// <param name="reStr">执行结果描述</param>
+        /// <returns>若在库则返回在库货位，否则返回空字符串</returns>
+        string IsProductCodeInStore(string houseName, string productCode, ref string reStr);
+ 
     }
 }

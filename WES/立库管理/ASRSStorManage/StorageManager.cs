@@ -847,6 +847,31 @@ namespace ASRSStorManage
         }
 
         /// <summary>
+        /// 产品条码是否在库
+        /// </summary>
+        /// <param name="houseName">库房名称</param>
+        /// <param name="productCode">产品二维码</param>
+        /// <param name="reStr">执行结果描述</param>
+        /// <returns>若在库则返回在库货位，否则返回空字符串</returns>
+        public string IsProductCodeInStore(string houseName, string productCode, ref string reStr)
+        {
+            StoreHouseModel house = bllStoreHouse.GetModelByName(houseName);
+            if (house == null)
+            {
+                reStr = "系统不存在此库房！";
+                return string.Empty;
+            }
+
+            View_StockModel stockModel = bllViewStock.GetModel(houseName,productCode);
+
+            if (stockModel == null)//所有货位没有库存的情况直接返回true
+            {
+                reStr = "此库房不存在此条码！";
+                return  string.Empty;
+            }
+            return stockModel.GoodsSitePos;
+        }
+        /// <summary>
         /// 初始化仓库货位（由于数据库操作需要占用几秒时间）
         /// 如果感觉耗时在货位没有发生变化时可以不调用
         /// </summary>

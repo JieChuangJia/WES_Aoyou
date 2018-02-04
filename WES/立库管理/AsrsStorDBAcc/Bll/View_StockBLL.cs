@@ -175,7 +175,19 @@ namespace AsrsStorDBAcc.BLL
             }
         }
 
-
+        public View_StockModel GetModel(string houseName,string boxCode)
+        {
+            string sqlStr = "MeterialboxCode = '" + boxCode + "' and StoreHouseName = '" + houseName + "'";
+            List<View_StockModel> viewList = GetModelList(sqlStr);
+            if (viewList != null && viewList.Count > 0)
+            {
+                return viewList[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
         public List<string> GetAllBatches(string houseName)
         {
             return dal.GetAllBatches(houseName);
