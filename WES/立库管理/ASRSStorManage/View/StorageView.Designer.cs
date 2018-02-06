@@ -753,6 +753,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer1.Location = new System.Drawing.Point(3, 3);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -765,7 +766,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.gb_Model);
             this.splitContainer1.Panel2MinSize = 1;
             this.splitContainer1.Size = new System.Drawing.Size(918, 354);
-            this.splitContainer1.SplitterDistance = 623;
+            this.splitContainer1.SplitterDistance = 558;
             this.splitContainer1.TabIndex = 12;
             // 
             // groupBox1
@@ -774,7 +775,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(623, 354);
+            this.groupBox1.Size = new System.Drawing.Size(558, 354);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "货位";
@@ -794,7 +795,7 @@
             this.storageControl1.Location = new System.Drawing.Point(3, 17);
             this.storageControl1.Margin = new System.Windows.Forms.Padding(4);
             this.storageControl1.Name = "storageControl1";
-            this.storageControl1.Size = new System.Drawing.Size(617, 334);
+            this.storageControl1.Size = new System.Drawing.Size(552, 334);
             this.storageControl1.TabIndex = 0;
             this.storageControl1.PositionsClick += new Storage.StorageControl.ClickPositionsEventHandler(this.storageControl1_PositionsClick);
             // 
@@ -807,7 +808,7 @@
             this.gb_Model.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gb_Model.Location = new System.Drawing.Point(0, 0);
             this.gb_Model.Name = "gb_Model";
-            this.gb_Model.Size = new System.Drawing.Size(291, 354);
+            this.gb_Model.Size = new System.Drawing.Size(356, 354);
             this.gb_Model.TabIndex = 2;
             this.gb_Model.TabStop = false;
             this.gb_Model.Text = "模块";
@@ -853,7 +854,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.pl_ExterProParent);
             this.splitContainer2.Panel2MinSize = 0;
-            this.splitContainer2.Size = new System.Drawing.Size(286, 313);
+            this.splitContainer2.Size = new System.Drawing.Size(351, 313);
             this.splitContainer2.SplitterDistance = 142;
             this.splitContainer2.TabIndex = 2;
             // 
@@ -862,7 +863,7 @@
             this.pl_InnerParent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pl_InnerParent.Location = new System.Drawing.Point(0, 0);
             this.pl_InnerParent.Name = "pl_InnerParent";
-            this.pl_InnerParent.Size = new System.Drawing.Size(286, 142);
+            this.pl_InnerParent.Size = new System.Drawing.Size(351, 142);
             this.pl_InnerParent.TabIndex = 3;
             // 
             // pl_ExterProParent
@@ -870,7 +871,7 @@
             this.pl_ExterProParent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pl_ExterProParent.Location = new System.Drawing.Point(0, 0);
             this.pl_ExterProParent.Name = "pl_ExterProParent";
-            this.pl_ExterProParent.Size = new System.Drawing.Size(286, 167);
+            this.pl_ExterProParent.Size = new System.Drawing.Size(351, 167);
             this.pl_ExterProParent.TabIndex = 2;
             // 
             // StorageView

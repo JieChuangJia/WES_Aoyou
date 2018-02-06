@@ -58,6 +58,7 @@ namespace ASRSStorManage.View
                 this.splitContainer1.Panel2Collapsed = true;
                 this.手动移库ToolStripMenuItem.Visible = false;
             }
+            splitContainer1.SplitterDistance = splitContainer1.Width - splitContainer1.SplitterWidth - 360;//移库控件宽度
         }
         public void SetMenuLimit()
         {
