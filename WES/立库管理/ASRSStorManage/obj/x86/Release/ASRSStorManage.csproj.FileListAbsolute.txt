@@ -91,7 +91,6 @@ E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\obj\x86\Release\A
 E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\obj\x86\Release\ASRSStorManage.View.StorageView.resources
 E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\obj\x86\Release\ASRSStorManage.View.WaitDlg.resources
 E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\obj\x86\Release\ASRSStorManage.csproj.GenerateResource.Cache
-E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\bin\Release\GoogsSiteCfg.xml
 E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\bin\Release\ASRSStorManage.exe
 E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\bin\Release\ASRSStorManage.pdb
 E:\NpWork\others\遨优\代码\WES\立库管理\ASRSStorManage\bin\Release\AsrsInterface.dll

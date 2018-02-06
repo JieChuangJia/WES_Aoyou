@@ -23,6 +23,10 @@ namespace ASRSStorManage.View
         private Form expandForm = null;
         IAsrsCtlToManage iControl = null;
         IAsrsManageToCtl iStorageManage = null;
+        /// <summary>
+        /// 是否启用移库功能
+        /// </summary>
+        private bool isUseMoveHouse = true;
         private delegate void RefreshDataInvoke();
         private delegate  void RefreshPosInvoke(List<Positions> posList);
         private delegate void RefreshGSDetailInvoke(List<View_StockModel> stockList);
@@ -32,7 +36,7 @@ namespace ASRSStorManage.View
         {
             InitializeComponent();
             presenter = new StoragePresenter(this);
-          
+            SetFunc();
       
         }
         public void SetInterface(IAsrsManageToCtl iAsrsManageToCtl, IAsrsCtlToManage iAsrsCtlToManage)
@@ -41,6 +45,19 @@ namespace ASRSStorManage.View
             this.iStorageManage = iAsrsManageToCtl;
             presenter.IniPresenter(iStorageManage, iControl);
       
+        }
+        private void SetFunc()
+        {
+            if(this.isUseMoveHouse == true)
+            {
+                this.splitContainer1.Panel2Collapsed = false;
+                this.手动移库ToolStripMenuItem.Visible = true;
+            }
+            else
+            {
+                this.splitContainer1.Panel2Collapsed = true;
+                this.手动移库ToolStripMenuItem.Visible = false;
+            }
         }
         public void SetMenuLimit()
         {
@@ -80,7 +97,7 @@ namespace ASRSStorManage.View
         {
             this.presenter.LoadData();
             this.splitContainer2.SplitterDistance = 0;
-            //RegisterInnerForm();
+            RegisterInnerForm();
         }
    
         public void BindHouseData(List<string> houseList)
@@ -574,6 +591,7 @@ namespace ASRSStorManage.View
             innerForm.Visible = true;//默认不显示
             innerForm.Dock = DockStyle.Fill;
             innerForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.splitContainer2.SplitterDistance = this.splitContainer1.Height;
             this.pl_InnerParent.Controls.Add(innerForm);
         }
         public void RegisterExtForm(Form expandForm)
@@ -749,6 +767,7 @@ namespace ASRSStorManage.View
                 MessageBox.Show("当前用户没有此功能的操作权限！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            innerForm.Visible = true;
             this.splitContainer1.Panel2Collapsed = false;
             Positions pos = this.storageControl1.selectPositions;
             if (pos == null)
@@ -773,6 +792,7 @@ namespace ASRSStorManage.View
             {
                 return;
             }
+            innerForm.Visible = true;
             Positions pos = this.storageControl1.selectPositions;
             if(pos == null)
             {
