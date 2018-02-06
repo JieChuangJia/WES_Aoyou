@@ -54,6 +54,17 @@ namespace AsrsControl
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
+            taskPresenter.TaskFilter.CellCondition = checkBoxCell.Checked;
+            if (checkBoxCell.Checked)
+            {
+                taskPresenter.TaskFilter.Cell = this.textBoxCell.Text;
+            }
+            taskPresenter.TaskFilter.LikeQuery = checkBoxMohu.Checked;
+            if(checkBoxMohu.Checked)
+            {
+                taskPresenter.TaskFilter.LikeStr = this.textBoxMohu.Text;
+            }
+           
             taskPresenter.QueryTask();
         }
 

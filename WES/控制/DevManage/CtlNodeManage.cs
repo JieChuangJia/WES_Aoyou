@@ -103,7 +103,6 @@ namespace CtlManage
                 }
             }
         }
-        
         public void BuildNodePath()
         {
             foreach(CtlNodeBaseModel node in monitorNodeList)

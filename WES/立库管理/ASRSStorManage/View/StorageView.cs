@@ -763,7 +763,7 @@ namespace ASRSStorManage.View
 
         private void tsmi_StartPos_Click(object sender, EventArgs e)
         {
-            if (this.parentPNP.RoleID > 2)
+            if (this.parentPNP.RoleID > 1)
             {
                 MessageBox.Show("当前用户没有此功能的操作权限！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -784,7 +784,7 @@ namespace ASRSStorManage.View
 
         private void tsmi_EndPos_Click(object sender, EventArgs e)
         {
-            if (this.parentPNP.RoleID > 2)
+            if (this.parentPNP.RoleID > 1)
             {
                 MessageBox.Show("当前用户没有此功能的操作权限！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

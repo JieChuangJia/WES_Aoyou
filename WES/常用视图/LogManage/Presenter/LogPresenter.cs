@@ -69,9 +69,9 @@ namespace LogManage
           
             SumLogPage = 0;
             StringBuilder strWhere = new StringBuilder();
-            strWhere.AppendFormat("LogTime between '{0}' and '{1}' ",
-                logFilter.StartDate.ToString("yyyy-MM-dd HH:MM:00"),
-                logFilter.EndDate.ToString("yyyy-MM-dd HH:MM:00"));
+            strWhere.AppendFormat("LogTime >= '{0}' and LogTime<= '{1}' ",
+                logFilter.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                logFilter.EndDate.ToString("yyyy-MM-dd HH:mm:ss"));
             if (logFilter.LogsrcStationName != "所有")
             {
                 strWhere.AppendFormat("and LogSourceObject = '{0}'", logFilter.LogsrcStationName);

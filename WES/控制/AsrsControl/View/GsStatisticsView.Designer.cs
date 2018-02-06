@@ -70,7 +70,7 @@
             this.cb_HouseName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_HouseName.FormattingEnabled = true;
             this.cb_HouseName.Location = new System.Drawing.Point(502, 14);
-            this.cb_HouseName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cb_HouseName.Margin = new System.Windows.Forms.Padding(4);
             this.cb_HouseName.Name = "cb_HouseName";
             this.cb_HouseName.Size = new System.Drawing.Size(174, 32);
             this.cb_HouseName.TabIndex = 19;
@@ -97,22 +97,24 @@
             // 
             // dtp_end
             // 
-            this.dtp_end.CustomFormat = "yyyy-MM-dd HH:MM";
+            this.dtp_end.CustomFormat = "yyyy-MM-dd HH:mm";
             this.dtp_end.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_end.Location = new System.Drawing.Point(122, 57);
-            this.dtp_end.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_end.Margin = new System.Windows.Forms.Padding(4);
             this.dtp_end.Name = "dtp_end";
+            this.dtp_end.ShowUpDown = true;
             this.dtp_end.Size = new System.Drawing.Size(252, 35);
             this.dtp_end.TabIndex = 16;
             this.dtp_end.Value = new System.DateTime(2018, 1, 7, 20, 0, 0, 0);
             // 
             // dtp_start
             // 
-            this.dtp_start.CustomFormat = "yyyy-MM-dd HH:MM";
+            this.dtp_start.CustomFormat = "yyyy-MM-dd HH:mm";
             this.dtp_start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_start.Location = new System.Drawing.Point(122, 16);
-            this.dtp_start.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_start.Margin = new System.Windows.Forms.Padding(4);
             this.dtp_start.Name = "dtp_start";
+            this.dtp_start.ShowUpDown = true;
             this.dtp_start.Size = new System.Drawing.Size(252, 35);
             this.dtp_start.TabIndex = 15;
             this.dtp_start.Value = new System.DateTime(2018, 1, 7, 8, 0, 0, 0);
@@ -132,7 +134,7 @@
             this.cb_HouseArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_HouseArea.FormattingEnabled = true;
             this.cb_HouseArea.Location = new System.Drawing.Point(502, 54);
-            this.cb_HouseArea.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cb_HouseArea.Margin = new System.Windows.Forms.Padding(4);
             this.cb_HouseArea.Name = "cb_HouseArea";
             this.cb_HouseArea.Size = new System.Drawing.Size(174, 32);
             this.cb_HouseArea.TabIndex = 21;
@@ -151,7 +153,7 @@
             // 
             this.cb_GsName.FormattingEnabled = true;
             this.cb_GsName.Location = new System.Drawing.Point(826, 14);
-            this.cb_GsName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cb_GsName.Margin = new System.Windows.Forms.Padding(4);
             this.cb_GsName.Name = "cb_GsName";
             this.cb_GsName.Size = new System.Drawing.Size(174, 32);
             this.cb_GsName.TabIndex = 24;
@@ -159,7 +161,7 @@
             // bt_Query
             // 
             this.bt_Query.Location = new System.Drawing.Point(1020, 9);
-            this.bt_Query.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bt_Query.Margin = new System.Windows.Forms.Padding(4);
             this.bt_Query.Name = "bt_Query";
             this.bt_Query.Size = new System.Drawing.Size(198, 69);
             this.bt_Query.TabIndex = 25;
@@ -182,7 +184,7 @@
             this.cb_GsOperate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_GsOperate.FormattingEnabled = true;
             this.cb_GsOperate.Location = new System.Drawing.Point(826, 56);
-            this.cb_GsOperate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cb_GsOperate.Margin = new System.Windows.Forms.Padding(4);
             this.cb_GsOperate.Name = "cb_GsOperate";
             this.cb_GsOperate.Size = new System.Drawing.Size(174, 32);
             this.cb_GsOperate.TabIndex = 27;
@@ -219,7 +221,7 @@
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 124);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -234,9 +236,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.dgv_GsSta);
             this.groupBox1.Location = new System.Drawing.Point(4, 4);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(1356, 509);
             this.groupBox1.TabIndex = 32;
             this.groupBox1.TabStop = false;
@@ -251,7 +253,7 @@
             this.dgv_GsSta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_GsSta.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_GsSta.Location = new System.Drawing.Point(4, 25);
-            this.dgv_GsSta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_GsSta.Margin = new System.Windows.Forms.Padding(4);
             this.dgv_GsSta.Name = "dgv_GsSta";
             this.dgv_GsSta.RowTemplate.Height = 23;
             this.dgv_GsSta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -266,7 +268,7 @@
             this.tableLayoutPanel2.Controls.Add(this.lb_OperateGsType, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.lb_GsOperateNum, 1, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 521);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
@@ -304,7 +306,7 @@
             this.ClientSize = new System.Drawing.Size(1383, 687);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GsStatisticsView";
             this.Text = "出入库统计";
             this.tableLayoutPanel1.ResumeLayout(false);

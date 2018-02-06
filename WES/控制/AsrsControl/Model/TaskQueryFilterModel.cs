@@ -12,6 +12,10 @@ namespace AsrsControl
         public string NodeName { get; set; }
         public string TaskType { get; set; }
         public string TaskStatus { get; set; }
+        public bool CellCondition { get; set; }
+        public bool LikeQuery { get; set; }
+        public string Cell { get; set; }
+        public string LikeStr { get; set; }
         public TaskQueryFilterModel()
         {
             StartDate = System.DateTime.Now - (new TimeSpan(30, 0, 0, 0));

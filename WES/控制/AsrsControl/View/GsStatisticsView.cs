@@ -30,9 +30,8 @@ namespace AsrsControl
         {
             this.dgv_GsSta.DataSource = dt;
             this.dgv_GsSta.Columns["操作时间"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss";
-       
             this.dgv_GsSta.Columns["操作时间"].SortMode = DataGridViewColumnSortMode.Automatic;
-            //this.dgv_GsSta.Sort(this.dgv_GsSta.Columns["操作时间"], ListSortDirection.Descending);
+            this.dgv_GsSta.Sort(this.dgv_GsSta.Columns["操作时间"], ListSortDirection.Ascending);
         }
         public void ShowStatistics(string num)
         {

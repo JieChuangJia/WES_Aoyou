@@ -246,7 +246,7 @@ namespace AsrsControl
             int cellEmptCounts = 0;
             if(!asrsCtlModel.AsrsResManage.GetHouseAreaLeftGs(asrsCtlModel.HouseName, storeAreaZone.ToString(), ref cellEmptCounts, reStr))
             {
-                reStr = string.Format("查询{0}库房，{1}剩余货位失败,{1}", asrsCtlModel.HouseName, storeAreaZone.ToString(), reStr);
+                reStr = string.Format("查询{0}库房，{1}剩余货位失败,{2}", asrsCtlModel.HouseName, storeAreaZone.ToString(), reStr);
                 return -1;
             }
             weight += cellEmptCounts;

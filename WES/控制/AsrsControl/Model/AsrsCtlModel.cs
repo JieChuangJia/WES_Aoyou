@@ -29,6 +29,7 @@ namespace AsrsControl
         public delegate bool DlgtUpdateStepAfterCheckin(string palletID,AsrsCtlModel asrsCtl, int curStep);
         #region 数据
        // protected  Dictionary<int, string> mesStepLocalMap = new Dictionary<int, string>();
+        private short asrsCheckInFailed = 3; //入库申请失败应答
         public float defaultStoreTime = 10.0f;//默认存储时间(小时）
         private string houseName = "";
         private List<AsrsPortalModel> ports;
@@ -431,7 +432,7 @@ namespace AsrsControl
                    
                     if(className == "AsrsControl.AsrsStackerCtlModel")
                     {
-                        this.stacker = new AsrsStackerCtlModel();
+                        this.stacker = new AsrsStackerCtlModel(this);
                         stacker.HouseName = this.houseName;
                         if(!this.stacker.BuildCfg(el,ref reStr))
                         {
@@ -584,24 +585,20 @@ namespace AsrsControl
                 taskParam.InputCellGoods = storGoods.ToArray();
             }
             List<AsrsPortalModel> validPorts = GetOutPortsOfBindedtask(taskType);
-            if(validPorts != null && validPorts.Count()>0)
+            if(taskType != SysCfg.EnumAsrsTaskType.移库)
             {
-                taskParam.OutputPort = validPorts[0].PortSeq;
+                if (validPorts != null && validPorts.Count() > 0)
+                {
+                    taskParam.OutputPort = validPorts[0].PortSeq;
+                }
+                else
+                {
+                    logRecorder.AddDebugLog(nodeName, string.Format("生成出库任务{0}时发生错误，没有可用出口分配", taskType.ToString()));
+                    return false;
+                }
             }
-            else
-            {
-                logRecorder.AddDebugLog(nodeName, string.Format("生成出库任务{0}时发生错误，没有可用出口分配",taskType.ToString()));
-                return false;
-            }
-            //if (taskType == EnumAsrsTaskType.空筐出库)
-            //{
-            //    taskParam.OutputPort = 3;
-            //}
-            //else if (taskType == EnumAsrsTaskType.产品出库)
-            //{
-            //    taskParam.OutputPort = 2;//默认
-               
-            //}
+          
+            
 
             asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
             //申请完成后要锁定货位
@@ -914,17 +911,21 @@ namespace AsrsControl
                                 logStr += (pallet + ",");
                             }
                             logRecorder.AddDebugLog(nodeName, logStr);
+                            port.CurrentTaskDescribe = "入库申请成功,"+logStr;
                         }
                        
                     }
                     else
                     {
-                        if (port.Db1ValsToSnd[0] != 5)
+                       
+                        if (port.Db1ValsToSnd[0] != asrsCheckInFailed)
                         {
-                            string logStr = string.Format("托盘{0} 任务：{1}申请失败,因为：{2}", palletID,taskType.ToString(), reStr);
+                            string logStr = "";
+                            logStr = string.Format("托盘{0} 任务：{1}申请失败,因为：{2}", palletID,taskType.ToString(), reStr);
                             logRecorder.AddDebugLog(nodeName, logStr);
                         }
-                        port.Db1ValsToSnd[0] = 5;
+                        port.CurrentTaskDescribe = string.Format("托盘{0} 任务：{1}申请失败,因为：{2}", palletID, taskType.ToString(), reStr); 
+                        port.Db1ValsToSnd[0] = asrsCheckInFailed;
 
                     }
                 }
@@ -1005,104 +1006,104 @@ namespace AsrsControl
                
             }
         }
-        private void EmptyPalletOutputRequire(Dictionary<string, GSMemTempModel> asrsStatDic)
-        {
-            AsrsPortalModel port = null;
-            if(this.houseName== EnumStoreHouse.A1库房.ToString())
-            {
-                port = ports[1];
-            }
-            else if(this.houseName== EnumStoreHouse.C1库房.ToString() || this.houseName== EnumStoreHouse.C2库房.ToString())
-            {
-                port = ports[2];
-            }
-            else
-            {
-                return;
-            }
-            if(this.houseName== EnumStoreHouse.A1库房.ToString())
-            {
-                if (port.Db2Vals[0] == 1)//出口有框，禁止出库
-                {
-                    return;
-                }
-                if (port.Db1ValsToSnd[0] == 2) //出库请求已经应答
-                {
-                    return;
-                }
-               if(port.Db2Vals[1] != 2) //无空筐出库请求
-               {
-                   return;
-               }
-            }
-            else
-            {
-                if (port.Db2Vals[1] == 1)//出口有框，禁止出库
-                { 
-                    return;
-                }
-                if (port.Db1ValsToSnd[0] == 2)//出库请求已经应答
-                {
-                    return;
-                }
-                if (port.Db2Vals[0] != 3) //无空筐出库请求
-                {
-                    return;
-                }
+        //private void EmptyPalletOutputRequire(Dictionary<string, GSMemTempModel> asrsStatDic)
+        //{
+        //    AsrsPortalModel port = null;
+        //    if(this.houseName== EnumStoreHouse.A1库房.ToString())
+        //    {
+        //        port = ports[1];
+        //    }
+        //    else if(this.houseName== EnumStoreHouse.C1库房.ToString() || this.houseName== EnumStoreHouse.C2库房.ToString())
+        //    {
+        //        port = ports[2];
+        //    }
+        //    else
+        //    {
+        //        return;
+        //    }
+        //    if(this.houseName== EnumStoreHouse.A1库房.ToString())
+        //    {
+        //        if (port.Db2Vals[0] == 1)//出口有框，禁止出库
+        //        {
+        //            return;
+        //        }
+        //        if (port.Db1ValsToSnd[0] == 2) //出库请求已经应答
+        //        {
+        //            return;
+        //        }
+        //       if(port.Db2Vals[1] != 2) //无空筐出库请求
+        //       {
+        //           return;
+        //       }
+        //    }
+        //    else
+        //    {
+        //        if (port.Db2Vals[1] == 1)//出口有框，禁止出库
+        //        { 
+        //            return;
+        //        }
+        //        if (port.Db1ValsToSnd[0] == 2)//出库请求已经应答
+        //        {
+        //            return;
+        //        }
+        //        if (port.Db2Vals[0] != 3) //无空筐出库请求
+        //        {
+        //            return;
+        //        }
                
-            }
-            bool exitFlag = false;
-            int r = 1, c = 1, L = 1;
-            for (r = 1; r < asrsRow + 1; r++)
-            {
-                if (exitFlag)
-                {
-                    break;
-                }
-                for (c = 1; c < asrsCol + 1; c++)
-                {
-                    if (exitFlag)
-                    {
-                        break;
-                    }
-                    for (L = 1; L < asrsLayer + 1; L++)
-                    {
-                        CellCoordModel cell = new CellCoordModel(r, c, L);
-                        string strKey = string.Format("{0}:{1}-{2}-{3}", houseName, r, c, L);
-                        GSMemTempModel cellStat = null;
-                        if (!asrsStatDic.Keys.Contains(strKey))
-                        {
-                            continue;
-                        }
-                        cellStat = asrsStatDic[strKey];
+        //    }
+        //    bool exitFlag = false;
+        //    int r = 1, c = 1, L = 1;
+        //    for (r = 1; r < asrsRow + 1; r++)
+        //    {
+        //        if (exitFlag)
+        //        {
+        //            break;
+        //        }
+        //        for (c = 1; c < asrsCol + 1; c++)
+        //        {
+        //            if (exitFlag)
+        //            {
+        //                break;
+        //            }
+        //            for (L = 1; L < asrsLayer + 1; L++)
+        //            {
+        //                CellCoordModel cell = new CellCoordModel(r, c, L);
+        //                string strKey = string.Format("{0}:{1}-{2}-{3}", houseName, r, c, L);
+        //                GSMemTempModel cellStat = null;
+        //                if (!asrsStatDic.Keys.Contains(strKey))
+        //                {
+        //                    continue;
+        //                }
+        //                cellStat = asrsStatDic[strKey];
 
-                        if (cellStat.GSStatus != EnumCellStatus.空料框.ToString())
-                        {
-                            continue;
-                        }
+        //                if (cellStat.GSStatus != EnumCellStatus.空料框.ToString())
+        //                {
+        //                    continue;
+        //                }
 
-                        if (cellStat.GSTaskStatus != EnumGSTaskStatus.锁定.ToString() && cellStat.GSEnabled)
-                        {
-                            if (GenerateOutputTask(cell, null, SysCfg.EnumAsrsTaskType.空筐出库, true))
-                            {
-                                exitFlag = true;
-                                port.Db1ValsToSnd[0] = 2;
-                                string reStr = "";
-                                if (!port.NodeCmdCommit(true, ref reStr))
-                                {
-                                    logRecorder.AddDebugLog(port.NodeName, "发送命令失败" + reStr);
-                                }
-                                else
-                                {
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        //                if (cellStat.GSTaskStatus != EnumGSTaskStatus.锁定.ToString() && cellStat.GSEnabled)
+        //                {
+        //                    if (GenerateOutputTask(cell, null, SysCfg.EnumAsrsTaskType.空筐出库, true))
+        //                    {
+        //                        exitFlag = true;
+        //                        port.Db1ValsToSnd[0] = 2;
+        //                        string reStr = "";
+        //                        if (!port.NodeCmdCommit(true, ref reStr))
+        //                        {
+        //                            logRecorder.AddDebugLog(port.NodeName, "发送命令失败" + reStr);
+        //                        }
+        //                        else
+        //                        {
+        //                            return;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
            
-        }
+        //}
         private void CellStatusMonitor()
         {
             if(!this.nodeEnabled)
@@ -1267,6 +1268,7 @@ namespace AsrsControl
                         {
                             port.Db1ValsToSnd[0] = 1;
                             this.asrsCheckInRow = 0;
+                            this.currentTaskDescribe = "";
                         }
                     }
                     Array.Copy(port.Db2Vals, port.Db2ValsLast, port.Db2Vals.Count());
@@ -1689,31 +1691,32 @@ namespace AsrsControl
                             #region MES处理
                             if (taskParamModel.InputCellGoods != null && taskParamModel.InputCellGoods.Count() > 0)
                             {
-                                string palletID = taskParamModel.InputCellGoods[0];
-                                batchName = productOnlineBll.GetBatchNameofPallet(palletID);
-                                
-                                if(!MesAcc.GetStep(palletID,out curStep,ref reStr))
+                                string pallet = taskParamModel.InputCellGoods[0];
+                                batchName = productOnlineBll.GetBatchNameofPallet(pallet);
+
+                                if (!MesAcc.GetStep(pallet, out curStep, ref reStr))
                                 {
                                     return false;
                                 }
-                                if(dlgtUpdateStep != null)
+                                foreach(string palletID in taskParamModel.InputCellGoods)
                                 {
-                                    dlgtUpdateStep(palletID,this, curStep);
-                                }
-                                else
-                                {
-                                    stepUpdate = SysCfg.SysCfgModel.asrsStepCfg.GetNextStep(curStep);
-                                    if (!MesAcc.UpdateStep(stepUpdate, palletID, ref reStr))
+                                   
+                                    if (dlgtUpdateStep != null)
                                     {
-                                        return false;
+                                        dlgtUpdateStep(palletID, this, curStep);
+                                    }
+                                    else
+                                    {
+                                        stepUpdate = SysCfg.SysCfgModel.asrsStepCfg.GetNextStep(curStep);
+                                        if (!MesAcc.UpdateStep(stepUpdate, palletID, ref reStr))
+                                        {
+                                            return false;
+                                        }
                                     }
                                 }
-
-                               
+                               // string palletID = taskParamModel.InputCellGoods[0];
                             }
                             #endregion
-
- 
                             this.asrsResManage.AddStack(this.houseName, taskParamModel.CellPos1, batchName, taskParamModel.InputCellGoods, ref reStr);
 
                             //3 更新出入库操作状态

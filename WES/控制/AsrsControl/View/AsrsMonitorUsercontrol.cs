@@ -74,7 +74,7 @@ namespace AsrsControl.View
                 this.label31.Text = status[0];
                 this.label32.Text = status[1];
                 this.label33.Text = status[2];
-
+                this.Refresh();
 
             }
         }

@@ -47,25 +47,25 @@
             this.btnExportCurpage = new System.Windows.Forms.ToolStripButton();
             this.btnExportAll = new System.Windows.Forms.ToolStripButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBoxNode = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBoxLevel = new System.Windows.Forms.ComboBox();
-            this.cb_LikeQuery = new System.Windows.Forms.CheckBox();
-            this.textBoxLikeContent = new System.Windows.Forms.TextBox();
             this.buttonLogRefresh = new System.Windows.Forms.Button();
+            this.cb_LikeQuery = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxLikeContent = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBoxLevel = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBoxNode = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -77,7 +77,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 102F));
@@ -92,7 +92,7 @@
             this.panel1.Controls.Add(this.dataGridView1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(4, 106);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1719, 516);
             this.panel1.TabIndex = 0;
@@ -243,7 +243,7 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView1.Location = new System.Drawing.Point(0, 4);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1723, 466);
@@ -270,85 +270,16 @@
             this.panel2.Size = new System.Drawing.Size(1721, 96);
             this.panel2.TabIndex = 1;
             // 
-            // label1
+            // buttonLogRefresh
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 19);
-            this.label1.Margin = new System.Windows.Forms.Padding(4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 24);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "起始时间：";
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:MM";
-            this.dateTimePicker1.Location = new System.Drawing.Point(146, 10);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(209, 35);
-            this.dateTimePicker1.TabIndex = 0;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 62);
-            this.label2.Margin = new System.Windows.Forms.Padding(15, 4, 4, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(130, 24);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "结束时间：";
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:MM";
-            this.dateTimePicker2.Location = new System.Drawing.Point(146, 53);
-            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(4);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(209, 35);
-            this.dateTimePicker2.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(396, 18);
-            this.label3.Margin = new System.Windows.Forms.Padding(15, 4, 4, 4);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(130, 24);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "日志来源：";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // comboBoxNode
-            // 
-            this.comboBoxNode.FormattingEnabled = true;
-            this.comboBoxNode.Location = new System.Drawing.Point(538, 10);
-            this.comboBoxNode.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxNode.Name = "comboBoxNode";
-            this.comboBoxNode.Size = new System.Drawing.Size(349, 32);
-            this.comboBoxNode.TabIndex = 1;
-            this.comboBoxNode.SelectedIndexChanged += new System.EventHandler(this.comboBoxNode_SelectedIndexChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(906, 13);
-            this.label4.Margin = new System.Windows.Forms.Padding(15, 4, 4, 4);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 24);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "类别：";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // comboBoxLevel
-            // 
-            this.comboBoxLevel.FormattingEnabled = true;
-            this.comboBoxLevel.Location = new System.Drawing.Point(996, 5);
-            this.comboBoxLevel.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxLevel.Name = "comboBoxLevel";
-            this.comboBoxLevel.Size = new System.Drawing.Size(152, 32);
-            this.comboBoxLevel.TabIndex = 1;
-            this.comboBoxLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxLevel_SelectedIndexChanged);
+            this.buttonLogRefresh.Location = new System.Drawing.Point(1172, 5);
+            this.buttonLogRefresh.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonLogRefresh.Name = "buttonLogRefresh";
+            this.buttonLogRefresh.Size = new System.Drawing.Size(220, 74);
+            this.buttonLogRefresh.TabIndex = 3;
+            this.buttonLogRefresh.Text = " 查  询";
+            this.buttonLogRefresh.UseVisualStyleBackColor = true;
+            this.buttonLogRefresh.Click += new System.EventHandler(this.buttonLogRefresh_Click);
             // 
             // cb_LikeQuery
             // 
@@ -361,6 +292,17 @@
             this.cb_LikeQuery.Text = "模糊查询";
             this.cb_LikeQuery.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(906, 13);
+            this.label4.Margin = new System.Windows.Forms.Padding(15, 4, 4, 4);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(82, 24);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "类别：";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
             // textBoxLikeContent
             // 
             this.textBoxLikeContent.Location = new System.Drawing.Point(538, 49);
@@ -369,16 +311,79 @@
             this.textBoxLikeContent.Size = new System.Drawing.Size(613, 35);
             this.textBoxLikeContent.TabIndex = 2;
             // 
-            // buttonLogRefresh
+            // label3
             // 
-            this.buttonLogRefresh.Location = new System.Drawing.Point(1172, 5);
-            this.buttonLogRefresh.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonLogRefresh.Name = "buttonLogRefresh";
-            this.buttonLogRefresh.Size = new System.Drawing.Size(220, 74);
-            this.buttonLogRefresh.TabIndex = 3;
-            this.buttonLogRefresh.Text = " 查  询";
-            this.buttonLogRefresh.UseVisualStyleBackColor = true;
-            this.buttonLogRefresh.Click += new System.EventHandler(this.buttonLogRefresh_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(396, 18);
+            this.label3.Margin = new System.Windows.Forms.Padding(15, 4, 4, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(130, 24);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "日志来源：";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // comboBoxLevel
+            // 
+            this.comboBoxLevel.FormattingEnabled = true;
+            this.comboBoxLevel.Location = new System.Drawing.Point(996, 5);
+            this.comboBoxLevel.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxLevel.Name = "comboBoxLevel";
+            this.comboBoxLevel.Size = new System.Drawing.Size(152, 32);
+            this.comboBoxLevel.TabIndex = 1;
+            this.comboBoxLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxLevel_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 62);
+            this.label2.Margin = new System.Windows.Forms.Padding(15, 4, 4, 4);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(130, 24);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "结束时间：";
+            // 
+            // comboBoxNode
+            // 
+            this.comboBoxNode.FormattingEnabled = true;
+            this.comboBoxNode.Location = new System.Drawing.Point(538, 10);
+            this.comboBoxNode.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxNode.Name = "comboBoxNode";
+            this.comboBoxNode.Size = new System.Drawing.Size(349, 32);
+            this.comboBoxNode.TabIndex = 1;
+            this.comboBoxNode.SelectedIndexChanged += new System.EventHandler(this.comboBoxNode_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 19);
+            this.label1.Margin = new System.Windows.Forms.Padding(4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(130, 24);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "起始时间：";
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.CustomFormat = "yyyy-MM-dd HH:mm";
+            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker2.Location = new System.Drawing.Point(146, 53);
+            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(4);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.ShowUpDown = true;
+            this.dateTimePicker2.Size = new System.Drawing.Size(231, 35);
+            this.dateTimePicker2.TabIndex = 0;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm";
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.Location = new System.Drawing.Point(146, 10);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.ShowUpDown = true;
+            this.dateTimePicker1.Size = new System.Drawing.Size(231, 35);
+            this.dateTimePicker1.TabIndex = 0;
             // 
             // LogView
             // 
@@ -387,7 +392,7 @@
             this.ClientSize = new System.Drawing.Size(1727, 626);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "LogView";
             this.Text = "LogMainForm";
             this.Load += new System.EventHandler(this.LogView_Load);
@@ -396,9 +401,9 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -30,6 +30,7 @@ namespace AsrsControl
         protected AsrsTaskParamModel taskParamModel = null;
         protected IAsrsManageToCtl asrsResManage = null; //立库管理层接口对象
         protected IDictionary<int, string> errcodeMap = null;
+        private AsrsCtlModel asrsCtlModel = null;
         /// <summary>
         /// 管理层任务下发数据表的业务接口
         /// </summary>
@@ -41,10 +42,12 @@ namespace AsrsControl
       
         public string HouseName { get { return houseName; } set { houseName = value; } }
         public IAsrsManageToCtl AsrsResManage { get { return asrsResManage; } set { asrsResManage = value; } }
+        public AsrsCtlModel AsrsCtl { get { return asrsCtlModel; } }
         #endregion
         #region 公有
-        public AsrsStackerCtlModel()
+        public AsrsStackerCtlModel(AsrsCtlModel asrsCtl)
         {
+            this.asrsCtlModel = asrsCtl;
             this.currentStat = new CtlNodeStatus(nodeName);
             this.currentStat.Status = EnumNodeStatus.设备空闲;
             this.currentStat.StatDescribe = "空闲状态";
@@ -380,6 +383,27 @@ namespace AsrsControl
             if(db2Vals[1] == 4)
             {
                 reStr = "堆垛机处于非联机状态";
+                return false;
+            }
+            int step = 0;
+            
+            if (!MesAcc.GetStep(palletID, out step, ref reStr))
+            {
+                reStr = "获取工步失败:" + reStr;
+                return false;
+            }
+            AsrsModel.EnumLogicArea storeAreaZone = AsrsModel.EnumLogicArea.注液高温区;
+            storeAreaZone = this.asrsCtlModel.GetAreaToCheckin(step);//(AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); //AsrsModel.EnumLogicArea.注液高温区; //此处需要根据步号判断
+
+            int cellEmptCounts = 0;
+            if (!asrsCtlModel.AsrsResManage.GetHouseAreaLeftGs(asrsCtlModel.HouseName, storeAreaZone.ToString(), ref cellEmptCounts, reStr))
+            {
+                reStr = string.Format("查询{0}库房，{1}剩余货位失败,{1}", asrsCtlModel.HouseName, storeAreaZone.ToString(), reStr);
+                return false;
+            }
+            if(cellEmptCounts<=0)
+            {
+                reStr = "可用货位为0";
                 return false;
             }
             return true;

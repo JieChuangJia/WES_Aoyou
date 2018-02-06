@@ -49,8 +49,10 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(401, 163);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(627, 244);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -61,9 +63,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label33.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label33.Location = new System.Drawing.Point(6, 114);
+            this.label33.Location = new System.Drawing.Point(9, 171);
+            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(389, 38);
+            this.label33.Size = new System.Drawing.Size(607, 56);
             this.label33.TabIndex = 43;
             this.label33.Text = "状态：";
             // 
@@ -73,9 +76,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label32.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label32.Location = new System.Drawing.Point(151, 17);
+            this.label32.Location = new System.Drawing.Point(226, 26);
+            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(244, 38);
+            this.label32.Size = new System.Drawing.Size(390, 57);
             this.label32.TabIndex = 44;
             this.label32.Text = "当前任务：";
             // 
@@ -87,9 +91,10 @@
             this.label31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label31.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label31.ForeColor = System.Drawing.SystemColors.Info;
-            this.label31.Location = new System.Drawing.Point(6, 67);
+            this.label31.Location = new System.Drawing.Point(9, 100);
+            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(389, 38);
+            this.label31.Size = new System.Drawing.Size(607, 56);
             this.label31.TabIndex = 45;
             this.label31.Text = "故障码：";
             // 
@@ -101,9 +106,10 @@
             this.btnWarnReset.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnWarnReset.Image = ((System.Drawing.Image)(resources.GetObject("btnWarnReset.Image")));
             this.btnWarnReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnWarnReset.Location = new System.Drawing.Point(6, 13);
+            this.btnWarnReset.Location = new System.Drawing.Point(9, 20);
+            this.btnWarnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnWarnReset.Name = "btnWarnReset";
-            this.btnWarnReset.Size = new System.Drawing.Size(128, 50);
+            this.btnWarnReset.Size = new System.Drawing.Size(192, 75);
             this.btnWarnReset.TabIndex = 42;
             this.btnWarnReset.Text = "报警复位";
             this.btnWarnReset.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -116,12 +122,14 @@
             // 
             // AsrsMonitorUsercontrol
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AsrsMonitorUsercontrol";
-            this.Size = new System.Drawing.Size(401, 163);
+            this.Size = new System.Drawing.Size(627, 244);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 

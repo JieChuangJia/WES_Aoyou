@@ -41,9 +41,9 @@ namespace AsrsControl
         public void QueryTask()
         {
             StringBuilder strWhere = new StringBuilder();
-            strWhere.AppendFormat("CreateTime between '{0}' and '{1}' ",
-               taskFilter.StartDate.ToString("yyyy-MM-dd 0:00:00"),
-               taskFilter.EndDate.ToString("yyyy-MM-dd 0:00:00"));
+            strWhere.AppendFormat("CreateTime >= '{0}' and CreateTime<='{1}' ",
+               taskFilter.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+               taskFilter.EndDate.ToString("yyyy-MM-dd HH:mm:ss"));
             if(taskFilter.NodeName != "所有")
             {
                 strWhere.AppendFormat(" and DeviceID='{0}'", nodeNameMapID[taskFilter.NodeName]);
@@ -56,6 +56,14 @@ namespace AsrsControl
             if(taskFilter.TaskStatus != "所有")
             {
                 strWhere.AppendFormat(" and TaskStatus='{0}'", taskFilter.TaskStatus);
+            }
+            if(taskFilter.CellCondition)
+            {
+                strWhere.AppendFormat(" and tag2 Like '%{0}%'", taskFilter.Cell);
+            }
+            if(taskFilter.LikeQuery)
+            {
+                strWhere.AppendFormat(" and TaskParam Like '%{0}%' ", taskFilter.LikeStr);
             }
             strWhere.AppendFormat(" order by CreateTime asc");
             DataSet ds = taskBll.GetList(strWhere.ToString());

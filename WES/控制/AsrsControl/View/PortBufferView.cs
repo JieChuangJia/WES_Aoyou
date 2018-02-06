@@ -58,7 +58,21 @@ namespace AsrsControl
                 this.comboBoxPortin.Items.AddRange(portNameMap.Keys.ToArray());
                 this.comboBoxPortin.SelectedIndex = 0;
             }
-            
+            ContextMenuStrip listboxMenu = new ContextMenuStrip();
+            ToolStripMenuItem rightMenu = new ToolStripMenuItem("复制");
+            rightMenu.Click += new EventHandler(Copy_Click);
+            listboxMenu.Items.AddRange(new ToolStripItem[] { rightMenu });
+            this.listBoxPallet.ContextMenuStrip = listboxMenu;
+        }
+        private void Copy_Click(object sender, EventArgs e)
+        {
+            string CopyText = "";
+            if(this.listBoxPallet.SelectedItems.Count>0)
+            {
+                CopyText = this.listBoxPallet.SelectedItems[0].ToString();
+            }
+           
+            Clipboard.SetText(CopyText);
         }
         private void btnRefresh_Click(object sender, EventArgs e)
         {

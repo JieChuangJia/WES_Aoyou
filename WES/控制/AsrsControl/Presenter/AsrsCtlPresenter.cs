@@ -397,8 +397,8 @@ namespace AsrsControl
                 return false;
             }
             SysCfg.EnumAsrsTaskType taskType = SysCfg.EnumAsrsTaskType.移库;
-            asrsModel.GenerateOutputTask(startCell,endCell,taskType, false);
-            return true;
+            return asrsModel.GenerateOutputTask(startCell,endCell,taskType, false);
+            //return true;
         }
         #endregion
         #region IAsrsMonitor接口实现
@@ -635,20 +635,20 @@ namespace AsrsControl
             //batModbll.Update(batMod);
             //return true;
         }
-        private bool CellValidStatNotify(int row, int col, int layer, bool cellValid, string reason, ref string reStr)
-        {
+        //private bool CellValidStatNotify(int row, int col, int layer, bool cellValid, string reason, ref string reStr)
+        //{
             
-            CellCoordModel cell = new CellCoordModel(row, col, layer);
-            EnumGSEnabledStatus enableStatus = EnumGSEnabledStatus.禁用;
-            if(cellValid)
-            {
-                enableStatus = EnumGSEnabledStatus.启用;
-            }
-            //zwx,此处需要修改
-            return asrsResourceManage.UpdateGsEnabledStatus(EnumStoreHouse.B1库房.ToString(), cell, enableStatus, ref reStr);
+        //    CellCoordModel cell = new CellCoordModel(row, col, layer);
+        //    EnumGSEnabledStatus enableStatus = EnumGSEnabledStatus.禁用;
+        //    if(cellValid)
+        //    {
+        //        enableStatus = EnumGSEnabledStatus.启用;
+        //    }
+        //    //zwx,此处需要修改
+        //    return asrsResourceManage.UpdateGsEnabledStatus(EnumStoreHouse.B1库房.ToString(), cell, enableStatus, ref reStr);
             
             
-        }
+        //}
         private  bool CellEmerDangerNotify(int row, int col, int layer, string reason, ref string reStr)
         {
            logRecorder.AddDebugLog(this.objectName,string.Format("B库房货位：{0}-{1}-{2}充电故障，需要紧急出库",row,col,layer));

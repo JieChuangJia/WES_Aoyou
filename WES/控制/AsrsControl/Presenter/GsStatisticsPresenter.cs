@@ -112,11 +112,11 @@ namespace AsrsControl
 
             if (gsOperateType ==WAITOUTPRODUCT)
             {
-                sqlWhere += "TaskStatus = '待执行' and CreateTime >= '" + startTime + "' and CreateTime <='" + endTime + "' and  Remark ='产品出库' ";
+                sqlWhere = "TaskStatus = '待执行' and CreateTime >= '" + startTime + "' and CreateTime <='" + endTime + "' and  Remark ='产品出库' ";
             }
             else
             {
-                sqlWhere += "TaskStatus = '已完成' and FinishTime >= '" + startTime + "' and FinishTime <='" + endTime + "'";
+                sqlWhere = "TaskStatus = '已完成' and FinishTime >= '" + startTime + "' and FinishTime <='" + endTime + "'";
             }
            
             if (houseName != "所有")
@@ -133,14 +133,7 @@ namespace AsrsControl
                 sqlWhere += "and Remark = '" + gsOperateType + "'";
             }
 
-            if (gsOperateType == WAITOUTPRODUCT)
-            {
-                sqlWhere += "order by CreateTime desc";
-            }
-            else
-            {
-                sqlWhere += "order by FinishTime desc";
-            }
+
             List<ControlTaskModel> gsOperList = bllContorl.GetModelList(sqlWhere);
             return gsOperList;
         }

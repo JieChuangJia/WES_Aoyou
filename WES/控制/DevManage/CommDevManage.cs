@@ -106,12 +106,14 @@ namespace CtlManage
                     if(SysCfg.SysCfgModel.SimMode)
                     {
                         BarcodeRWSim barSim = new BarcodeRWSim(id);
+                        barSim.Role = barcodeXE.Attribute("role").Value.ToString();
                         barcodeRWList.Add(barSim);
                     }
                     else
                     {
                         BarcodeRWHonevor barcodeReader = new BarcodeRWHonevor(id);
                         barcodeReader.TriggerMode = EnumTriggerMode.程序命令触发;
+                        barcodeReader.Role = barcodeXE.Attribute("role").Value.ToString();
                         //System.IO.Ports.SerialPort comPort = new System.IO.Ports.SerialPort(commPort);
                         //comPort.BaudRate = 115200;
                         //comPort.DataBits = 8;
@@ -172,12 +174,12 @@ namespace CtlManage
                 string reStr = "";
                 if (!this.barcodeRWList[i].StartMonitor(ref reStr))
                 {
-                    logStr = string.Format("{0} 号条码枪端口打开失败,{1}", this.barcodeRWList[i].ReaderID, reStr);
+                    logStr = string.Format("{0} 号条码枪端口打开失败,{1}", this.barcodeRWList[i].Role, reStr);
                     Console.WriteLine(logStr);
                 }
                 else
                 {
-                    logStr = string.Format("{0} 号条码枪端口打开成功！", this.barcodeRWList[i].ReaderID);
+                    logStr = string.Format("{0} 号条码枪端口打开成功！", this.barcodeRWList[i].Role);
                     Console.WriteLine(logStr);
                 }
                 WelcomeAddStartinfo(logStr);
