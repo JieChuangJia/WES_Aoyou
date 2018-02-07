@@ -48,7 +48,11 @@ namespace ASRSStorManage.View
                this.tb_EndPos.Text = EndGsHouseName + "," + endGsPos.Row + "排" + endGsPos.Col + "列" + endGsPos.Layer + "层";
             }
         }
-
+        public void ClearMoveParam()
+        {
+            this.tb_EndPos.Text = "";
+            this.tb_StartPos.Text = "";
+        }
         public MoveHouseManulView(Presenter.StoragePresenter pres)
         {
             InitializeComponent();
@@ -70,6 +74,12 @@ namespace ASRSStorManage.View
             if (this.tb_EndPos.Text.Trim() == "")
             {
                 MessageBox.Show("终止位置不能为空！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (this.StartGsHouseName == this.EndGsHouseName && this.startGsPos.Row == this.endGsPos.Row
+                && this.startGsPos.Col == this.endGsPos.Col && this.startGsPos.Layer == this.endGsPos.Layer)
+            {
+                MessageBox.Show("同一个位置不需要移库！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             this.presenter.MoveGsManual(this.StartGsHouseName, this.startGsPos, this.EndGsHouseName, this.endGsPos);

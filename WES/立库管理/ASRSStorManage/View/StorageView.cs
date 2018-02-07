@@ -58,7 +58,7 @@ namespace ASRSStorManage.View
                 this.splitContainer1.Panel2Collapsed = true;
                 this.手动移库ToolStripMenuItem.Visible = false;
             }
-            splitContainer1.SplitterDistance = splitContainer1.Width - splitContainer1.SplitterWidth - 360;//移库控件宽度
+            splitContainer1.SplitterDistance = splitContainer1.Width - splitContainer1.SplitterWidth - 320;//移库控件宽度
         }
         public void SetMenuLimit()
         {
@@ -211,8 +211,14 @@ namespace ASRSStorManage.View
         {
             string houseName = this.tscb_StoreHouseName.Text;
             this.presenter.ChangeHouse(houseName);
+            if(this.innerForm!= null)//切换库房时清除移库参数
+            {
+                this.innerForm.ClearMoveParam();
+            }
+       
+
         }
-  
+    
         private void storageControl1_PositionsClick(object sender, StorageControl.ClickPositionsEventArgs e)
         {
             this.storageControl1.selectPositions = e.Positions;
@@ -778,6 +784,12 @@ namespace ASRSStorManage.View
   
             this.innerForm.StartGsHouseName = this.tscb_StoreHouseName.Text;
 
+            if (CheckMoveHouse() == false)
+            {
+                MessageBox.Show("移库只能在同一个库房内操作！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
             this.innerForm.StartGsPos = new CellCoordModel(int.Parse(tscb_Rowth.Text), pos.Columnth, pos.Layer); ;
           
         }
@@ -799,12 +811,31 @@ namespace ASRSStorManage.View
             {
                 return;
             }
+           
     
             this.innerForm.EndGsHouseName = this.tscb_StoreHouseName.Text;
+
+           if(CheckMoveHouse() == false)
+           {
+               MessageBox.Show("移库只能在同一个库房内操作！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              
+               return;
+           }
             this.innerForm.EndGsPos = new CellCoordModel(int.Parse(tscb_Rowth.Text), pos.Columnth, pos.Layer); 
           
         }
-
+        private bool CheckMoveHouse()
+        {
+            if (this.innerForm.StartGsHouseName !=null && this.innerForm.EndGsHouseName != null)
+            {
+                if (this.innerForm.StartGsHouseName != this.innerForm.EndGsHouseName)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
         private void bt_InnerExpend_Click(object sender, EventArgs e)
         {
             this.splitContainer2.SplitterDistance = this.splitContainer1.Height;
