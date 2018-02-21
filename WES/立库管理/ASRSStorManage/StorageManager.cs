@@ -248,7 +248,8 @@ namespace ASRSStorManage
         /// <param name="cell">货位位置</param>
         /// <param name="logicArea">库区名称</param>
         /// <returns>执行状态</returns>
-        public bool GetLogicAreaName(string houseName, CellCoordModel cell, ref EnumLogicArea logicArea)
+        //public bool GetLogicAreaName(string houseName, CellCoordModel cell, ref EnumLogicArea logicArea)
+        public bool GetLogicAreaName(string houseName, CellCoordModel cell, ref string logicArea)
         {
             try
             {
@@ -271,7 +272,7 @@ namespace ASRSStorManage
                 {
                     return false;
                 }
-                logicArea = (EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), viewGsm.StoreHouseAreaName);
+                logicArea = viewGsm.StoreHouseAreaName;// (EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), viewGsm.StoreHouseAreaName);
                 return true;
             }
             catch

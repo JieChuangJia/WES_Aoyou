@@ -69,9 +69,10 @@ namespace AsrsControl
 
             this.cb_HouseArea.Items.Clear();
             this.cb_HouseArea.Items.Add("所有");
-            for (int i = 0; i < Enum.GetNames(typeof(EnumLogicArea)).Count(); i++)
+           // for (int i = 0; i < Enum.GetNames(typeof(EnumLogicArea)).Count(); i++)
+            for (int i = 0; i < SysCfg.SysCfgModel.AsrsAreaList.Count(); i++)
             {
-                string houseName = Enum.GetNames(typeof(EnumLogicArea))[i];
+                string houseName = SysCfg.SysCfgModel.AsrsAreaList[i];//Enum.GetNames(typeof(EnumLogicArea))[i];
                 this.cb_HouseArea.Items.Add(houseName);
             }
             if (this.cb_HouseArea.Items.Count > 0)
@@ -89,9 +90,10 @@ namespace AsrsControl
         {
             this.cb_HouseName.Items.Clear();
             this.cb_HouseName.Items.Add("所有");
-            for (int i = 0; i < Enum.GetNames(typeof(EnumStoreHouse)).Count(); i++)
+            //for (int i = 0; i < Enum.GetNames(typeof(EnumStoreHouse)).Count(); i++)
+            for (int i = 0; i <SysCfg.SysCfgModel.AsrsHouseList.Count(); i++)
             {
-                string houseName = Enum.GetNames(typeof(EnumStoreHouse))[i];
+                string houseName = SysCfg.SysCfgModel.AsrsHouseList[i];
                 this.cb_HouseName.Items.Add(houseName);
             }
             if (this.cb_HouseName.Items.Count > 0)

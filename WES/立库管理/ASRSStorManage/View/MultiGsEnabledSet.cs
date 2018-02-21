@@ -84,9 +84,10 @@ namespace ASRSStorManage.View
         private void IniHouseAreaList()
         {
             this.cb_HouseArea.Items.Clear();
-            for(int i=0;i<Enum.GetNames(typeof(EnumLogicArea)).Length;i++)
+           // for(int i=0;i<Enum.GetNames(typeof(EnumLogicArea)).Length;i++)
+            for (int i = 0; i < SysCfg.SysCfgModel.AsrsAreaList.Count();i++ )
             {
-                string areaName = Enum.GetNames(typeof(EnumLogicArea))[i];
+                string areaName = SysCfg.SysCfgModel.AsrsAreaList[i];//Enum.GetNames(typeof(EnumLogicArea))[i];
                 this.cb_HouseArea.Items.Add(areaName);
             }
             if(this.cb_HouseArea.Items.Count>0)

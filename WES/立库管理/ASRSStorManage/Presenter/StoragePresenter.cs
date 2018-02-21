@@ -775,6 +775,7 @@ namespace ASRSStorManage.Presenter
                     //    continue;
                     //}
                     this.areaColor[long.Parse(houseAreaID)] =Color.FromArgb(int.Parse( rgbArr[0]),int.Parse(rgbArr[1]),int.Parse(rgbArr[2]));
+                  
                 }
                 ShowAreaColor();
                

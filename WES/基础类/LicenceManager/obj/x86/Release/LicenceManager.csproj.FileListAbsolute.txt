@@ -11,3 +11,4 @@ E:\workspace\项目\之信遨优项目\代码\WES\基础类\LicenceManager\obj\x
 E:\workspace\项目\之信遨优项目\代码\WES\基础类\LicenceManager\obj\x86\Release\LicenceManager.csproj.GenerateResource.Cache
 E:\workspace\项目\之信遨优项目\代码\WES\基础类\LicenceManager\obj\x86\Release\LicenceManager.dll
 E:\workspace\项目\之信遨优项目\代码\WES\基础类\LicenceManager\obj\x86\Release\LicenceManager.pdb
+E:\workspace\项目\之信遨优项目\代码\WES\基础类\LicenceManager\obj\x86\Release\LicenceManager.csprojResolveAssemblyReference.cache

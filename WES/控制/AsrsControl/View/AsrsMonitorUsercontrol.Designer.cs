@@ -52,7 +52,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(627, 244);
+            this.groupBox1.Size = new System.Drawing.Size(627, 206);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -61,12 +61,11 @@
             // 
             this.label33.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label33.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label33.Location = new System.Drawing.Point(9, 171);
+            this.label33.Location = new System.Drawing.Point(9, 147);
             this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(607, 56);
+            this.label33.Size = new System.Drawing.Size(607, 47);
             this.label33.TabIndex = 43;
             this.label33.Text = "状态：";
             // 
@@ -74,7 +73,6 @@
             // 
             this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label32.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label32.Location = new System.Drawing.Point(226, 26);
             this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -88,13 +86,12 @@
             this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label31.BackColor = System.Drawing.Color.Transparent;
-            this.label31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label31.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label31.ForeColor = System.Drawing.SystemColors.Info;
             this.label31.Location = new System.Drawing.Point(9, 100);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(607, 56);
+            this.label31.Size = new System.Drawing.Size(607, 42);
             this.label31.TabIndex = 45;
             this.label31.Text = "故障码：";
             // 
@@ -109,7 +106,7 @@
             this.btnWarnReset.Location = new System.Drawing.Point(9, 20);
             this.btnWarnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnWarnReset.Name = "btnWarnReset";
-            this.btnWarnReset.Size = new System.Drawing.Size(192, 75);
+            this.btnWarnReset.Size = new System.Drawing.Size(192, 63);
             this.btnWarnReset.TabIndex = 42;
             this.btnWarnReset.Text = "报警复位";
             this.btnWarnReset.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -129,7 +126,7 @@
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AsrsMonitorUsercontrol";
-            this.Size = new System.Drawing.Size(627, 244);
+            this.Size = new System.Drawing.Size(627, 206);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 

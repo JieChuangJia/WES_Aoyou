@@ -76,23 +76,23 @@ namespace AsrsModel
     /// <summary>
     /// 库房枚举
     /// </summary>
-    public enum EnumStoreHouse
-    {
-        A1库房,
-        A2库房,
-        B1库房,
-        C1库房,
-        C2库房,
-        C3库房
-    }
+    //public enum EnumStoreHouse
+    //{
+    //    A1库房,
+    //    A2库房,
+    //    B1库房,
+    //    C1库房,
+    //    C2库房,
+    //    C3库房
+    //}
     /// <summary>
     /// 逻辑区域枚举
     /// </summary>
-    public enum EnumLogicArea
-    {
+    ////public enum EnumLogicArea
+    ////{
 
-        通用分区,注液高温区,化成高温区, 空筐区,分容常温区,OCV常温区,正极材料区,负极材料区,其它
-    }
+    ////    通用分区,注液高温区,化成高温区, 空筐区,分容常温区,OCV常温区,正极材料区,负极材料区,其它
+    ////}
     
    
 }

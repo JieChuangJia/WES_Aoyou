@@ -68,9 +68,10 @@ namespace ASRSStorManage.View
         {
             this.cb_HouseName.Items.Clear();
             this.cb_HouseName.Items.Add("所有");
-            for (int i = 0; i < Enum.GetNames(typeof(EnumStoreHouse)).Count(); i++)
+          //  for (int i = 0; i < Enum.GetNames(typeof(EnumStoreHouse)).Count(); i++)
+            for (int i = 0; i < SysCfg.SysCfgModel.AsrsHouseList.Count(); i++)
             {
-                string typeName = Enum.GetNames(typeof(EnumStoreHouse))[i];
+                string typeName = SysCfg.SysCfgModel.AsrsHouseList[i];
                 this.cb_HouseName.Items.Add(typeName);
             }
             if (this.cb_HouseName.Items.Count > 0)

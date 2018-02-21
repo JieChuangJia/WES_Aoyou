@@ -240,7 +240,7 @@ namespace AsrsControl
                 }
             }
            */
-            AsrsModel.EnumLogicArea storeAreaZone = AsrsModel.EnumLogicArea.注液高温区; 
+            string storeAreaZone = "注液高温区"; 
             storeAreaZone = asrsCtlModel.GetAreaToCheckin(step);//(AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); //AsrsModel.EnumLogicArea.注液高温区; //此处需要根据步号判断
             
             int cellEmptCounts = 0;

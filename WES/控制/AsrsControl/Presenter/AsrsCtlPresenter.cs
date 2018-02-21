@@ -193,6 +193,10 @@ namespace AsrsControl
             //3 分配通信对象
             foreach(AsrsCtlModel asrs in asrsCtls)
             {
+                if(!SysCfg.SysCfgModel.AsrsHouseList.Contains(asrs.HouseName))
+                {
+                    SysCfg.SysCfgModel.AsrsHouseList.Add(asrs.HouseName);
+                }
                 if(!asrs.Init())
                 {
                     //logRecorder.AddLog(new LogModel(objectName, asrs.NodeName + "初始化错误", EnumLoglevel.错误));

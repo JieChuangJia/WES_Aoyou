@@ -79,7 +79,7 @@ namespace AsrsInterface
         /// <param name="cell">货位位置</param>
         /// <param name="logicArea">库区名称</param>
         /// <returns>执行状态</returns>
-        bool GetLogicAreaName(string houseName, CellCoordModel cell, ref EnumLogicArea logicArea);
+        bool GetLogicAreaName(string houseName, CellCoordModel cell, ref string logicArea);
 
         /// <summary>
         ///查询货位启用状态

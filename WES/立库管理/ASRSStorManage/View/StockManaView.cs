@@ -94,9 +94,10 @@ namespace ASRSStorManage.View
         private void IniStoreHouse()
         {   
             this.cb_StoreHouse.Items.Clear();
-            for(int i=0;i<Enum.GetNames(typeof(EnumStoreHouse)).Count();i++)
+           // for(int i=0;i<Enum.GetNames(typeof(EnumStoreHouse)).Count();i++)
+            for (int i = 0; i < SysCfg.SysCfgModel.AsrsHouseList.Count(); i++)
             {
-                string houseName = Enum.GetNames(typeof(EnumStoreHouse))[i];
+                string houseName = SysCfg.SysCfgModel.AsrsHouseList[i];
                 this.cb_StoreHouse.Items.Add(houseName);
             }
             if(this.cb_StoreHouse.Items.Count>0)

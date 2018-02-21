@@ -242,7 +242,7 @@ namespace AsrsControl
         {
             return true;
         }
-        public bool AsrsCheckinTaskRequire(AsrsPortalModel port, EnumLogicArea logicArea,SysCfg.EnumAsrsTaskType taskType,string[] palletIDS,ref string reStr)
+        public bool AsrsCheckinTaskRequire(AsrsPortalModel port, string logicArea,SysCfg.EnumAsrsTaskType taskType,string[] palletIDS,ref string reStr)
         {
             try
             {
@@ -488,7 +488,7 @@ namespace AsrsControl
             foreach (CellCoordModel cell in cells)
             {
                  string checkOutBatch = "";
-                 EnumLogicArea logicArea= EnumLogicArea.通用分区;
+                 string logicArea= "通用分区";
                  asrsResManage.GetLogicAreaName(houseName,cell,ref logicArea);
                  if (!asrsResManage.GetOutBatch(houseName, logicArea.ToString(), ref checkOutBatch, ref reStr))
                  {
@@ -801,16 +801,16 @@ namespace AsrsControl
         /// </summary>
         /// <param name="step">当前工步</param>
         /// <returns></returns>
-        public EnumLogicArea GetAreaToCheckin(int step)
+        public string GetAreaToCheckin(int step)
         {
-            EnumLogicArea area = EnumLogicArea.其它;
+           string area = "其它";
             if(dlgtGetLogicArea != null)
             {
-                area = (EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), dlgtGetLogicArea(this,step));
+                area = dlgtGetLogicArea(this, step);//(EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), dlgtGetLogicArea(this,step));
             }
             else
             {
-                area = (EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step));
+                area = SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step);// (EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step));
             }
             return area;
         }
@@ -855,7 +855,7 @@ namespace AsrsControl
                 string palletID = "";
                 if(port.AsrsInputEnabled(ref taskType))
                 {
-                    EnumLogicArea checkinArea = EnumLogicArea.注液高温区;
+                    string checkinArea = "注液高温区";
                     string[] cellGoods = null;
                     if(port.PalletBuffer.Count>0)
                     {
@@ -864,7 +864,7 @@ namespace AsrsControl
                     
                     if(taskType == SysCfg.EnumAsrsTaskType.空筐入库)
                     {
-                        checkinArea = EnumLogicArea.空筐区;
+                        checkinArea = "空筐区";
                     }
                     else
                     {

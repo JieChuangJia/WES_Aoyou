@@ -44,7 +44,7 @@ namespace AsrsControl
                          string [] rcl = ctm.tag2.Split('-');
                          
                          CellCoordModel cell = new CellCoordModel(int.Parse(rcl[0]),int.Parse(rcl[1]),int.Parse(rcl[2]));
-                         EnumLogicArea logicArea =  EnumLogicArea.OCV常温区;
+                         string logicArea =  "OCV常温区";
                          if(this.asrsResManage.GetLogicAreaName(houseName,cell,ref logicArea)==false)
                          {
                              gsOperList.RemoveAt(i);

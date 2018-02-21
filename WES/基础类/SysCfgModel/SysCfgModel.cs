@@ -27,7 +27,8 @@ namespace SysCfg
         public static bool SimMode { get; set; }
        // public static bool TestMode = true;
         public static float AsrsStoreTime { get; set; } //默认统一静置时间
-      
+        public static List<string> AsrsHouseList = new List<string>();
+        public static List<string> AsrsAreaList = new List<string>();
         public static Dictionary<string, string> CheckoutBatchDic { get; set; }
         public static Dictionary<string, string> CheckinBatchDic { get; set; }
      //   public static bool HouseEnabledA { get; set; }
@@ -94,6 +95,15 @@ namespace SysCfg
 
                 XElement asrsStoreCfgXE = root.Element("sysSet").Element("AsrsStoreCfg");
                 AsrsStoreTime=float.Parse(asrsStoreCfgXE.Attribute("StoreTime").Value);
+                IEnumerable<XElement> houseArea = root.Element("sysSet").Element("HouseAreaColorSet").Elements("HouseArea");
+                foreach (XElement element in houseArea)
+                {
+                    string areaName = element.Attribute("areaName").Value;
+                    if(!AsrsAreaList.Contains(areaName))
+                    {
+                        AsrsAreaList.Add(areaName);
+                    }
+                }
                 XElement runModeXE = root.Element("sysSet").Element("RunMode");
                 string simStr = runModeXE.Attribute("sim").Value.ToString().ToUpper();
                 if (simStr == "TRUE")
