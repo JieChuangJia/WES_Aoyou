@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ProcessCfg>
+  <sysSet>
+    <RunMode sim="true" RfidSimMode="False" UnBindedMode="False">运行模式</RunMode>
+    <!--线体控制，速度，启动/停止-->
+    <LineCtl addrStart="D4000" blockNum="3">线体控制</LineCtl>
+    <AsrsStoreCfg StoreTime="72">A库静置时间，单位：小时</AsrsStoreCfg>
+    <AsrsBatchCfg HouseACheckin="48-d" HouseACheckout="空" HouseBCheckin="" HouseBCheckout="所有" HouseC1Checkin="所有" HouseC1Checkout="17e01a" HouseC2Checkin="所有" HouseC2Checkout="17e01a">出入库批次设置</AsrsBatchCfg>
+    <AsrsEnableSet HouseEnabledA="True" HouseEnabledB="True">库房启用设置</AsrsEnableSet>
+    <HouseAreaColorSet>
+      <HouseArea houseAreaID="1" areaName="通用分区">128,255,255</HouseArea>
+      <HouseArea houseAreaID="2" areaName="空筐区">192,192,192</HouseArea>
+      <HouseArea houseAreaID="3" areaName="正极材料区">0,162,232</HouseArea>
+      <HouseArea houseAreaID="4" areaName="负极材料区">181,230,29</HouseArea>
+    </HouseAreaColorSet>
+   <!--立库出入库工艺流程配置-->
+    <AsrsStepCfg>
+     <ProcStep stepNO="1" asrsArea="正极材料区" describe="正极材料区">
+        <AsrsPortCfg houseName="A1库房" inPort="1" outPort="2"></AsrsPortCfg>
+     </ProcStep>
+      <ProcStep stepNO="2" asrsArea="负极材料区" describe="负极材料区">
+        <AsrsPortCfg houseName="A1库房" inPort="1" outPort="2"></AsrsPortCfg>
+      </ProcStep>
+    </AsrsStepCfg>
+  </sysSet>
+  <CommDevCfg>
+    <PLCCfg>
+      <PLCVendor>三菱</PLCVendor>
+      <PLC id="1" cata="FX5U" role="A1库堆垛机" db1Len="20"  db2Len="20" >192.168.127.2:7000</PLC>
+     
+    </PLCCfg>
+    <!--RFID配置-->
+    <RfidCfg CommType="TCPIP">
+      <!--<RFID id="1" CommAddr="192.168.1.231:9000"></RFID>
+      <RFID id="2" CommAddr="192.168.1.232:9000"></RFID>
+      <RFID id="3" CommAddr="192.168.1.233:9000"></RFID>
+      <RFID id="4" CommAddr="192.168.1.234:9000"></RFID>
+      <RFID id="5" CommAddr="192.168.1.236:9000"></RFID>
+      <RFID id="6" CommAddr="192.168.1.237:9000"></RFID>
+      <RFID id="7" CommAddr="192.168.1.238:9000"></RFID>
+      <RFID id="8" CommAddr="192.168.1.239:9000"></RFID>
+      <RFID id="9" CommAddr="192.168.1.240:9000"></RFID>
+      <RFID id="10" CommAddr="192.168.1.241:9000"></RFID>
+      <RFID id="11" CommAddr="192.168.1.242:9000"></RFID>-->
+    </RfidCfg>
+    <BarScannerCfg>
+      <BarScanner id="1" role ="分流点1" CommAddr="COM11"></BarScanner>
+      <!--<BarScanner id="2" role  ="分流点2" CommAddr="COM12"></BarScanner>-->
+      <BarScanner id="3" role="烘烤后入库前分流点" CommAddr="COM13"></BarScanner>
+     
+    </BarScannerCfg>
+    <HKFillServerCfg>
+      <!--杭可装载服务器地址配置-->
+      <!--<HkServer id="1" ip="192.168.100.20" port="13535">化成装载服务器</HkServer>
+      <HkServer id="2" ip="192.168.100.21" port="13535">分容装载服务器</HkServer>-->
+    </HKFillServerCfg>
+  </CommDevCfg>
+  <CtlNodes>
+    <Node className="PrcsCtlModelsLishen.NodeSwitchInput" id="4001" enabled="true">
+      <BaseDatainfo plcID="1" barcodeScanner="1">
+        <NodeName>分流点1</NodeName>
+        <DB1Addr addrStart="D2066" blockNum="5">DB1数据区地址信息</DB1Addr>
+        <DB2Addr addrStart="D3056" blockNum="5">DB2数据区地址信息</DB2Addr>
+      </BaseDatainfo>
+      <SelfDatainfo >
+        <Db1Desc>0：复位,1：读码失败,2：入库分流,3:烘烤分流</Db1Desc>
+        <Db2Desc>入口状态,1:无板，2:有板</Db2Desc>
+        <SwitchPath>2001,4002</SwitchPath>
+      </SelfDatainfo>
+    </Node>
+    <!--<Node className="PrcsCtlModelsLishen.NodeSwitchOutput" id="4002" enabled="true">
+      <BaseDatainfo plcID="1" barcodeScanner="2">
+        <NodeName>分流点2</NodeName>
+        <DB1Addr addrStart="D2071" blockNum="5">DB1数据区地址信息</DB1Addr>
+        <DB2Addr addrStart="D3061" blockNum="5">DB2数据区地址信息</DB2Addr>
+      </BaseDatainfo>
+      <SelfDatainfo >
+        <Db1Desc>0：复位,1：读码失败,2：烘烤线1分流,3:烘烤线2分流</Db1Desc>
+        <Db2Desc>入口状态,1:无板，2:有板</Db2Desc>
+      </SelfDatainfo>
+    </Node>-->
+    <Node className="PrcsCtlModelsLishen.NodeSwitchInput" id="4003" enabled="true">
+      <BaseDatainfo plcID="1" barcodeScanner="3">
+        <NodeName>烘烤后入库前分流点</NodeName>
+        <DB1Addr addrStart="D2076" blockNum="5">DB1数据区地址信息</DB1Addr>
+        <DB2Addr addrStart="D3066" blockNum="5">DB2数据区地址信息</DB2Addr>
+      </BaseDatainfo>
+      <SelfDatainfo >
+        <Db1Desc>0：复位,1：读码失败,2：进入立库口</Db1Desc>
+        <Db2Desc>入口状态,1:无板，2:有板</Db2Desc>
+        <SwitchPath>2002</SwitchPath>
+      </SelfDatainfo>
+    </Node>
+  </CtlNodes>
+  <!--操作系统任务线程分配-->
+  <!--操作系统任务线程分配-->
+  <ThreadAlloc>
+    <Thread id="1" name="线程1" loopInterval="100">
+      <NodeContainer>
+        <NodeID>4001</NodeID>
+      </NodeContainer>
+    </Thread>
+    <!--<Thread id="2" name="线程2" loopInterval="100">
+      <NodeContainer>
+        <NodeID>4002</NodeID>
+      </NodeContainer>
+    </Thread>-->
+    <Thread id="3" name="线程3" loopInterval="100">
+      <NodeContainer>
+       
+        <NodeID>4003</NodeID>
+      </NodeContainer>
+    </Thread>
+  
+  </ThreadAlloc>
+  <AsrsNodes>
+    <!--asrsOutputMode：出库模式，计时出库，条件出库,其它-->
+    <Asrs name="A1库房" asrsOutputMode="条件出库">
+      <Node className="AsrsControl.AsrsStackerCtlModel" id="1001" enabled="true">
+        <BaseDatainfo plcID="1" >
+          <NodeName>A1库</NodeName>
+          <DB1Addr addrStart="D2001" blockNum="20">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3001" blockNum="10">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+      </Node>
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2001" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库物料入口1</NodeName>
+          <DB1Addr addrStart="D2021" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3011" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="1" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false">
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <PortType>1</PortType>
+          <SwitchPath>1001</SwitchPath>
+        </SelfDatainfo>
+      </Node>
+     
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2002" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库物料入口2</NodeName>
+          <DB1Addr addrStart="D2026" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3016" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="2" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false">
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <PortType>1</PortType>
+          <SwitchPath>1001</SwitchPath>
+        </SelfDatainfo>
+      </Node>
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2003" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库空筐入口1</NodeName>
+          <DB1Addr addrStart="D2031" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3021" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="3" bindedTask="空筐入库" capacity="1">
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <PortType>1</PortType>
+          <SwitchPath>1001</SwitchPath>
+        </SelfDatainfo>
+      </Node>
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2004" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库物料出口1</NodeName>
+          <DB1Addr addrStart="D2036" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3026" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="4" bindedTask="产品出库" capacity="1">
+          <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
+          <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;物料出库请求,1:复位，2:出库请求;物料种类需求,1:正极,2:隔膜,3:负极</Db2Desc>
+          <PortType>2</PortType>
+        </SelfDatainfo>
+      </Node>
+
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2005" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库空筐入口1</NodeName>
+          <DB1Addr addrStart="D2041" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3031" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="5" bindedTask="空筐入库" capacity="1">
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <PortType>1</PortType>
+          <SwitchPath>1001</SwitchPath>
+        </SelfDatainfo>
+      </Node>
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2006" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库物料出口2</NodeName>
+          <DB1Addr addrStart="D2046" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3036" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="6" bindedTask="产品出库" capacity="1">
+          <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
+          <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;物料出库请求,1:复位，2:出库请求;物料种类需求,1:正极,2:隔膜,3:负极</Db2Desc>
+          <PortType>2</PortType>
+        </SelfDatainfo>
+      </Node>
+
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2007" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库空筐入口3</NodeName>
+          <DB1Addr addrStart="D2051" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3041" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="7" bindedTask="空筐入库" capacity="1">
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <PortType>1</PortType>
+          <SwitchPath>1001</SwitchPath>
+        </SelfDatainfo>
+      </Node>
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2008" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库物料出口3</NodeName>
+          <DB1Addr addrStart="D2056" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3046" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="8" bindedTask="产品出库" capacity="1">
+          <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
+          <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;物料出库请求,1:复位，2:出库请求;物料种类需求,1:正极,2:隔膜,3:负极</Db2Desc>
+          <PortType>2</PortType>
+        </SelfDatainfo>
+      </Node>
+      <Node className="AsrsPortalModel.AsrsPortalModel" id="2009" enabled="true">
+        <BaseDatainfo plcID="1">
+          <NodeName>A1库空筐出口</NodeName>
+          <DB1Addr addrStart="D2061" blockNum="5">DB1数据区地址信息</DB1Addr>
+          <DB2Addr addrStart="D3051" blockNum="5">DB2数据区地址信息</DB2Addr>
+        </BaseDatainfo>
+        <SelfDatainfo portSeq="9" bindedTask="空筐出库" capacity="1">
+          <Db1Desc></Db1Desc>
+          <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;</Db2Desc>
+          <PortType>2</PortType>
+        </SelfDatainfo>
+      </Node>
+    </Asrs>
+   
+  </AsrsNodes>
+</ProcessCfg>
+

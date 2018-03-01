@@ -37,7 +37,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cb_HouseArea = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cb_GsName = new System.Windows.Forms.ComboBox();
             this.bt_Query = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.cb_GsOperate = new System.Windows.Forms.ComboBox();
@@ -48,6 +47,7 @@
             this.dgv_GsSta = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox_GsName = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_GsSta)).BeginInit();
@@ -148,15 +148,6 @@
             this.label5.Size = new System.Drawing.Size(106, 24);
             this.label5.TabIndex = 23;
             this.label5.Text = "货    位";
-            // 
-            // cb_GsName
-            // 
-            this.cb_GsName.FormattingEnabled = true;
-            this.cb_GsName.Location = new System.Drawing.Point(826, 14);
-            this.cb_GsName.Margin = new System.Windows.Forms.Padding(4);
-            this.cb_GsName.Name = "cb_GsName";
-            this.cb_GsName.Size = new System.Drawing.Size(174, 32);
-            this.cb_GsName.TabIndex = 24;
             // 
             // bt_Query
             // 
@@ -280,6 +271,7 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.panel1.Controls.Add(this.textBox_GsName);
             this.panel1.Controls.Add(this.dtp_start);
             this.panel1.Controls.Add(this.dtp_end);
             this.panel1.Controls.Add(this.cb_GsOperate);
@@ -288,7 +280,6 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.bt_Query);
             this.panel1.Controls.Add(this.cb_HouseName);
-            this.panel1.Controls.Add(this.cb_GsName);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.cb_HouseArea);
@@ -298,6 +289,13 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1362, 105);
             this.panel1.TabIndex = 31;
+            // 
+            // textBox_GsName
+            // 
+            this.textBox_GsName.Location = new System.Drawing.Point(832, 9);
+            this.textBox_GsName.Name = "textBox_GsName";
+            this.textBox_GsName.Size = new System.Drawing.Size(168, 35);
+            this.textBox_GsName.TabIndex = 28;
             // 
             // GsStatisticsView
             // 
@@ -331,7 +329,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cb_HouseArea;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cb_GsName;
         private System.Windows.Forms.Button bt_Query;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cb_GsOperate;
@@ -342,6 +339,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgv_GsSta;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox_GsName;
 
     }
 }

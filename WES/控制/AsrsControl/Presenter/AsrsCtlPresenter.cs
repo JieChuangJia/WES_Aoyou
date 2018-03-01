@@ -19,7 +19,7 @@ using CtlMonitorInterface;
 namespace AsrsControl
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class AsrsCtlPresenter:IAsrsCtlToManage,IAsrsMonitor
+    public class AsrsCtlPresenter:IAsrsCtlToManage
     {
         public delegate bool DlgtAsrsExtParams(List<string> cellStoreGoods, ref List<short> extParams, ref string reStr);
         #region 数据
@@ -133,7 +133,17 @@ namespace AsrsControl
             }
             return true;
         }
-       
+        public AsrsCtlModel GetAsrsCtlByName(string asrsHouseName)
+        {
+            foreach(AsrsCtlModel asrsCtl in asrsCtls)
+            {
+                if(asrsCtl.HouseName == asrsHouseName)
+                {
+                    return asrsCtl;
+                }
+            }
+            return null;
+        }
         public void SetLogRecorder(ILogRecorder logRecorder)
         {
             this.logRecorder = logRecorder;

@@ -1,0 +1,8 @@
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\bin\Release\WESAoyouMonitor.exe
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\bin\Release\WESAoyouMonitor.pdb
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\obj\Release\WESAoyouMonitor.csprojResolveAssemblyReference.cache
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\obj\Release\WESAoyouMonitor.MonitorMainForm.resources
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\obj\Release\WESAoyouMonitor.Properties.Resources.resources
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\obj\Release\WESAoyouMonitor.csproj.GenerateResource.Cache
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\obj\Release\WESAoyouMonitor.exe
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\WESAoyouMonitor\obj\Release\WESAoyouMonitor.pdb

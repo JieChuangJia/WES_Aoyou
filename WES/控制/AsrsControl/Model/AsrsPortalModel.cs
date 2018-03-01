@@ -333,10 +333,10 @@ namespace AsrsControl
                 {
                     if (this.PortinBufCapacity > 1)
                     {
-                        //缓存满或者手动强制入库
-                        if ((this.db2Vals[this.PortinBufCapacity] == 2))
+                        //缓存满，并且入口有料，并且手动强制入库
+                        if (this.db2Vals[this.PortinBufCapacity] == 2)
                         {
-                            if (this.palletBuffer.Count() > 0)
+                            if ((this.palletBuffer.Count() > 0) && (this.db2Vals[0]==2) )
                             {
                                 return true;
                             }
@@ -345,7 +345,7 @@ namespace AsrsControl
                                 return false;
                             }
                         }
-                        else if (this.palletBuffer.Count() >= this.PortinBufCapacity)
+                        else if (this.palletBuffer.Count() >= this.PortinBufCapacity) 
                         {
                             for (int j = 0; j < Math.Min(PalletBuffer.Count(), PortinBufCapacity); j++)
                             {

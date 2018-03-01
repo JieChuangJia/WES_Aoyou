@@ -106,24 +106,27 @@ namespace AsrsControl
 
         private List<ControlTaskModel> GetGsList(DateTime startTime, DateTime endTime, string houseName, string houseArea, string gsName, string gsOperateType)
         {
-            startTime = DateTime.Parse(startTime.ToString("yyyy-MM-dd HH:00:00"));
-            endTime = DateTime.Parse(endTime.ToString("yyyy-MM-dd HH:23:59"));
+            string strSt = startTime.ToString("yyyy-MM-dd HH:00:00");
+           // startTime = DateTime.Parse(strSt);
+            string strEnd = endTime.ToString("yyyy-MM-dd HH:23:59");
+          //  endTime = DateTime.Parse(strEnd);
             string sqlWhere = "";
 
             if (gsOperateType ==WAITOUTPRODUCT)
             {
-                sqlWhere = "TaskStatus = '待执行' and CreateTime >= '" + startTime + "' and CreateTime <='" + endTime + "' and  Remark ='产品出库' ";
+                sqlWhere = "TaskStatus = '待执行' and CreateTime >= '" + strSt + "' and CreateTime <='" + strEnd + "' and  Remark ='产品出库' ";
             }
             else
             {
-                sqlWhere = "TaskStatus = '已完成' and FinishTime >= '" + startTime + "' and FinishTime <='" + endTime + "'";
+                sqlWhere = "TaskStatus = '已完成' and FinishTime >= '" + strSt + "' and FinishTime <='" + strEnd + "'";
             }
            
             if (houseName != "所有")
             {
                 sqlWhere += "and tag1 = '" + houseName + "'";
             }
-            if (gsName != "所有")
+            if(!string.IsNullOrWhiteSpace(gsName.Trim()))
+           // if (gsName != "所有")
             {
                 sqlWhere += "and tag2 = '" + gsName + "'";
             }

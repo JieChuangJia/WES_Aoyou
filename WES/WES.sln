@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsrsUtil", "AsrsUtil\AsrsUt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigManage", "Apps\WESAoyouApp\ConfigManage\ConfigManage.csproj", "{5AB1D7F4-0D37-4D6D-9939-1D6026CD33FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WESAoyouMonitor", "Apps\WESAoyouApp\WESAoyouMonitor\WESAoyouMonitor.csproj", "{7FBBB635-16FF-4E06-B818-35A1D28323ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -384,6 +386,17 @@ Global
 		{5AB1D7F4-0D37-4D6D-9939-1D6026CD33FD}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5AB1D7F4-0D37-4D6D-9939-1D6026CD33FD}.Release|x86.ActiveCfg = Release|x86
 		{5AB1D7F4-0D37-4D6D-9939-1D6026CD33FD}.Release|x86.Build.0 = Release|x86
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Release|x86.ActiveCfg = Release|x86
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -417,5 +430,6 @@ Global
 		{F87116B4-1B95-408B-8506-709C92F7B650} = {71CCDFEE-F414-4E6D-B9E2-C64747551DDC}
 		{98EE1522-BEA7-4CA7-94CF-56F4C986EF3F} = {71CCDFEE-F414-4E6D-B9E2-C64747551DDC}
 		{5AB1D7F4-0D37-4D6D-9939-1D6026CD33FD} = {8D77D164-614E-4965-B89D-D0E0FF3D2B8E}
+		{7FBBB635-16FF-4E06-B818-35A1D28323ED} = {8D77D164-614E-4965-B89D-D0E0FF3D2B8E}
 	EndGlobalSection
 EndGlobal

@@ -75,3 +75,6 @@ E:\workspace\项目\之信遨优项目\代码\WES\控制\AsrsControl\obj\x86\Rel
 E:\workspace\项目\之信遨优项目\代码\WES\控制\AsrsControl\obj\x86\Release\AsrsControl.csproj.GenerateResource.Cache
 E:\workspace\项目\之信遨优项目\代码\WES\控制\AsrsControl\obj\x86\Release\AsrsControl.dll
 E:\workspace\项目\之信遨优项目\代码\WES\控制\AsrsControl\obj\x86\Release\AsrsControl.pdb
+E:\workspace\项目\之信遨优项目\代码\WES\控制\AsrsControl\obj\x86\Release\AsrsControl.AsrsMonitorView.resources
+E:\workspace\项目\之信遨优项目\代码\WES\控制\AsrsControl\obj\x86\Release\AsrsControl.AsrsStatUserCtl.resources
+E:\workspace\项目\之信遨优项目\代码\WES\控制\AsrsControl\obj\x86\Release\AsrsControl.PortBufferMonitorView.resources

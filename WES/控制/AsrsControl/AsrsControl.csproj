@@ -87,6 +87,24 @@
     <Compile Include="Presenter\CtlTaskPresenter.cs" />
     <Compile Include="Presenter\GsStatisticsPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View2\AsrsMonitorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View2\AsrsMonitorView.Designer.cs">
+      <DependentUpon>AsrsMonitorView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View2\AsrsStatUserCtl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View2\AsrsStatUserCtl.Designer.cs">
+      <DependentUpon>AsrsStatUserCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View2\PortBufferMonitorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View2\PortBufferMonitorView.Designer.cs">
+      <DependentUpon>PortBufferMonitorView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\AsrsCtlView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +138,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="View2\AsrsMonitorView.resx">
+      <DependentUpon>AsrsMonitorView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View2\AsrsStatUserCtl.resx">
+      <DependentUpon>AsrsStatUserCtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View2\PortBufferMonitorView.resx">
+      <DependentUpon>PortBufferMonitorView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\AsrsCtlView.resx">
       <DependentUpon>AsrsCtlView.cs</DependentUpon>
     </EmbeddedResource>

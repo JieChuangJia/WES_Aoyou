@@ -14,7 +14,7 @@ using System.Data;
 using LogInterface;
 using AsrsInterface;
 using System.Xml.Linq;
-
+using System.Xml;
 namespace ASRSStorManage.Presenter
 {
     public class StoragePresenter
@@ -36,6 +36,8 @@ namespace ASRSStorManage.Presenter
         IAsrsManageToCtl iStorageManage = null;
         string currHouseName = "A库房";
         int currRowth = 1;
+        string filePath = AppDomain.CurrentDomain.BaseDirectory + @"\data\GoogsSiteCfg.xml";
+        XMLOperater xmlOper = null;
         public StoragePresenter(StorageView view)
         {
             this.view = view;
@@ -49,6 +51,7 @@ namespace ASRSStorManage.Presenter
             IniAreaColorDic();
             string rstr="";
             LoadAreaColorCfg(ref rstr);
+            xmlOper = new XMLOperater(filePath);
           
         }
 
@@ -100,7 +103,7 @@ namespace ASRSStorManage.Presenter
         }
         public void LoadData()
         {
-            List<StoreHouseModel> houseModelList = bllStoreHouse.GetModelList("");
+            /*List<StoreHouseModel> houseModelList = bllStoreHouse.GetModelList("");
             List<string> houseList = new List<string>();
             if (houseModelList == null)
             {
@@ -109,6 +112,22 @@ namespace ASRSStorManage.Presenter
             for (int i = 0; i < houseModelList.Count; i++)
             {
                 houseList.Add(houseModelList[i].StoreHouseName);
+            }
+            this.view.BindHouseData(houseList);*/
+            XmlNodeList houseNodeList = xmlOper.GetNodesByName("StoreHouse");
+            if (null == houseNodeList)
+            {
+                return;
+            }
+
+            List<string> houseList = new List<string>();
+            for (int i = 0; i < houseNodeList.Count; i++)
+            {
+                XmlNode house = houseNodeList[i];
+                foreach (XmlAttribute xmlAttri in house.Attributes)
+                {
+                    houseList.Add(xmlAttri.Value);
+                }
             }
             this.view.BindHouseData(houseList);
         }
@@ -290,32 +309,39 @@ namespace ASRSStorManage.Presenter
             //    this.view.AddLog("库存管理", "手动出库货失败，没有库存！", LogInterface.EnumLoglevel.提示);
             //    return;
             //}
+            try
+            {
+                View_GoodsSiteModel vgsm = bllViewGs.GetModelByGSID(gsID);
+                if (vgsm == null)
+                {
+                    this.view.AddLog("库存管理", "货位错误！", LogInterface.EnumLoglevel.提示);
+                    return;
+                }
 
-            View_GoodsSiteModel vgsm = bllViewGs.GetModelByGSID(gsID);
-            if (vgsm == null)
-            {
-                this.view.AddLog("库存管理", "货位错误！", LogInterface.EnumLoglevel.提示);
-                return;
-            }
+                CellCoordModel cell = new CellCoordModel(vgsm.GoodsSiteRow, vgsm.GoodsSiteColumn, vgsm.GoodsSiteLayer);
+                if (this.iControl == null)
+                {
+                    return;
+                }
+                bool status = this.iControl.CreateManualOutputTask(vgsm.StoreHouseName, cell, ref reStr);
+                if (status == true)
+                {
+                    this.view.AddLog("库存管理", "手动出库货位：" + vgsm.GoodsSiteName + "成功！", LogInterface.EnumLoglevel.提示);
+                    this.iStorageManage.AddGSOperRecord(vgsm.StoreHouseName, cell, EnumGSOperateType.手动出库, "手动出库货位：" + vgsm.GoodsSiteName, ref reStr);
+                }
+                else
+                {
+                    this.view.AddLog("库存管理", "手动出库货位：" + vgsm.GoodsSiteName + "失败！" + reStr, LogInterface.EnumLoglevel.提示);
+                    this.iStorageManage.AddGSOperRecord(vgsm.StoreHouseName, cell, EnumGSOperateType.手动出库, "手动出库货位：" + vgsm.GoodsSiteName + "失败" + reStr, ref reStr);
+                }
 
-            CellCoordModel cell = new CellCoordModel(vgsm.GoodsSiteRow, vgsm.GoodsSiteColumn, vgsm.GoodsSiteLayer);
-            if (this.iControl == null)
-            {
-                return;
+                RefreshPos(vgsm.StoreHouseName, vgsm.GoodsSiteRow);//刷新
             }
-            bool status = this.iControl.CreateManualOutputTask(vgsm.StoreHouseName, cell, ref reStr);
-            if (status == true)
+            catch (Exception ex)
             {
-                this.view.AddLog("库存管理", "手动出库货位：" + vgsm.GoodsSiteName + "成功！", LogInterface.EnumLoglevel.提示);
-                this.iStorageManage.AddGSOperRecord(vgsm.StoreHouseName, cell, EnumGSOperateType.手动出库, "手动出库货位：" + vgsm.GoodsSiteName, ref reStr);
+                Console.WriteLine("发生异常：" + ex.ToString());
             }
-            else
-            {
-                this.view.AddLog("库存管理", "手动出库货位：" + vgsm.GoodsSiteName + "失败！" + reStr, LogInterface.EnumLoglevel.提示);
-                this.iStorageManage.AddGSOperRecord(vgsm.StoreHouseName, cell, EnumGSOperateType.手动出库, "手动出库货位：" + vgsm.GoodsSiteName + "失败" + reStr, ref reStr);
-            }
-
-            RefreshPos(vgsm.StoreHouseName, vgsm.GoodsSiteRow);//刷新
+           
         }
         public void ModifyStockCode(long stockListID,long gsID,string boxCode)
         {

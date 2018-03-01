@@ -62,6 +62,17 @@ namespace CtlManage
             }
             return null;
         }
+        public CtlNodeBaseModel GetNodeByName(string nodeName)
+        {
+            foreach (CtlNodeBaseModel node in monitorNodeList)
+            {
+                if (node.NodeName == nodeName)
+                {
+                    return node;
+                }
+            }
+            return null;
+        }
         public void AddCtlNode(CtlNodeBaseModel ctlNode)
         {
             if (ctlNode != null)

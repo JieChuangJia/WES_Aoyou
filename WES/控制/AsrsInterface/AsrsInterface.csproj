@@ -61,7 +61,6 @@
   <ItemGroup>
     <Compile Include="IAsrsCtlToManage.cs" />
     <Compile Include="IAsrsManageToCtl.cs" />
-    <Compile Include="IRemoteMonitorSvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

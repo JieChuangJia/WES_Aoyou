@@ -273,7 +273,7 @@ namespace FlowCtlBaseModel
         }
         public DataTable GetDB1DataDetail()
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new DataTable("Dt1");
             dt.Columns.Add("索引");
             dt.Columns.Add("地址");
             dt.Columns.Add("内容");
@@ -291,7 +291,7 @@ namespace FlowCtlBaseModel
         }
         public DataTable GetDB2DataDetail()
         {
-            DataTable dt = new DataTable();
+            DataTable dt = new DataTable("Dt2");
             dt.Columns.Add("索引");
             dt.Columns.Add("地址");
             dt.Columns.Add("内容");

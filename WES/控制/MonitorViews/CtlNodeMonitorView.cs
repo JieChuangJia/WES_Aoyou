@@ -28,6 +28,7 @@ namespace MonitorViews
         #endregion
         #region 公有接口
         public ICtlnodeMonitor NodeMonitor { get; set; }
+        public IAsrsMonitor AsrsMonitor { get; set; }
         public CtlNodeMonitorView(string captionText)
             : base(captionText)
         {
@@ -210,6 +211,7 @@ namespace MonitorViews
                 RefreshPLCComm();
             }
             devMonitorView.RefreshDevDic();
+            
         }
        
 

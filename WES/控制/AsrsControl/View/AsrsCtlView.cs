@@ -63,23 +63,23 @@ namespace AsrsControl
             //
             this.portBufView.AsrsPorts = presenter.AsrsPorts;
 
-          //  this.asrsBatchSettingCtl = new View.AsrsBatchSettingControl();
+  
 
             //宿主服务IAsrsCtlToManage
-            //Uri _baseAddress = new Uri("http://localhost:8733/ZZ/AsrsCtlSvc/AsrsCtl/");
-            //EndpointAddress _Address = new EndpointAddress(_baseAddress);
-            //BasicHttpBinding _Binding = new BasicHttpBinding();
-            //ContractDescription _Contract = ContractDescription.GetContract(typeof(AsrsInterface.IAsrsCtlToManage));
-            //ServiceEndpoint endpoint = new ServiceEndpoint(_Contract, _Binding, _Address);
-            //ServiceHost host = new ServiceHost(this.presenter, _baseAddress);
-            ////添加终结点ABC
-            //host.Description.Endpoints.Add(endpoint);
-            ////启用元数据交换
-            //ServiceMetadataBehavior meta = new ServiceMetadataBehavior();
+            Uri _baseAddress = new Uri("http://localhost:8800/JCJ/AsrsCtlSvc");
+            EndpointAddress _Address = new EndpointAddress(_baseAddress);
+            BasicHttpBinding _Binding = new BasicHttpBinding();
+            ContractDescription _Contract = ContractDescription.GetContract(typeof(AsrsInterface.IAsrsCtlToManage));
+            ServiceEndpoint endpoint = new ServiceEndpoint(_Contract, _Binding, _Address);
+            ServiceHost host = new ServiceHost(this.presenter, _baseAddress);
+            //添加终结点ABC
+            host.Description.Endpoints.Add(endpoint);
+            //启用元数据交换
+            ServiceMetadataBehavior meta = new ServiceMetadataBehavior();
 
-            //meta.HttpGetEnabled = true;
-            //host.Description.Behaviors.Add(meta);
-            //host.Open();
+            meta.HttpGetEnabled = true;
+            host.Description.Behaviors.Add(meta);
+            host.Open();
         }
         public override void ChangeRoleID(int roleID)
         {

@@ -60,7 +60,7 @@ namespace AsrsControl
             IniHouseName();
             IniHouseArea();
             IniGsOperate();
-            IniGsName();
+         
             this.dtp_start.Value = DateTime.Now.Date + new TimeSpan(8, 0, 0);
             this.dtp_end.Value = DateTime.Now.Date + new TimeSpan(20,0,0);
         }
@@ -80,12 +80,7 @@ namespace AsrsControl
                 this.cb_HouseArea.SelectedIndex = 0;
             }
         }
-        private void IniGsName()
-        {
-            this.cb_GsName.Items.Clear();
-            this.cb_GsName.Items.Add("所有");
-            this.cb_GsName.SelectedIndex = 0;
-        }
+      
         private void IniHouseName()
         {
             this.cb_HouseName.Items.Clear();
@@ -121,7 +116,7 @@ namespace AsrsControl
                 MessageBox.Show("请选择指定库房！", "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            this.presenter.QueryStatistics(this.dtp_start.Value, this.dtp_end.Value, this.cb_HouseName.Text, this.cb_HouseArea.Text, this.cb_GsName.Text, this.cb_GsOperate.Text);
+            this.presenter.QueryStatistics(this.dtp_start.Value, this.dtp_end.Value, this.cb_HouseName.Text, this.cb_HouseArea.Text, this.textBox_GsName.Text, this.cb_GsOperate.Text);
         }
 
       
