@@ -27,6 +27,7 @@ namespace AsrsStorDBAcc.Model
         private long _storehouselogicareaid;
         private string _storehouseareaname;
         private string _storehouseareadesc;
+        private string _goodssite_reserve;
         /// <summary>
         /// 
         /// </summary>
@@ -163,7 +164,16 @@ namespace AsrsStorDBAcc.Model
             set { _storehouseareadesc = value; }
             get { return _storehouseareadesc; }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string GoodsSite_Reserve
+        {
+            set { _goodssite_reserve = value; }
+            get { return _goodssite_reserve; }
+        }
         #endregion Model
+
 
     }
 }

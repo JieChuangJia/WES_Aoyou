@@ -19,11 +19,11 @@ namespace AsrsStorDBAcc.DAL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public bool Exists(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select count(1) from View_GoodsSite");
-            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc ");
+            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc and GoodsSite_Reserve=@GoodsSite_Reserve ");
             SqlParameter[] parameters = {
 					new SqlParameter("@GoodsSiteID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseID", SqlDbType.BigInt,8),
@@ -41,7 +41,8 @@ namespace AsrsStorDBAcc.DAL
 					new SqlParameter("@GsEnabled", SqlDbType.Bit,1),
 					new SqlParameter("@StoreHouseLogicAreaID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseAreaName", SqlDbType.NVarChar,50),
-					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100)			};
+					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100),
+					new SqlParameter("@GoodsSite_Reserve", SqlDbType.NVarChar,200)			};
             parameters[0].Value = GoodsSiteID;
             parameters[1].Value = StoreHouseID;
             parameters[2].Value = GoodsSiteName;
@@ -59,6 +60,7 @@ namespace AsrsStorDBAcc.DAL
             parameters[14].Value = StoreHouseLogicAreaID;
             parameters[15].Value = StoreHouseAreaName;
             parameters[16].Value = StoreHouseAreaDesc;
+            parameters[17].Value = GoodsSite_Reserve;
 
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
@@ -71,9 +73,9 @@ namespace AsrsStorDBAcc.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into View_GoodsSite(");
-            strSql.Append("GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc)");
+            strSql.Append("GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc,GoodsSite_Reserve)");
             strSql.Append(" values (");
-            strSql.Append("@GoodsSiteID,@StoreHouseID,@GoodsSiteName,@GoodsSiteLayer,@GoodsSiteColumn,@GoodsSiteRow,@GoodsSiteTaskStatus,@GoodsSiteType,@GoodsSitePos,@GoodsSiteStatus,@GoodsSiteOperate,@StoreHouseName,@StoreHouseDesc,@GsEnabled,@StoreHouseLogicAreaID,@StoreHouseAreaName,@StoreHouseAreaDesc)");
+            strSql.Append("@GoodsSiteID,@StoreHouseID,@GoodsSiteName,@GoodsSiteLayer,@GoodsSiteColumn,@GoodsSiteRow,@GoodsSiteTaskStatus,@GoodsSiteType,@GoodsSitePos,@GoodsSiteStatus,@GoodsSiteOperate,@StoreHouseName,@StoreHouseDesc,@GsEnabled,@StoreHouseLogicAreaID,@StoreHouseAreaName,@StoreHouseAreaDesc,@GoodsSite_Reserve)");
             SqlParameter[] parameters = {
 					new SqlParameter("@GoodsSiteID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseID", SqlDbType.BigInt,8),
@@ -91,7 +93,8 @@ namespace AsrsStorDBAcc.DAL
 					new SqlParameter("@GsEnabled", SqlDbType.Bit,1),
 					new SqlParameter("@StoreHouseLogicAreaID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseAreaName", SqlDbType.NVarChar,50),
-					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100)};
+					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100),
+					new SqlParameter("@GoodsSite_Reserve", SqlDbType.NVarChar,200)};
             parameters[0].Value = model.GoodsSiteID;
             parameters[1].Value = model.StoreHouseID;
             parameters[2].Value = model.GoodsSiteName;
@@ -109,6 +112,7 @@ namespace AsrsStorDBAcc.DAL
             parameters[14].Value = model.StoreHouseLogicAreaID;
             parameters[15].Value = model.StoreHouseAreaName;
             parameters[16].Value = model.StoreHouseAreaDesc;
+            parameters[17].Value = model.GoodsSite_Reserve;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -143,8 +147,9 @@ namespace AsrsStorDBAcc.DAL
             strSql.Append("GsEnabled=@GsEnabled,");
             strSql.Append("StoreHouseLogicAreaID=@StoreHouseLogicAreaID,");
             strSql.Append("StoreHouseAreaName=@StoreHouseAreaName,");
-            strSql.Append("StoreHouseAreaDesc=@StoreHouseAreaDesc");
-            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc ");
+            strSql.Append("StoreHouseAreaDesc=@StoreHouseAreaDesc,");
+            strSql.Append("GoodsSite_Reserve=@GoodsSite_Reserve");
+            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc and GoodsSite_Reserve=@GoodsSite_Reserve ");
             SqlParameter[] parameters = {
 					new SqlParameter("@GoodsSiteID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseID", SqlDbType.BigInt,8),
@@ -162,7 +167,8 @@ namespace AsrsStorDBAcc.DAL
 					new SqlParameter("@GsEnabled", SqlDbType.Bit,1),
 					new SqlParameter("@StoreHouseLogicAreaID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseAreaName", SqlDbType.NVarChar,50),
-					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100)};
+					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100),
+					new SqlParameter("@GoodsSite_Reserve", SqlDbType.NVarChar,200)};
             parameters[0].Value = model.GoodsSiteID;
             parameters[1].Value = model.StoreHouseID;
             parameters[2].Value = model.GoodsSiteName;
@@ -180,6 +186,7 @@ namespace AsrsStorDBAcc.DAL
             parameters[14].Value = model.StoreHouseLogicAreaID;
             parameters[15].Value = model.StoreHouseAreaName;
             parameters[16].Value = model.StoreHouseAreaDesc;
+            parameters[17].Value = model.GoodsSite_Reserve;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -195,12 +202,12 @@ namespace AsrsStorDBAcc.DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public bool Delete(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("delete from View_GoodsSite ");
-            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc ");
+            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc and GoodsSite_Reserve=@GoodsSite_Reserve ");
             SqlParameter[] parameters = {
 					new SqlParameter("@GoodsSiteID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseID", SqlDbType.BigInt,8),
@@ -218,7 +225,8 @@ namespace AsrsStorDBAcc.DAL
 					new SqlParameter("@GsEnabled", SqlDbType.Bit,1),
 					new SqlParameter("@StoreHouseLogicAreaID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseAreaName", SqlDbType.NVarChar,50),
-					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100)			};
+					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100),
+					new SqlParameter("@GoodsSite_Reserve", SqlDbType.NVarChar,200)			};
             parameters[0].Value = GoodsSiteID;
             parameters[1].Value = StoreHouseID;
             parameters[2].Value = GoodsSiteName;
@@ -236,6 +244,7 @@ namespace AsrsStorDBAcc.DAL
             parameters[14].Value = StoreHouseLogicAreaID;
             parameters[15].Value = StoreHouseAreaName;
             parameters[16].Value = StoreHouseAreaDesc;
+            parameters[17].Value = GoodsSite_Reserve;
 
             int rows = DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -252,12 +261,12 @@ namespace AsrsStorDBAcc.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public AsrsStorDBAcc.Model.View_GoodsSiteModel GetModel(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public AsrsStorDBAcc.Model.View_GoodsSiteModel GetModel(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc from View_GoodsSite ");
-            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc ");
+            strSql.Append("select  top 1 GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc,GoodsSite_Reserve from View_GoodsSite ");
+            strSql.Append(" where GoodsSiteID=@GoodsSiteID and StoreHouseID=@StoreHouseID and GoodsSiteName=@GoodsSiteName and GoodsSiteLayer=@GoodsSiteLayer and GoodsSiteColumn=@GoodsSiteColumn and GoodsSiteRow=@GoodsSiteRow and GoodsSiteTaskStatus=@GoodsSiteTaskStatus and GoodsSiteType=@GoodsSiteType and GoodsSitePos=@GoodsSitePos and GoodsSiteStatus=@GoodsSiteStatus and GoodsSiteOperate=@GoodsSiteOperate and StoreHouseName=@StoreHouseName and StoreHouseDesc=@StoreHouseDesc and GsEnabled=@GsEnabled and StoreHouseLogicAreaID=@StoreHouseLogicAreaID and StoreHouseAreaName=@StoreHouseAreaName and StoreHouseAreaDesc=@StoreHouseAreaDesc and GoodsSite_Reserve=@GoodsSite_Reserve ");
             SqlParameter[] parameters = {
 					new SqlParameter("@GoodsSiteID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseID", SqlDbType.BigInt,8),
@@ -275,7 +284,8 @@ namespace AsrsStorDBAcc.DAL
 					new SqlParameter("@GsEnabled", SqlDbType.Bit,1),
 					new SqlParameter("@StoreHouseLogicAreaID", SqlDbType.BigInt,8),
 					new SqlParameter("@StoreHouseAreaName", SqlDbType.NVarChar,50),
-					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100)			};
+					new SqlParameter("@StoreHouseAreaDesc", SqlDbType.NVarChar,100),
+					new SqlParameter("@GoodsSite_Reserve", SqlDbType.NVarChar,200)			};
             parameters[0].Value = GoodsSiteID;
             parameters[1].Value = StoreHouseID;
             parameters[2].Value = GoodsSiteName;
@@ -293,6 +303,7 @@ namespace AsrsStorDBAcc.DAL
             parameters[14].Value = StoreHouseLogicAreaID;
             parameters[15].Value = StoreHouseAreaName;
             parameters[16].Value = StoreHouseAreaDesc;
+            parameters[17].Value = GoodsSite_Reserve;
 
             AsrsStorDBAcc.Model.View_GoodsSiteModel model = new AsrsStorDBAcc.Model.View_GoodsSiteModel();
             DataSet ds = DbHelperSQL.Query(strSql.ToString(), parameters);
@@ -390,6 +401,10 @@ namespace AsrsStorDBAcc.DAL
                 {
                     model.StoreHouseAreaDesc = row["StoreHouseAreaDesc"].ToString();
                 }
+                if (row["GoodsSite_Reserve"] != null)
+                {
+                    model.GoodsSite_Reserve = row["GoodsSite_Reserve"].ToString();
+                }
             }
             return model;
         }
@@ -400,7 +415,7 @@ namespace AsrsStorDBAcc.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc ");
+            strSql.Append("select GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc,GoodsSite_Reserve ");
             strSql.Append(" FROM View_GoodsSite ");
             if (strWhere.Trim() != "")
             {
@@ -420,7 +435,7 @@ namespace AsrsStorDBAcc.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc ");
+            strSql.Append(" GoodsSiteID,StoreHouseID,GoodsSiteName,GoodsSiteLayer,GoodsSiteColumn,GoodsSiteRow,GoodsSiteTaskStatus,GoodsSiteType,GoodsSitePos,GoodsSiteStatus,GoodsSiteOperate,StoreHouseName,StoreHouseDesc,GsEnabled,StoreHouseLogicAreaID,StoreHouseAreaName,StoreHouseAreaDesc,GoodsSite_Reserve ");
             strSql.Append(" FROM View_GoodsSite ");
             if (strWhere.Trim() != "")
             {
@@ -465,7 +480,7 @@ namespace AsrsStorDBAcc.DAL
             }
             else
             {
-                strSql.Append("order by T.StoreHouseAreaDesc desc");
+                strSql.Append("order by T.GoodsSite_Reserve desc");
             }
             strSql.Append(")AS Row, T.*  from View_GoodsSite T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
@@ -493,7 +508,7 @@ namespace AsrsStorDBAcc.DAL
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
             parameters[0].Value = "View_GoodsSite";
-            parameters[1].Value = "StoreHouseAreaDesc";
+            parameters[1].Value = "GoodsSite_Reserve";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;

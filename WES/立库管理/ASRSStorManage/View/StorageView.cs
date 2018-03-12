@@ -276,6 +276,7 @@ namespace ASRSStorManage.View
                     this.dgv_GoodsSiteDetail.Rows[i].Cells["StockListID"].Value = stockList[i].StockListID;
                     this.dgv_GoodsSiteDetail.Rows[i].Cells["updateTime"].Value = stockList[i].InHouseTime;
                     this.dgv_GoodsSiteDetail.Rows[i].Cells["col_StayHouseTime"].Value = (DateTime.Now - stockList[i].InHouseTime).TotalHours.ToString("0.00");
+                    this.dgv_GoodsSiteDetail.Rows[i].Cells["Col_Remark"].Value = stockList[i].GoodsSite_Reserve ;
                 }
             }
       

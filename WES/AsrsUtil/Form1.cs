@@ -12,10 +12,12 @@ namespace AsrsUtil
 {
     public partial class Form1 : Form,IMainView
     {
+        private string version = "系统版本:1.0.0  2018-3-7";
         private delegate void DlgtRefreshPLCComm();
         MainPresenter presenter = null;
         public Form1()
         {
+          
             InitializeComponent();
             presenter = new MainPresenter(this);
         }
@@ -106,6 +108,7 @@ namespace AsrsUtil
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.labelVersion.Text = this.version;
             this.btnStartRun.Enabled = false;
             if(!presenter.Init())
             {
@@ -209,14 +212,7 @@ namespace AsrsUtil
 
         private void checkBoxAutorefresh_CheckedChanged(object sender, EventArgs e)
         {
-            if(checkBoxAutorefresh.Checked)
-            {
-                timerNodeStatus.Start();
-            }
-            else
-            {
-                timerNodeStatus.Stop();
-            }
+
         }
         private void buttonDB2SimSet_Click(object sender, EventArgs e)
         {
@@ -249,12 +245,60 @@ namespace AsrsUtil
 
         private void buttonMultiReadPlc_Click(object sender, EventArgs e)
         {
+            string addrStart = this.textBoxPlcAddrStart.Text;
+            int blockNum = int.Parse(this.textBoxPlcBlockNum.Text);
+            short[] reVals = null;
 
+            if (!presenter.plcRW.IsConnect)
+            {
+                string reStr = "";
+                presenter.plcRW.ConnectPLC(ref reStr);
+            }
+            if (presenter.plcRW.ReadMultiDB(addrStart, blockNum, ref reVals))
+            {
+                string strVal = "";
+                for (int i = 0; i < blockNum; i++)
+                {
+                    strVal += reVals[i].ToString() + ",";
+                }
+                this.richTextBoxMultiDBVal.Text = strVal;
+            }
+            else
+            {
+                Console.WriteLine("批量读取PLC数据失败");
+            }
         }
 
         private void buttonMultiWritePlc_Click(object sender, EventArgs e)
         {
-
+            string addrStart = this.textBoxPlcAddrStart.Text;
+            int blockNum = int.Parse(this.textBoxPlcBlockNum.Text);
+            string[] splitStr = new string[] { ",", ":", "-", ";" };
+            string strVals = this.richTextBoxMultiDBVal.Text;
+            string[] strArray = strVals.Split(splitStr, StringSplitOptions.RemoveEmptyEntries);
+            if (strArray == null || strArray.Count() < 1)
+            {
+                MessageBox.Show("输入数据错误");
+                return;
+            }
+            short[] vals = new short[strArray.Count()];
+            for (int i = 0; i < vals.Count(); i++)
+            {
+                vals[i] = short.Parse(strArray[i]);
+            }
+            if (!presenter.plcRW.IsConnect)
+            {
+                string reStr = "";
+                presenter.plcRW.ConnectPLC(ref reStr);
+            }
+            if (presenter.plcRW.WriteMultiDB(addrStart, blockNum, vals))
+            {
+                Console.WriteLine("批量写入成功");
+            }
+            else
+            {
+                Console.WriteLine("批量写入失败");
+            }
         }
 
         private void buttonPLCDBReset_Click(object sender, EventArgs e)
@@ -282,9 +326,14 @@ namespace AsrsUtil
                 }
                 task.CellA = new CellCoordModel(int.Parse(textBoxRow.Text),int.Parse(textBoxCol.Text),int.Parse(textBoxLayer.Text));
                
-                if (!presenter.Stacker.FillTask(task, ref reStr))
+                if (presenter.Stacker.FillTask(task, ref reStr))
                 {
-                    Console.WriteLine("分配任务失败," + reStr);
+                    Console.WriteLine("分配{0}任务成功",taskType.ToString());
+                    this.label11.Text = string.Format("当前任务:{0} ,站台号:{1},货位地址：{2}-{3}-{4}", taskType.ToString(), this.textBoxPortID.Text, task.CellA.Row, task.CellA.Col, task.CellA.Layer);
+                }
+                else
+                {
+                    Console.WriteLine("分配{0}任务失败,{1}",taskType.ToString(),reStr);
                 }
             }
             catch (Exception ex)
@@ -296,6 +345,21 @@ namespace AsrsUtil
         private void button3_Click(object sender, EventArgs e)
         {
             OnGenerateTask();
+        }
+        private void OnDevReset()
+        {
+            if(presenter.Reset())
+            {
+                Console.WriteLine("设备复位成功");
+            }
+            else
+            {
+                Console.WriteLine("设备复位失败");
+            }
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OnDevReset();
         }
        
     }

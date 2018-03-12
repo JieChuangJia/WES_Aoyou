@@ -50,3 +50,4 @@ E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\ConfigManage\
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\ConfigManage\obj\x86\Release\ConfigManage.csproj.GenerateResource.Cache
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\ConfigManage\obj\x86\Release\AoyouCfg.dll
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\ConfigManage\obj\x86\Release\AoyouCfg.pdb
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESAoyouApp\ConfigManage\obj\x86\Release\ConfigManage.BatteryCataCfgView.resources

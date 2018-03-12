@@ -284,12 +284,16 @@ namespace AsrsUtil
             try
             {
                 Array.Clear(db1ValsToSnd, 0, db1ValsToSnd.Count());
+                db1ValsToSnd[0] = 1;
+                db1ValsToSnd[1] = 1;
                 string reStr = "";
                 if(!NodeCmdCommit(false, ref reStr))
                 {
                     Console.WriteLine("提交命令数据错误:"+reStr);
                     return false;
                 }
+                this.currentTask = null;
+                currentTaskDescribe = "等待新的任务";
                 return true;
             }
             catch (Exception ex)
@@ -524,8 +528,6 @@ namespace AsrsUtil
                         currentTask = null;
                         currentTaskPhase = 0;
                         currentTaskDescribe = "等待执行下一个任务";
-
-                       
                         break;
                     }
                 default:

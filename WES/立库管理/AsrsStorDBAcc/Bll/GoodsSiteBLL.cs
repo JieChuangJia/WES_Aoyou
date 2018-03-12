@@ -193,6 +193,22 @@ namespace AsrsStorDBAcc.BLL
             }
             return goodsSite;
         }
+        public GoodsSiteModel GetModelByRCL_ExtProp(long storeHouseID, int row, int col, int layer,string extProp)
+        {
+            GoodsSiteModel goodsSite = null;
+
+            string sqlStr = "StoreHouseID = " + storeHouseID + " and GoodsSiteColumn = " + col + " and GoodsSiteRow ="
+                + row + " and GoodsSiteLayer =" + layer + " and Reserve = '" +extProp + "'";
+
+            List<AsrsStorDBAcc.Model.GoodsSiteModel> goodsSiteList = GetModelList(sqlStr);
+            if (goodsSiteList.Count > 0)
+            {
+                goodsSite = goodsSiteList[0];
+            }
+            return goodsSite;
+        }
+
+
 
         public List<GoodsSiteModel> GetModelListByRow(long storeHouseID,int row)
         {

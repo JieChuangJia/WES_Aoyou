@@ -18,9 +18,9 @@ namespace AsrsStorDBAcc.BLL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public bool Exists(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
-            return dal.Exists(GoodsSiteID, StoreHouseID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StoreHouseName, StoreHouseDesc, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc);
+            return dal.Exists(GoodsSiteID, StoreHouseID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StoreHouseName, StoreHouseDesc, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc, GoodsSite_Reserve);
         }
 
         /// <summary>
@@ -42,22 +42,22 @@ namespace AsrsStorDBAcc.BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public bool Delete(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
 
-            return dal.Delete(GoodsSiteID, StoreHouseID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StoreHouseName, StoreHouseDesc, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc);
+            return dal.Delete(GoodsSiteID, StoreHouseID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StoreHouseName, StoreHouseDesc, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc, GoodsSite_Reserve);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public AsrsStorDBAcc.Model.View_GoodsSiteModel GetModel(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public AsrsStorDBAcc.Model.View_GoodsSiteModel GetModel(long GoodsSiteID, long StoreHouseID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, string StoreHouseName, string StoreHouseDesc, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
 
-            return dal.GetModel(GoodsSiteID, StoreHouseID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StoreHouseName, StoreHouseDesc, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc);
+            return dal.GetModel(GoodsSiteID, StoreHouseID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StoreHouseName, StoreHouseDesc, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc, GoodsSite_Reserve);
         }
 
-        
+       
 
         /// <summary>
         /// 获得数据列表

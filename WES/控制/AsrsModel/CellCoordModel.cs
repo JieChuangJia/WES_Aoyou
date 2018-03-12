@@ -25,6 +25,10 @@ namespace AsrsModel
 
         [DataMember]
         public int Layer { get { return layer; } set { this.layer = value; } }
+        /// <summary>
+        /// 货位扩展属性
+        /// </summary>
+        public string ExtProp1 { get; set; }
         public CellCoordModel(int row,int col,int layer)
         {
             this.row = row;

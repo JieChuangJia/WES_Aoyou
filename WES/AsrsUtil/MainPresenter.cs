@@ -86,12 +86,12 @@ namespace AsrsUtil
                 string reStr="";
                 if(plcRW.ConnectPLC( ref reStr))
                 {
-                    Console.WriteLine("PLC连接成功");
+                    Console.WriteLine("PLC连接成功！");
                     return true;
                 }
                 else
                 {
-                    Console.WriteLine("PLC连接断开");
+                    Console.WriteLine("PLC连接失败！");
                     return false;
                 }
             }
@@ -131,6 +131,10 @@ namespace AsrsUtil
             db2Dt = stacker.GetDB2DataDetail();
             taskDetail = stacker.GetRunningTaskDetail();
         
+        }
+        public bool Reset()
+        {
+            return this.stacker.DevReset();
         }
 
         private void TaskRunLoop()

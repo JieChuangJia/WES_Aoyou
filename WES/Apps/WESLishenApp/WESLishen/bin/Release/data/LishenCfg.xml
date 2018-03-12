@@ -47,7 +47,9 @@
       <BarScanner id="1" role ="分流点1" CommAddr="COM11"></BarScanner>
       <!--<BarScanner id="2" role  ="分流点2" CommAddr="COM12"></BarScanner>-->
       <BarScanner id="3" role="烘烤后入库前分流点" CommAddr="COM13"></BarScanner>
-     
+      <BarScanner id="4" role="空框入口1" CommAddr="COM14"></BarScanner>
+      <BarScanner id="5" role="空框入口2" CommAddr="COM15"></BarScanner>
+      <BarScanner id="6" role="空框入口3" CommAddr="COM16"></BarScanner>
     </BarScannerCfg>
     <HKFillServerCfg>
       <!--杭可装载服务器地址配置-->
@@ -129,8 +131,8 @@
           <DB1Addr addrStart="D2021" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3011" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="1" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false">
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败</Db1Desc>
+        <SelfDatainfo portSeq="1" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false" barcodeScanRequire="false">
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败;空框可出库状态,1:复位,2:有满足型号的可出库空框，已生成出库任务,3:无满足型号的可出库空框</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>
           <SwitchPath>1001</SwitchPath>
@@ -143,7 +145,7 @@
           <DB1Addr addrStart="D2026" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3016" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="2" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false">
+        <SelfDatainfo portSeq="2" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false" barcodeScanRequire="false">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>
@@ -151,12 +153,12 @@
         </SelfDatainfo>
       </Node>
       <Node className="AsrsPortalModel.AsrsPortalModel" id="2003" enabled="true">
-        <BaseDatainfo plcID="1">
+        <BaseDatainfo plcID="1" barcodeScanner="4">
           <NodeName>A1库空筐入口1</NodeName>
           <DB1Addr addrStart="D2031" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3021" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="3" bindedTask="空筐入库" capacity="1">
+        <SelfDatainfo portSeq="3" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>
@@ -177,12 +179,12 @@
       </Node>
 
       <Node className="AsrsPortalModel.AsrsPortalModel" id="2005" enabled="true">
-        <BaseDatainfo plcID="1">
-          <NodeName>A1库空筐入口1</NodeName>
+        <BaseDatainfo plcID="1" barcodeScanner="5">
+          <NodeName>A1库空筐入口2</NodeName>
           <DB1Addr addrStart="D2041" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3031" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="5" bindedTask="空筐入库" capacity="1">
+        <SelfDatainfo portSeq="5" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>
@@ -201,14 +203,13 @@
           <PortType>2</PortType>
         </SelfDatainfo>
       </Node>
-
       <Node className="AsrsPortalModel.AsrsPortalModel" id="2007" enabled="true">
-        <BaseDatainfo plcID="1">
+        <BaseDatainfo plcID="1" barcodeScanner="6">
           <NodeName>A1库空筐入口3</NodeName>
           <DB1Addr addrStart="D2051" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3041" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="7" bindedTask="空筐入库" capacity="1">
+        <SelfDatainfo portSeq="7" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>

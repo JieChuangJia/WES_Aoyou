@@ -15,7 +15,7 @@ namespace ConfigManage
         
         private UserManageView userManageView = null;
         private SysSettingView sysSettignView = null;
-       
+        private BatteryCataCfgView batteryCfgView = null;
        
         #region 公共接口
         //public string CaptionText { get { return captionText; } set { captionText = value; this.Text = captionText; } }
@@ -25,7 +25,7 @@ namespace ConfigManage
           
             userManageView = new UserManageView("用户管理");
             sysSettignView = new SysSettingView("系统设置");
-        
+            batteryCfgView = new BatteryCataCfgView("电芯型号配置");
         }
         public void SetCfgNodes(List<FlowCtlBaseModel.CtlNodeBaseModel> cfgNodes)
         {
@@ -44,11 +44,11 @@ namespace ConfigManage
            
             ToolStripItem userItem = rootMenuItem.DropDownItems.Add("修改密码");
             ToolStripItem sysSetItem = rootMenuItem.DropDownItems.Add("系统设置");
-         
+            ToolStripItem batteryCfgItem = rootMenuItem.DropDownItems.Add("电芯型号配置");
            
             userItem.Click += LoadView_MenuHandler;
             sysSetItem.Click += LoadView_MenuHandler;
-         
+            batteryCfgItem.Click += LoadView_MenuHandler;
         }
         public override void SetParent(/*Control parentContainer, Form parentForm, */IParentModule parentPnP)
         {
@@ -61,7 +61,7 @@ namespace ConfigManage
            
             this.sysSettignView.SetParent(parentPnP);
             this.userManageView.SetParent(parentPnP);
-          
+            this.batteryCfgView.SetParent(parentPnP);
         }
         public override void SetLoginterface(ILogRecorder logRecorder)
         {
@@ -70,12 +70,13 @@ namespace ConfigManage
            
             this.sysSettignView.SetLoginterface(logRecorder);
             this.userManageView.SetLoginterface(logRecorder);
-         
+            this.batteryCfgView.SetLoginterface(logRecorder);
         }
         public override void ChangeRoleID(int roleID)
         {
             this.sysSettignView.ChangeRoleID(roleID);
-          
+            this.userManageView.ChangeRoleID(roleID);
+            this.batteryCfgView.ChangeRoleID(roleID);
         }
         #endregion
         private void LoadView_MenuHandler(object sender, EventArgs e)
@@ -97,6 +98,18 @@ namespace ConfigManage
                         if (parentPNP.RoleID <3)
                         {
                             this.parentPNP.AttachModuleView(this.sysSettignView);
+                        }
+                        else
+                        {
+                            Console.WriteLine("没有访问权限！请切换到管理员模式");
+                        }
+                        break;
+                    }
+                case "电芯型号配置":
+                    {
+                        if (parentPNP.RoleID < 3)
+                        {
+                            this.parentPNP.AttachModuleView(this.batteryCfgView);
                         }
                         else
                         {

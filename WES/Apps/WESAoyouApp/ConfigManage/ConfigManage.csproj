@@ -66,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="view\BatteryCataCfgView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\BatteryCataCfgView.Designer.cs">
+      <DependentUpon>BatteryCataCfgView.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\ConfiManageView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="view\BatteryCataCfgView.resx">
+      <DependentUpon>BatteryCataCfgView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="view\ConfiManageView.resx">
       <DependentUpon>ConfiManageView.cs</DependentUpon>
     </EmbeddedResource>

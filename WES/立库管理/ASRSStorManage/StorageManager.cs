@@ -623,6 +623,9 @@ namespace ASRSStorManage
                 reStr = "不存在此库存！";
                 return false;
             }
+            gsm.Reserve = cellCoord.ExtProp1;//保存货位扩展属性，目前为空托盘型号 
+            bllGoodsSite.Update(gsm);
+
             StockModel sm = new StockModel();
             sm.GoodsSiteID = gsm.GoodsSiteID;
             sm.IsFull = true;
@@ -776,7 +779,7 @@ namespace ASRSStorManage
                 gsModel.GSPos = allGses[i].GoodsSitePos;
                 gsModel.GSStatus = allGses[i].GoodsSiteStatus;
                 gsModel.GSTaskStatus = allGses[i].GoodsSiteTaskStatus;
-
+                gsModel.ExtProp1 = allGses[i].GoodsSite_Reserve;
                 string keyStr = allGses[i].StoreHouseName + ":" + allGses[i].GoodsSitePos;
                 gsTempDic[keyStr] = gsModel;
             }

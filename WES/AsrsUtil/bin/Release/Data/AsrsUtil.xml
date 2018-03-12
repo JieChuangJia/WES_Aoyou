@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Asrs>
   <sysSet>
-    <RunMode sim="true" RfidSimMode="False" UnBindedMode="False">运行模式</RunMode>
+    <RunMode sim="false">运行模式</RunMode>
   </sysSet>
   <StackerCfg id="1001" enabled="true">
     <BaseDatainfo plcID="1" mesStep="2,4">

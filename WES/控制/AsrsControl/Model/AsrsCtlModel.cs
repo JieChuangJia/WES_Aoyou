@@ -253,110 +253,163 @@ namespace AsrsControl
                 //}
            
                 CellCoordModel requireCell = null;
-                if(this.asrsCheckInRow >0)
+                if (this.asrsCheckInRow > 0)
                 {
-                    if (asrsResManage.CellRequireByRow(this.houseName, logicArea.ToString(),this.asrsCheckInRow,ref requireCell, ref reStr))
+                    if (!asrsResManage.CellRequireByRow(this.houseName, logicArea.ToString(),this.asrsCheckInRow,ref requireCell, ref reStr))
                     {
-                        //生成任务
-                        ControlTaskModel asrsTask = new ControlTaskModel();
-                        asrsTask.DeviceID = this.stacker.NodeID;
-                        asrsTask.CreateMode = "自动";
-                        asrsTask.CreateTime = System.DateTime.Now;
-                        asrsTask.TaskID = System.Guid.NewGuid().ToString();
-                        asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
-                        asrsTask.TaskType = (int)taskType;
-                        AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
-
-                        taskParam.CellPos1 = requireCell;
-                        taskParam.InputPort = port.PortSeq;
-                        // if (taskType == EnumAsrsTaskType.产品入库)
-                        // {
-                        taskParam.InputCellGoods = palletIDS;
-                        //  }
-                        asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
-
-
-                        //申请完成后要锁定货位
-                        if (!asrsResManage.UpdateCellStatus(houseName, requireCell, EnumCellStatus.空闲, EnumGSTaskStatus.锁定, ref reStr))
-                        {
-                            logRecorder.AddDebugLog(nodeName, "更新货位状态失败," + reStr);
-                            return false;
-                        }
-                        if (!asrsResManage.UpdateGSOper(houseName, requireCell, EnumGSOperate.入库, ref reStr))
-                        {
-                            logRecorder.AddDebugLog(nodeName, "更新货位操作类行失败," + reStr);
-                            return false;
-                        }
-                        else
-                        {
-                            asrsTask.tag1 = houseName;
-                            asrsTask.tag2 = string.Format("{0}-{1}-{2}", requireCell.Row, requireCell.Col, requireCell.Layer);
-                            asrsTask.Remark = taskType.ToString();
-                            ctlTaskBll.Add(asrsTask);
-
-                            string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3}，任务参数：{4}", taskType.ToString(), requireCell.Row, requireCell.Col, requireCell.Layer, asrsTask.TaskParam);
-                            logRecorder.AddDebugLog(nodeName, logInfo);
-                            return true;
-                        }
-                    }
-                    else
-                    {
-
                         return false;
                     }
                 }
                 else
                 {
-                    if (asrsResManage.CellRequire(this.houseName, logicArea.ToString(), ref requireCell, ref reStr))
+                    if (!asrsResManage.CellRequire(this.houseName, logicArea.ToString(), ref requireCell, ref reStr))
                     {
-                        //生成任务
-                        ControlTaskModel asrsTask = new ControlTaskModel();
-                        asrsTask.DeviceID = this.stacker.NodeID;
-                        asrsTask.CreateMode = "自动";
-                        asrsTask.CreateTime = System.DateTime.Now;
-                        asrsTask.TaskID = System.Guid.NewGuid().ToString();
-                        asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
-                        asrsTask.TaskType = (int)taskType;
-                        AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
-
-                        taskParam.CellPos1 = requireCell;
-                        taskParam.InputPort = port.PortSeq;
-                        // if (taskType == EnumAsrsTaskType.产品入库)
-                        // {
-                        taskParam.InputCellGoods = palletIDS;
-                        //  }
-                        asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
-
-
-                        //申请完成后要锁定货位
-                        if (!asrsResManage.UpdateCellStatus(houseName, requireCell, EnumCellStatus.空闲, EnumGSTaskStatus.锁定, ref reStr))
-                        {
-                            logRecorder.AddDebugLog(nodeName, "更新货位状态失败," + reStr);
-                            return false;
-                        }
-                        if (!asrsResManage.UpdateGSOper(houseName, requireCell, EnumGSOperate.入库, ref reStr))
-                        {
-                            logRecorder.AddDebugLog(nodeName, "更新货位操作类行失败," + reStr);
-                            return false;
-                        }
-                        else
-                        {
-                            asrsTask.tag1 = houseName;
-                            asrsTask.tag2 = string.Format("{0}-{1}-{2}", requireCell.Row, requireCell.Col, requireCell.Layer);
-                            asrsTask.Remark = taskType.ToString();
-                            ctlTaskBll.Add(asrsTask);
-
-                            string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3}，任务参数：{4}", taskType.ToString(), requireCell.Row, requireCell.Col, requireCell.Layer, asrsTask.TaskParam);
-                            logRecorder.AddDebugLog(nodeName, logInfo);
-                            return true;
-                        }
-                    }
-                    else
-                    {
-
                         return false;
                     }
                 }
+                //生成任务
+                ControlTaskModel asrsTask = new ControlTaskModel();
+                asrsTask.DeviceID = this.stacker.NodeID;
+                asrsTask.CreateMode = "自动";
+                asrsTask.CreateTime = System.DateTime.Now;
+                asrsTask.TaskID = System.Guid.NewGuid().ToString();
+                asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
+                asrsTask.TaskType = (int)taskType;
+                AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
+
+                taskParam.CellPos1 = requireCell;
+                taskParam.InputPort = port.PortSeq;
+                taskParam.InputCellGoods = palletIDS;
+                asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
+
+
+                //申请完成后要锁定货位
+                if (!asrsResManage.UpdateCellStatus(houseName, requireCell, EnumCellStatus.空闲, EnumGSTaskStatus.锁定, ref reStr))
+                {
+                    logRecorder.AddDebugLog(nodeName, "更新货位状态失败," + reStr);
+                    return false;
+                }
+                if (!asrsResManage.UpdateGSOper(houseName, requireCell, EnumGSOperate.入库, ref reStr))
+                {
+                    logRecorder.AddDebugLog(nodeName, "更新货位操作类行失败," + reStr);
+                    return false;
+                }
+                else
+                {
+                    asrsTask.tag1 = houseName;
+                    asrsTask.tag2 = string.Format("{0}-{1}-{2}", requireCell.Row, requireCell.Col, requireCell.Layer);
+                    asrsTask.Remark = taskType.ToString();
+                    ctlTaskBll.Add(asrsTask);
+
+                    string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3}，任务参数：{4}", taskType.ToString(), requireCell.Row, requireCell.Col, requireCell.Layer, asrsTask.TaskParam);
+                    logRecorder.AddDebugLog(nodeName, logInfo);
+                    return true;
+                }
+
+                //if(this.asrsCheckInRow >0)
+                //{
+                //    if (asrsResManage.CellRequireByRow(this.houseName, logicArea.ToString(),this.asrsCheckInRow,ref requireCell, ref reStr))
+                //    {
+                //        //生成任务
+                //        ControlTaskModel asrsTask = new ControlTaskModel();
+                //        asrsTask.DeviceID = this.stacker.NodeID;
+                //        asrsTask.CreateMode = "自动";
+                //        asrsTask.CreateTime = System.DateTime.Now;
+                //        asrsTask.TaskID = System.Guid.NewGuid().ToString();
+                //        asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
+                //        asrsTask.TaskType = (int)taskType;
+                //        AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
+
+                //        taskParam.CellPos1 = requireCell;
+                //        taskParam.InputPort = port.PortSeq;
+                //        // if (taskType == EnumAsrsTaskType.产品入库)
+                //        // {
+                //        taskParam.InputCellGoods = palletIDS;
+                //        //  }
+                //        asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
+
+
+                //        //申请完成后要锁定货位
+                //        if (!asrsResManage.UpdateCellStatus(houseName, requireCell, EnumCellStatus.空闲, EnumGSTaskStatus.锁定, ref reStr))
+                //        {
+                //            logRecorder.AddDebugLog(nodeName, "更新货位状态失败," + reStr);
+                //            return false;
+                //        }
+                //        if (!asrsResManage.UpdateGSOper(houseName, requireCell, EnumGSOperate.入库, ref reStr))
+                //        {
+                //            logRecorder.AddDebugLog(nodeName, "更新货位操作类行失败," + reStr);
+                //            return false;
+                //        }
+                //        else
+                //        {
+                //            asrsTask.tag1 = houseName;
+                //            asrsTask.tag2 = string.Format("{0}-{1}-{2}", requireCell.Row, requireCell.Col, requireCell.Layer);
+                //            asrsTask.Remark = taskType.ToString();
+                //            ctlTaskBll.Add(asrsTask);
+
+                //            string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3}，任务参数：{4}", taskType.ToString(), requireCell.Row, requireCell.Col, requireCell.Layer, asrsTask.TaskParam);
+                //            logRecorder.AddDebugLog(nodeName, logInfo);
+                //            return true;
+                //        }
+                //    }
+                //    else
+                //    {
+
+                //        return false;
+                //    }
+                //}
+                //else
+                //{
+                //    if (asrsResManage.CellRequire(this.houseName, logicArea.ToString(), ref requireCell, ref reStr))
+                //    {
+                //        //生成任务
+                //        ControlTaskModel asrsTask = new ControlTaskModel();
+                //        asrsTask.DeviceID = this.stacker.NodeID;
+                //        asrsTask.CreateMode = "自动";
+                //        asrsTask.CreateTime = System.DateTime.Now;
+                //        asrsTask.TaskID = System.Guid.NewGuid().ToString();
+                //        asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
+                //        asrsTask.TaskType = (int)taskType;
+                //        AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
+
+                //        taskParam.CellPos1 = requireCell;
+                //        taskParam.InputPort = port.PortSeq;
+                //        // if (taskType == EnumAsrsTaskType.产品入库)
+                //        // {
+                //        taskParam.InputCellGoods = palletIDS;
+                //        //  }
+                //        asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
+
+
+                //        //申请完成后要锁定货位
+                //        if (!asrsResManage.UpdateCellStatus(houseName, requireCell, EnumCellStatus.空闲, EnumGSTaskStatus.锁定, ref reStr))
+                //        {
+                //            logRecorder.AddDebugLog(nodeName, "更新货位状态失败," + reStr);
+                //            return false;
+                //        }
+                //        if (!asrsResManage.UpdateGSOper(houseName, requireCell, EnumGSOperate.入库, ref reStr))
+                //        {
+                //            logRecorder.AddDebugLog(nodeName, "更新货位操作类行失败," + reStr);
+                //            return false;
+                //        }
+                //        else
+                //        {
+                //            asrsTask.tag1 = houseName;
+                //            asrsTask.tag2 = string.Format("{0}-{1}-{2}", requireCell.Row, requireCell.Col, requireCell.Layer);
+                //            asrsTask.Remark = taskType.ToString();
+                //            ctlTaskBll.Add(asrsTask);
+
+                //            string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3}，任务参数：{4}", taskType.ToString(), requireCell.Row, requireCell.Col, requireCell.Layer, asrsTask.TaskParam);
+                //            logRecorder.AddDebugLog(nodeName, logInfo);
+                //            return true;
+                //        }
+                //    }
+                //    else
+                //    {
+
+                //        return false;
+                //    }
+                //}
                
             }
             catch (Exception ex)
@@ -695,6 +748,12 @@ namespace AsrsControl
                     logRecorder.AddDebugLog(nodeName, "更新货位状态失败," + reStr);
                     return false;
                 }
+                if (!asrsResManage.UpdateGSOper(houseName, cell, EnumGSOperate.出库, ref reStr))
+                {
+                    logRecorder.AddDebugLog(nodeName, "更新货位操作类行失败," + reStr);
+                    return false;
+                }
+
                 asrsTask.tag1 = houseName;
                 asrsTask.tag2 = string.Format("{0}-{1}-{2}", cell.Row, cell.Col, cell.Layer);
                 asrsTask.Remark = taskType.ToString();
@@ -849,52 +908,69 @@ namespace AsrsControl
                     {
                         taskType = SysCfg.EnumAsrsTaskType.空筐入库;
                     }
-                  
-                }
 
+                }
                 string palletID = "";
-                if(port.AsrsInputEnabled(ref taskType))
+                #region 判断是否需要读条码
+                if(port.BarcodeScanRequire)
+                {
+                    if((port.Db2Vals[0]==2) && (port.Db1ValsToSnd[0] !=2))
+                    {
+                       
+                        if(SysCfg.SysCfgModel.SimMode)
+                        {
+                            palletID = port.SimRfidUID;
+                        }
+                        else
+                        {
+                            if (barcodeRW != null)
+                            {
+                               palletID = barcodeRW.ReadBarcode();
+                            }
+                        }
+                        if(string.IsNullOrWhiteSpace(palletID))
+                        {
+                            port.Db1ValsToSnd[0] = 3;
+                            continue;
+                        }
+                        port.PushPalletID(palletID);
+                    }
+                }
+                #endregion
+                #region 入库申请
+           
+                if (port.AsrsInputEnabled(ref taskType))
                 {
                     string checkinArea = "注液高温区";
                     string[] cellGoods = null;
-                    if(port.PalletBuffer.Count>0)
+                    if (port.PalletBuffer.Count > 0)
                     {
                         cellGoods = port.PalletBuffer.ToArray();
                     }
-                    
-                    if(taskType == SysCfg.EnumAsrsTaskType.空筐入库)
+
+                    if (taskType == SysCfg.EnumAsrsTaskType.空筐入库)
                     {
                         checkinArea = "空筐区";
                     }
                     else
                     {
-                       
-                        if(cellGoods.Count()<1)
+                        if (cellGoods.Count() < 1)
                         {
                             continue;
                         }
                         palletID = cellGoods[0];
-                        int step=0;
-                        
-                        if(!MesAcc.GetStep(palletID,out step,ref reStr))
+                        int step = 0;
+
+                        if (!MesAcc.GetStep(palletID, out step, ref reStr))
                         {
                             Console.WriteLine("{0}查询工步发生异常：", reStr);
                             continue;
                         }
-                        //int nextStep = SysCfg.SysCfgModel.asrsStepCfg.GetNextStep(step);
                         checkinArea = GetAreaToCheckin(step);
-                        //if(dlgtGetLogicArea != null)
-                        //{
-                        //    checkinArea = (EnumLogicArea)Enum.Parse(typeof(EnumLogicArea),dlgtGetLogicArea(step));
-                        //}
-                        //else
-                        //{
-                        //    checkinArea = (EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); 
-                        //}
-
                     }
+
                     //申请货位
-                   
+
                     if (AsrsCheckinTaskRequire(port, checkinArea, taskType, cellGoods, ref reStr))
                     {
                         // port.PalletBuffer.Clear(); //清空入口缓存
@@ -903,7 +979,7 @@ namespace AsrsControl
                             port.Db1ValsToSnd[0] = 2;
 
                         }
-                        if(cellGoods != null && cellGoods.Count()>0)
+                        if (cellGoods != null && cellGoods.Count() > 0)
                         {
                             string logStr = "自动清空入口缓存数据";
                             foreach (string pallet in cellGoods)
@@ -911,24 +987,26 @@ namespace AsrsControl
                                 logStr += (pallet + ",");
                             }
                             logRecorder.AddDebugLog(nodeName, logStr);
-                            port.CurrentTaskDescribe = "入库申请成功,"+logStr;
+                            port.CurrentTaskDescribe = "入库申请成功," + logStr;
                         }
-                       
+
                     }
                     else
                     {
-                       
+
                         if (port.Db1ValsToSnd[0] != asrsCheckInFailed)
                         {
                             string logStr = "";
-                            logStr = string.Format("托盘{0} 任务：{1}申请失败,因为：{2}", palletID,taskType.ToString(), reStr);
+                            logStr = string.Format("托盘{0} 任务：{1}申请失败,因为：{2}", palletID, taskType.ToString(), reStr);
                             logRecorder.AddDebugLog(nodeName, logStr);
                         }
-                        port.CurrentTaskDescribe = string.Format("托盘{0} 任务：{1}申请失败,因为：{2}", palletID, taskType.ToString(), reStr); 
+                        port.CurrentTaskDescribe = string.Format("托盘{0} 任务：{1}申请失败,因为：{2}", palletID, taskType.ToString(), reStr);
                         port.Db1ValsToSnd[0] = asrsCheckInFailed;
 
                     }
                 }
+                #endregion
+               
             }
         }
         private void EmptyPalletOutputRequire2(Dictionary<string, GSMemTempModel> asrsStatDic)

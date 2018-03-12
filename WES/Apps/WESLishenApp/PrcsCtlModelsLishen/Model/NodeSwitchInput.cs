@@ -12,6 +12,13 @@ namespace PrcsCtlModelsLishen
         private short barcodeFailedStat = 1;
         private List<FlowPathModel> flowPathList = new List<FlowPathModel>();
         private AsrsControl.AsrsPortalModel asrsInPort = null;
+        public AsrsControl.AsrsCtlModel AsrsCtl { get; set; }
+        public AsrsControl.AsrsPortalModel AsrsPort { get; set; }
+        public AsrsInterface.IAsrsManageToCtl AsrsResManage { get; set; } 
+        public NodeSwitchInput()
+        {
+            AsrsResManage = null;
+        }
         /// <summary>
         /// 建立路径列表，只建两级路径，分流点-入口-堆垛机
         /// </summary>
@@ -39,7 +46,10 @@ namespace PrcsCtlModelsLishen
                 currentTaskPhase = 0;
                 DevCmdReset();
                 db1ValsToSnd[0] = 0;
-
+                if(this.nodeID=="4001")
+                {
+                    db1ValsToSnd[1] = 1;
+                }
                 rfidUID = string.Empty;
                 currentTaskDescribe = "等待新的任务";
                 //return true;
@@ -154,30 +164,33 @@ namespace PrcsCtlModelsLishen
         private bool Switch4001()
         {
             int switchRe = 0;
-            string strCata = this.rfidUID.Substring(10, 1).ToUpper();
-            int productCata = 0;
-            string strCataName = "正极材料";
-            int step = 0;
-            string reStr = "";
-            if (strCata == "C")
+
+            //string strCata = "";// this.rfidUID.Substring(10, 1).ToUpper();
+            short productCata = 0;
+            string strCataName = "";// "正极材料";
+            string reStr="";
+            if (!ParsePalletID(this.rfidUID, ref productCata, ref strCataName, ref reStr))
             {
-                strCataName = "正极材料";
-                productCata = 1;
-                switchRe = 2;
-                step = 1;
+                return false;
             }
-            else if (strCata == "A")
+           // int step = 0;
+           
+            if (productCata==1) //正极
             {
-                strCataName = "负极材料";
-                productCata = 3;
-                step = 2;
+              
+                switchRe = 2;
+              //  step = 1;
+            }
+            else if (productCata==3)//负极
+            {
+               
+               
+              //  step = 2;
                 switchRe = 3;
             }
-            else if (strCata == "S")
+            else if (productCata == 2) //隔膜
             {
-                strCataName = "隔膜材料";
-                productCata = 2;
-                step = 0;
+              
                 switchRe = 2;
             }
             else
@@ -186,8 +199,26 @@ namespace PrcsCtlModelsLishen
                 {
                     logRecorder.AddDebugLog(nodeName, "不可识别的条码类别：" + this.rfidUID);
                 }
+                this.db1ValsToSnd[0] = barcodeFailedStat;
                 return false;
             }
+            //检索库里的空框类型，生成对应的空框出库任务，如果没有可以出库的空框也给出反馈
+            
+            short emptypalletReqRe = 0;
+            if(this.db1ValsToSnd[1] ==1)
+            {
+                if (EmptyPalletOutrequire(productCata, ref emptypalletReqRe, ref reStr))
+                {
+                    this.db1ValsToSnd[1] = 2;
+                }
+                else
+                {
+                    this.db1ValsToSnd[1] = 3;
+                    this.currentTaskDescribe = string.Format("申请空框类型{0}出库失败,{1}", strCataName, reStr);
+                    return false;
+                }
+            }
+           
             if (switchRe == 2)
             {
                 if (asrsInPort.PalletBuffer.Count() >= asrsInPort.PortinBufCapacity)
@@ -204,15 +235,111 @@ namespace PrcsCtlModelsLishen
       
                 logRecorder.AddDebugLog(nodeName, string.Format("{0}{1}，分流进立库", this.rfidUID, strCataName));
                 asrsInPort.PushPalletID(this.rfidUID);
-                this.db1ValsToSnd[0] = 2;
+                this.db1ValsToSnd[0] = (short)switchRe;
                 return true;
             }
             else
             {
-                this.db1ValsToSnd[0] = 3;
+                this.db1ValsToSnd[0] = (short)switchRe;
                 logRecorder.AddDebugLog(nodeName, string.Format("{0}负极材料，分流进烘烤线", this.rfidUID));
                 return true;
             }
+        }
+        private bool EmptyPalletOutrequire(short palletCata,ref short re,ref string reStr)
+        {
+            
+            string houseName = "A1库房";
+            //遍历所有库位，判断材料类别，按照先入先出规则，匹配出库的货位。
+            Dictionary<string, AsrsModel.GSMemTempModel> asrsStatDic = new Dictionary<string, AsrsModel.GSMemTempModel>();
+            
+            if (!AsrsResManage.GetAllGsModel(ref asrsStatDic, ref reStr))
+            {
+                Console.WriteLine(string.Format("{0} 获取货位状态失败", houseName));
+                return false;
+            }
+            List<AsrsModel.GSMemTempModel> validCells = new List<AsrsModel.GSMemTempModel>();
+            int r = 1, c = 1, L = 1;
+            for (r = 1; r < AsrsCtl.AsrsRow + 1; r++)
+            {
+                for (c = 1; c < AsrsCtl.AsrsCol + 1; c++)
+                {
+                    for (L = 1; L <AsrsCtl.AsrsLayer + 1; L++)
+                    {
+                        string strKey = string.Format("{0}:{1}-{2}-{3}", houseName, r, c, L);
+                        AsrsModel.GSMemTempModel cellStat = null;
+                        if (!asrsStatDic.Keys.Contains(strKey))
+                        {
+                            continue;
+                        }
+                        cellStat = asrsStatDic[strKey];
+                        if ((!cellStat.GSEnabled) || (cellStat.GSTaskStatus == AsrsModel.EnumGSTaskStatus.锁定.ToString()) || (cellStat.GSStatus != AsrsModel.EnumCellStatus.空料框.ToString()))
+                        {
+                            // reStr = string.Format("货位{0}-{1}-{2}禁用,无法生成出库任务", cell.Row, cell.Col, cell.Layer);
+                            continue;
+                        }
+                        AsrsModel.CellCoordModel cell = new AsrsModel.CellCoordModel(r, c, L);
+                        List<string> storGoods = new List<string>();
+                        if (!AsrsResManage.GetStockDetail(houseName, cell, ref storGoods))
+                        {
+                            continue;
+                        }
+                        if (storGoods.Count() < 1)
+                        {
+                            continue;
+                        }
+                        string palletID = storGoods[0];
+                      //  string strCata = "";// this.rfidUID.Substring(10, 1).ToUpper();
+                        short productCata = 0;
+                        string strCataName = "";// "正极材料";
+
+                        if (!ParsePalletID(palletID, ref productCata, ref strCataName, ref reStr))
+                        {
+                            continue;
+                        }
+                        if (productCata ==palletCata)
+                        {
+                            validCells.Add(cellStat);
+                        }
+                    }
+                }
+            }
+            if (validCells.Count() > 0)
+            {
+                //排序，按照先入先出
+                AsrsModel.GSMemTempModel firstGS = validCells[0];
+                if (validCells.Count() > 1)
+                {
+                    for (int i = 1; i < validCells.Count(); i++)
+                    {
+                        AsrsModel.GSMemTempModel tempGS = validCells[i];
+                        if (tempGS.InHouseDate < firstGS.InHouseDate)
+                        {
+                            firstGS = tempGS;
+                        }
+                    }
+                }
+                //生成出库任务
+                string[] strCellArray = firstGS.GSPos.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
+                int row = int.Parse(strCellArray[0]);
+                int col = int.Parse(strCellArray[1]);
+                int layer = int.Parse(strCellArray[2]);
+                AsrsModel.CellCoordModel cell = new AsrsModel.CellCoordModel(row, col, layer);
+                if (AsrsCtl.GenerateOutputTask(cell, SysCfg.EnumAsrsTaskType.空筐出库, true, AsrsPort.PortSeq, ref reStr, new List<short> { palletCata }))
+                {
+                    AsrsPort.Db1ValsToSnd[0] = 2;
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("生成任务{0}失败,{1}", AsrsPort.BindedTaskOutput.ToString(), reStr);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
         }
         private bool Switch4003()
         {
@@ -344,6 +471,55 @@ namespace PrcsCtlModelsLishen
                 }
             }
             return true;
+        }
+        public static bool ParsePalletID(string palletID, ref short cata, ref string strCataName, ref string reStr)
+        {
+            try
+            {
+                if(string.IsNullOrWhiteSpace(palletID))
+                {
+                    reStr = "料筐条码为空";
+                    return false;
+                }
+                if(palletID.Length<11)
+                {
+                    reStr = "料筐条码长度不足";
+                    return false;
+                }
+                string strCata = palletID.Substring(10, 1).ToUpper();
+                cata = 0;
+                strCataName = "";
+                if (strCata == "C")
+                {
+                    strCataName = "正极材料";
+                    cata = 1;
+                  
+                }
+                else if (strCata == "A")
+                {
+                    strCataName = "负极材料";
+                    cata = 3;
+                    
+                }
+                else if (strCata == "S")
+                {
+                    strCataName = "隔膜材料";
+                    cata = 2;
+                   
+                }
+                else
+                {
+                    
+                    reStr = "无法解析条码" + palletID;
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                reStr = ex.ToString();
+                return false;
+            }
         }
     }
 }

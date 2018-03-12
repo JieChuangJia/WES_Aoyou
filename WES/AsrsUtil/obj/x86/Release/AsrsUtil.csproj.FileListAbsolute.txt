@@ -1,5 +1,4 @@
-E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\AsrsUtil.exe
-E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\AsrsUtil.pdb
+E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\AsrsUtil.xml
 E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\DevAccess.dll
 E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\DevInterface.dll
 E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\Oracle.ManagedDataAccess.dll
@@ -10,6 +9,8 @@ E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\DevAccess
 E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\AsrsUtil.Form1.resources
 E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\AsrsUtil.Properties.Resources.resources
 E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\AsrsUtil.csproj.GenerateResource.Cache
-E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\AsrsUtil.exe
-E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\AsrsUtil.pdb
-E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\AsrsUtil.xml
+E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\AsrsUtil.csprojResolveAssemblyReference.cache
+E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\堆垛机调试助手.exe
+E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\bin\Release\堆垛机调试助手.pdb
+E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\堆垛机调试助手.exe
+E:\workspace\项目\之信遨优项目\代码\WES\AsrsUtil\obj\x86\Release\堆垛机调试助手.pdb

@@ -39,6 +39,10 @@ namespace AsrsModel
         /// 货位入库时间,没有库存入库时间为空
         /// </summary>
         public DateTime? InHouseDate { get; set; }
+        /// <summary>
+        /// 货位扩展属性
+        /// </summary>
+        public string ExtProp1 { get; set; }
        
     }
 }

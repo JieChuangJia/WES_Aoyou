@@ -38,11 +38,13 @@ namespace AsrsControl
         /// </summary>
         public int PortinBufCapacity { get; set; }
         public bool EmptyPalletInputEnabled { get; set; }
+        public bool BarcodeScanRequire { get; set; }
         public AsrsPortalModel(AsrsCtlModel asrsCtl)
         {
             PortinBufCapacity = 1; //默认最大容量是1
             this.asrsCtlModel = asrsCtl;
             EmptyPalletInputEnabled = false;
+            BarcodeScanRequire = false;
         }
         public override bool ExeBusiness(ref string reStr)
         {
@@ -123,6 +125,13 @@ namespace AsrsControl
                         }
                     }
                 }
+            }
+            if (selfDataXE.Attribute("barcodeScanRequire") != null)
+            {
+               if(selfDataXE.Attribute("barcodeScanRequire").Value.ToString().ToUpper()=="TRUE")
+               {
+                   BarcodeScanRequire = true;
+               }
             }
             return true;
         }
@@ -336,7 +345,7 @@ namespace AsrsControl
                         //缓存满，并且入口有料，并且手动强制入库
                         if (this.db2Vals[this.PortinBufCapacity] == 2)
                         {
-                            if ((this.palletBuffer.Count() > 0) && (this.db2Vals[0]==2) )
+                            if ((this.palletBuffer.Count() > 0) && (this.db2Vals[0]==2 || this.db2Vals[1]==2) )
                             {
                                 return true;
                             }

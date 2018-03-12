@@ -17,9 +17,9 @@ namespace AsrsStorDBAcc.BLL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(long StoreHouseID, long GoodsSiteID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, string StoreHouseName, string StoreHouseDesc, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, long StockID, string TrayID, bool IsFull, DateTime InHouseTime, string MeterialboxCode, string MeterialBatch, string MeterialStatus, long StockListID, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public bool Exists(long StoreHouseID, long GoodsSiteID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, string StoreHouseName, string StoreHouseDesc, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, long StockID, string TrayID, bool IsFull, DateTime InHouseTime, string MeterialboxCode, string MeterialBatch, string MeterialStatus, long StockListID, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
-            return dal.Exists(StoreHouseID, GoodsSiteID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, StoreHouseName, StoreHouseDesc, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StockID, TrayID, IsFull, InHouseTime, MeterialboxCode, MeterialBatch, MeterialStatus, StockListID, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc);
+            return dal.Exists(StoreHouseID, GoodsSiteID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, StoreHouseName, StoreHouseDesc, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StockID, TrayID, IsFull, InHouseTime, MeterialboxCode, MeterialBatch, MeterialStatus, StockListID, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc, GoodsSite_Reserve);
         }
 
         /// <summary>
@@ -41,22 +41,22 @@ namespace AsrsStorDBAcc.BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(long StoreHouseID, long GoodsSiteID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, string StoreHouseName, string StoreHouseDesc, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, long StockID, string TrayID, bool IsFull, DateTime InHouseTime, string MeterialboxCode, string MeterialBatch, string MeterialStatus, long StockListID, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public bool Delete(long StoreHouseID, long GoodsSiteID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, string StoreHouseName, string StoreHouseDesc, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, long StockID, string TrayID, bool IsFull, DateTime InHouseTime, string MeterialboxCode, string MeterialBatch, string MeterialStatus, long StockListID, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
 
-            return dal.Delete(StoreHouseID, GoodsSiteID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, StoreHouseName, StoreHouseDesc, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StockID, TrayID, IsFull, InHouseTime, MeterialboxCode, MeterialBatch, MeterialStatus, StockListID, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc);
+            return dal.Delete(StoreHouseID, GoodsSiteID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, StoreHouseName, StoreHouseDesc, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StockID, TrayID, IsFull, InHouseTime, MeterialboxCode, MeterialBatch, MeterialStatus, StockListID, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc, GoodsSite_Reserve);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public AsrsStorDBAcc.Model.View_StockModel GetModel(long StoreHouseID, long GoodsSiteID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, string StoreHouseName, string StoreHouseDesc, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, long StockID, string TrayID, bool IsFull, DateTime InHouseTime, string MeterialboxCode, string MeterialBatch, string MeterialStatus, long StockListID, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc)
+        public AsrsStorDBAcc.Model.View_StockModel GetModel(long StoreHouseID, long GoodsSiteID, string GoodsSiteName, int GoodsSiteLayer, int GoodsSiteColumn, string StoreHouseName, string StoreHouseDesc, int GoodsSiteRow, string GoodsSiteTaskStatus, string GoodsSiteType, string GoodsSitePos, string GoodsSiteStatus, string GoodsSiteOperate, long StockID, string TrayID, bool IsFull, DateTime InHouseTime, string MeterialboxCode, string MeterialBatch, string MeterialStatus, long StockListID, bool GsEnabled, long StoreHouseLogicAreaID, string StoreHouseAreaName, string StoreHouseAreaDesc, string GoodsSite_Reserve)
         {
 
-            return dal.GetModel(StoreHouseID, GoodsSiteID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, StoreHouseName, StoreHouseDesc, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StockID, TrayID, IsFull, InHouseTime, MeterialboxCode, MeterialBatch, MeterialStatus, StockListID, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc);
+            return dal.GetModel(StoreHouseID, GoodsSiteID, GoodsSiteName, GoodsSiteLayer, GoodsSiteColumn, StoreHouseName, StoreHouseDesc, GoodsSiteRow, GoodsSiteTaskStatus, GoodsSiteType, GoodsSitePos, GoodsSiteStatus, GoodsSiteOperate, StockID, TrayID, IsFull, InHouseTime, MeterialboxCode, MeterialBatch, MeterialStatus, StockListID, GsEnabled, StoreHouseLogicAreaID, StoreHouseAreaName, StoreHouseAreaDesc, GoodsSite_Reserve);
         }
 
-       
+        
 
         /// <summary>
         /// 获得数据列表

@@ -38,6 +38,10 @@ namespace WESLishen
         {
             asrsPresenter.SetAsrsResManage(asrsRes);
             this.asrsResManage = asrsRes;
+            PrcsCtlModelsLishen.NodeSwitchInput nodeSwitch = ctlNodeManager.GetNodeByID("4001") as PrcsCtlModelsLishen.NodeSwitchInput;
+            nodeSwitch.AsrsResManage = asrsResManage;
+            nodeSwitch.AsrsCtl = asrsPresenter.AsrsCtls[0];
+            nodeSwitch.AsrsPort = ctlNodeManager.GetNodeByID("2009") as AsrsControl.AsrsPortalModel;
         }
         /// <summary>
         /// 系统控制初始化
@@ -101,6 +105,8 @@ namespace WESLishen
                     asrsCtl.dlgtGetLogicArea = AsrsAreaToCheckin;
                     asrsCtl.dlgtUpdateStep = UpdateStepAfterCheckin;
                 }
+               
+
                 //6 通信设备分配
                 ctlNodeManager.AllocateCommdev();
 
@@ -321,11 +327,11 @@ namespace WESLishen
         }
         private string AsrsAreaToCheckin(AsrsControl.AsrsCtlModel asrsCtl,int step)
         {
-            string area = AsrsModel.EnumLogicArea.其它.ToString();
+            string area = "其它";
             if(step== 0)
             {
                 //不限库区，
-                string[] logicAreas = new string[]{AsrsModel.EnumLogicArea.正极材料区.ToString(),AsrsModel.EnumLogicArea.负极材料区.ToString(),AsrsModel.EnumLogicArea.空筐区.ToString()};
+                string[] logicAreas = new string[]{"正极材料区","负极材料区","空筐区"};
                 foreach(string strArea in logicAreas)
                 {
                     int validNum = 0;
