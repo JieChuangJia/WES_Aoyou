@@ -714,7 +714,7 @@ namespace ASRSStorManage.Presenter
             {
                 foreach (Color col in this.areaColor.Values)
                 {
-                    if (col == color)
+                    if (col.R == color.R && col.G == color.G&&col.B == color.B)
                     {
                         reStr = "已经存在相同库区颜色！";
 
