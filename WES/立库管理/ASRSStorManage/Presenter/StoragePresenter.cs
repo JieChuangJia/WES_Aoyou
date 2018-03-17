@@ -434,7 +434,7 @@ namespace ASRSStorManage.Presenter
         /// <param name="houseName"></param>
         /// <param name="colth"></param>
         /// <returns></returns>
-        public bool SetSingleColArea(string houseName,int rowth, int stCol,int edCol, string logicAreaName)
+        public bool SetMulLayerMulColArea(string houseName,int rowth, int stCol,int edCol,int stLayer,int edLayer,string logicAreaName)
         {
             string reStr = "";
             StoreHouseModel house = bllStoreHouse.GetModelByName(houseName);
@@ -447,18 +447,26 @@ namespace ASRSStorManage.Presenter
             {
                 return false;
             }
-            for (int i = stCol; i <= edCol; i++)
-            {
+            //for (int i = stCol; i <= edCol; i++)
+            //{
 
-                bool status = bllGs.SetSingleColGsArea(house.StoreHouseID, logicArea.StoreHouseLogicAreaID, rowth, i);
+             bool status = bllGs.SetMulLayerMulColGsArea(house.StoreHouseID, logicArea.StoreHouseLogicAreaID, rowth, stCol,edCol,stLayer,edLayer);
                 if (status == false)
                 {
-                    continue;
+                    return false;
                 }
-                this.iStorageManage.AddGSOperRecord(houseName, new CellCoordModel(rowth, i, 1)
-                    , EnumGSOperateType.库存区域设置, "手动单列库存区域设置:货位列" + i + "为：" + logicArea.StoreHouseAreaName, ref reStr);
+                //for (int layer = stLayer; layer <= edLayer;layer ++ )
+                //{
+                //    for(int col = stCol;col<=edCol;col++)
+                //    {
+                this.iStorageManage.AddGSOperRecord(houseName, new CellCoordModel(rowth, stCol, stLayer)
+                    , EnumGSOperateType.库存区域设置, "手动多层多列库存区域设置:起始列[" + stCol + "]终止列["+edCol+"] 起始层["+stLayer+"]"
+                    +"终止层[" +edLayer+"] 为->"+ logicArea.StoreHouseAreaName, ref reStr);
+                //    }
+                //}
+                
 
-            }
+            //}
             RefreshPos(this.currHouseName, currRowth);
             return true;
              

@@ -35,15 +35,23 @@ namespace ASRSStorManage.View
 
         private void IniLayerListArea( List<string> layerList)
         {
-            this.cb_LayerListArea.Items.Clear();
+            //this.cb_LayerListArea.Items.Clear();
+            this.cb_startLayer.Items.Clear();
+            this.cb_EndLayer.Items.Clear();
+
             for (int i = 0; i < layerList.Count; i++)
             {
-                this.cb_LayerListArea.Items.Add(layerList[i]);
+                //this.cb_LayerListArea.Items.Add(layerList[i]);
+                this.cb_startLayer.Items.Add(layerList[i]);
+                this.cb_EndLayer.Items.Add(layerList[i]);
 
             }
-            if (this.cb_LayerListArea.Items.Count > 0)
+
+            if (this.cb_startLayer.Items.Count > 0)
             {
-                this.cb_LayerListArea.SelectedIndex = 0;
+                //this.cb_LayerListArea.SelectedIndex = 0;
+                this.cb_startLayer.SelectedIndex = 0;
+                this.cb_EndLayer.SelectedIndex = 0;
             }
         }
         private void IniLayerList( List<string> layerList)
@@ -186,24 +194,33 @@ namespace ASRSStorManage.View
             //    MessageBox.Show(restr, "信息提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //    return;
             //}
-            if(this.rb_SingleColArea.Checked == true)
-            {
+            //if(this.rb_SingleColArea.Checked == true)
+            //{
                 int startCol = int.Parse(this.cb_ColListSTArea.Text);
                 int endCol = int.Parse(this.cb_ColListEDArea.Text);
+                int startLayer = int.Parse(this.cb_startLayer.Text);
+                int endLayer = int.Parse(this.cb_EndLayer.Text);
+
                 if (endCol < startCol)
                 {
                     MessageBox.Show("您的起止列设置错误！", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                this.presenter.SetSingleColArea(this.houseName, this.rowth, startCol,endCol, this.cb_HouseArea.Text);
-            }
-            else if(this.rb_SingleLayerArea.Checked == true)
-            {
-                this.presenter.SetSingleLayerArea(this.houseName,this.rowth, int.Parse(this.cb_LayerListArea.Text),this.cb_HouseArea.Text);
-            }
+                if (endLayer < startLayer)
+                {
+                    MessageBox.Show("您的起止层设置错误！", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                this.presenter.SetMulLayerMulColArea(this.houseName, this.rowth, startCol, endCol,startLayer,endLayer, this.cb_HouseArea.Text);
+            //}
+            //else if(this.rb_SingleLayerArea.Checked == true)
+            //{
+            //    this.presenter.SetSingleLayerArea(this.houseName,this.rowth, int.Parse(this.cb_LayerListArea.Text),this.cb_HouseArea.Text);
+            //}
            
           
         }
+
  
         //public static bool LoadColorCfg(ref string reStr)
         //{

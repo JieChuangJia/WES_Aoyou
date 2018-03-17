@@ -513,6 +513,22 @@ namespace AsrsStorDBAcc.BLL
             }
             return true;
         }
+        public bool SetMulLayerMulColGsArea(long houseID, long houseAreaID, int rowth, int stCol,int edCol,int stLayer,int edLayer)
+        {
+            string strSql = "StoreHouseID =" + houseID + " and GoodsSiteRow = " + rowth + " and GoodsSiteColumn >=" + stCol + " and GoodsSiteColumn<= " + edCol
+                + " and GoodsSiteLayer>= " + stLayer + " and GoodsSiteLayer<= " +edLayer;
+            List<GoodsSiteModel> gsList = GetModelList(strSql);
+            if (gsList == null)
+            {
+                return false;
+            }
+            for (int i = 0; i < gsList.Count; i++)
+            {
+                gsList[i].StoreHouseLogicAreaID = houseAreaID;
+                Update(gsList[i]);
+            }
+            return true;
+        }
         public bool SetSingleLayerGsArea(long houseID, long houseAreaID,int rowth, int layer)
         {
             string strSql = "StoreHouseID =" + houseID + " and GoodsSiteRow = "+ rowth  +" and GoodsSiteLayer =" + layer;
