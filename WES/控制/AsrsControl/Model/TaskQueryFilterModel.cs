@@ -16,6 +16,7 @@ namespace AsrsControl
         public bool LikeQuery { get; set; }
         public string Cell { get; set; }
         public string LikeStr { get; set; }
+        public string PrivelegeType { get; set; }
         public TaskQueryFilterModel()
         {
             StartDate = System.DateTime.Now - (new TimeSpan(30, 0, 0, 0));

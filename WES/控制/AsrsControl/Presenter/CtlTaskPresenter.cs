@@ -65,7 +65,18 @@ namespace AsrsControl
             {
                 strWhere.AppendFormat(" and TaskParam Like '%{0}%' ", taskFilter.LikeStr);
             }
-            strWhere.AppendFormat(" order by CreateTime asc");
+            if(taskFilter.PrivelegeType == "由高到低")
+            {
+                strWhere.AppendFormat(" order by cast(tag4 as INTEGER) desc,CreateTime asc");
+            }
+            else if(taskFilter.PrivelegeType == "由低到高")
+            {
+                strWhere.AppendFormat(" order by cast(tag4 as INTEGER) asc,CreateTime asc");
+            }
+            else
+            {
+                strWhere.AppendFormat(" order by CreateTime asc");
+            }
             DataSet ds = taskBll.GetList(strWhere.ToString());
             DataTable dt = ds.Tables[0];
             dt.Columns["TaskID"].ColumnName= "任务ID";
@@ -79,8 +90,9 @@ namespace AsrsControl
             dt.Columns["DeviceID"].ColumnName = "设备ID";
             dt.Columns["tag1"].ColumnName = "库房";
             dt.Columns["tag2"].ColumnName = "货位";
+            dt.Columns["tag4"].ColumnName = "优先级";
             dt.Columns.Remove("tag3");
-            dt.Columns.Remove("tag4");
+          
             dt.Columns.Remove("tag5");
             dt.Columns["Remark"].ColumnName = "备注";
             dt.Columns.Add("设备");
@@ -134,6 +146,17 @@ namespace AsrsControl
                 taskBll.Delete(taskID);
             }
             QueryTask();
+        }
+        public bool ModifyTaskPri(string taskID,int pri,ref string reStr)
+        {
+            ControlTaskModel taskM= taskBll.GetModel(taskID);
+            if(taskM == null)
+            {
+                reStr = "不存在的任务ID:"+taskID;
+                return false;
+            }
+            taskM.tag4 = pri.ToString();
+            return taskBll.Update(taskM);
         }
 
     }

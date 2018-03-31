@@ -13,5 +13,6 @@ namespace ModuleCrossPnP
         string CurUsername { get; }
         int RoleID { get; }
         void AttachModuleView(System.Windows.Forms.Form childView);
+        void RemoveModuleView(System.Windows.Forms.Form childView);
     }
 }

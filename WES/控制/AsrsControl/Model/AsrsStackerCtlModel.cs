@@ -393,7 +393,7 @@ namespace AsrsControl
                 return false;
             }
             string storeAreaZone = "注液高温区";
-            storeAreaZone = this.asrsCtlModel.GetAreaToCheckin(step);//(AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); //AsrsModel.EnumLogicArea.注液高温区; //此处需要根据步号判断
+            storeAreaZone = this.asrsCtlModel.GetAreaToCheckin(palletID,step);//(AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); //AsrsModel.EnumLogicArea.注液高温区; //此处需要根据步号判断
 
             int cellEmptCounts = 0;
             if (!asrsCtlModel.AsrsResManage.GetHouseAreaLeftGs(asrsCtlModel.HouseName, storeAreaZone.ToString(), ref cellEmptCounts, reStr))

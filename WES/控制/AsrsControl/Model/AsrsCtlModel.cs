@@ -25,7 +25,7 @@ namespace AsrsControl
         public delegate ControlTaskModel DelegateGetTaskTorun(AsrsControl.AsrsCtlModel asrsCtl,IAsrsManageToCtl asrsResManage, IList<ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType);
         public delegate bool DlgtAsrsportBusiness(AsrsPortalModel port, ref string reStr);
         public delegate bool DlgtAsrsOutTaskPortBusiness(AsrsPortalModel port, AsrsControl.AsrsTaskParamModel taskParam, ref string reStr);
-        public delegate string DlgtGetAsrsLogicArea(AsrsCtlModel asrsCtl,int curStep);
+        public delegate string DlgtGetAsrsLogicArea(string palletID,AsrsCtlModel asrsCtl,int curStep);
         public delegate bool DlgtUpdateStepAfterCheckin(string palletID,AsrsCtlModel asrsCtl, int curStep);
         #region 数据
        // protected  Dictionary<int, string> mesStepLocalMap = new Dictionary<int, string>();
@@ -609,7 +609,7 @@ namespace AsrsControl
              
             }
         }
-        public bool GenerateOutputTask(CellCoordModel cell, CellCoordModel cell2, SysCfg.EnumAsrsTaskType taskType, bool autoTaskMode,List<short> reserveParams=null)
+        public bool GenerateOutputTask(CellCoordModel cell, CellCoordModel cell2, SysCfg.EnumAsrsTaskType taskType, bool autoTaskMode,List<short> reserveParams=null,int priGrade=0)
         {
            // throw new NotImplementedException();
           
@@ -632,6 +632,7 @@ namespace AsrsControl
             taskParam.ReserveParams = reserveParams;
             taskParam.CellPos1 = cell;
             taskParam.CellPos2 = cell2;
+            asrsTask.tag4 = priGrade.ToString();
             List<string> storGoods = new List<string>();
             if (asrsResManage.GetStockDetail(houseName, cell, ref storGoods))
             {
@@ -707,7 +708,7 @@ namespace AsrsControl
             }
             return true;
         }
-        public bool GenerateOutputTask(CellCoordModel cell,SysCfg.EnumAsrsTaskType taskType,bool autoTaskMode,int portID,ref string reStr,List<short> reserveParams=null)
+        public bool GenerateOutputTask(CellCoordModel cell, SysCfg.EnumAsrsTaskType taskType, bool autoTaskMode, int portID, ref string reStr, List<short> reserveParams = null, int priGrade = 0)
         {
             try
             {
@@ -726,6 +727,7 @@ namespace AsrsControl
                 asrsTask.TaskID = System.Guid.NewGuid().ToString();
                 asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
                 asrsTask.TaskType = (int)taskType;
+                asrsTask.tag4 = "0";
                 AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
                 taskParam.InputPort = 0;
                 taskParam.CellPos1 = cell;
@@ -756,6 +758,7 @@ namespace AsrsControl
 
                 asrsTask.tag1 = houseName;
                 asrsTask.tag2 = string.Format("{0}-{1}-{2}", cell.Row, cell.Col, cell.Layer);
+                asrsTask.tag4 = priGrade.ToString();
                 asrsTask.Remark = taskType.ToString();
                 ctlTaskBll.Add(asrsTask);
                 string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3},{4}", taskType.ToString(), cell.Row, cell.Col, cell.Layer, asrsTask.TaskParam);
@@ -860,12 +863,12 @@ namespace AsrsControl
         /// </summary>
         /// <param name="step">当前工步</param>
         /// <returns></returns>
-        public string GetAreaToCheckin(int step)
+        public string GetAreaToCheckin(string palletID,int step)
         {
            string area = "其它";
             if(dlgtGetLogicArea != null)
             {
-                area = dlgtGetLogicArea(this, step);//(EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), dlgtGetLogicArea(this,step));
+                area = dlgtGetLogicArea(palletID,this, step);//(EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), dlgtGetLogicArea(this,step));
             }
             else
             {
@@ -896,20 +899,22 @@ namespace AsrsControl
                 }
                
                 SysCfg.EnumAsrsTaskType taskType = port.BindedTaskInput;
-                //判断第一个料框是否空筐
-                if (port.EmptyPalletInputEnabled && port.PalletBuffer.Count() > 0)
+                int palletStep = 0;
+                if (!MesAcc.GetStep(port.PalletBuffer[0], out palletStep, ref reStr))
                 {
-                    int palletStep = 0;
-                    if (!MesAcc.GetStep(port.PalletBuffer[0], out palletStep, ref reStr))
+                    continue;
+                }
+                if (palletStep == 0)
+                {
+                    //判断第一个料框是否空筐
+                    taskType = SysCfg.EnumAsrsTaskType.空筐入库;
+                    if (!port.EmptyPalletInputEnabled || port.PalletBuffer.Count() < 1)
                     {
+                        port.CurrentTaskDescribe = "空筐入库申请失败，请检查配置空筐是否允许出库，以及是否有缓存托盘数据";
                         continue;
                     }
-                    if(palletStep==0)
-                    {
-                        taskType = SysCfg.EnumAsrsTaskType.空筐入库;
-                    }
-
                 }
+  
                 string palletID = "";
                 #region 判断是否需要读条码
                 if(port.BarcodeScanRequire)
@@ -966,7 +971,7 @@ namespace AsrsControl
                             Console.WriteLine("{0}查询工步发生异常：", reStr);
                             continue;
                         }
-                        checkinArea = GetAreaToCheckin(step);
+                        checkinArea = GetAreaToCheckin(palletID,step);
                     }
 
                     //申请货位
@@ -1563,7 +1568,7 @@ namespace AsrsControl
                    
 
                     //遍历所有可执行任务，找到第一个可用的
-                    List<ControlTaskModel> taskList = ctlTaskBll.GetTaskToRunList((int)taskType, SysCfg.EnumTaskStatus.待执行.ToString(), stacker.NodeID);
+                    List<ControlTaskModel> taskList = ctlTaskBll.GetTaskToRunList((int)taskType, SysCfg.EnumTaskStatus.待执行.ToString(), stacker.NodeID,true);
                     ControlTaskModel task = GetTaskTorun(taskList, (SysCfg.EnumAsrsTaskType)taskType);
                     /*ControlTaskModel task = null;
                    if(taskList != null)

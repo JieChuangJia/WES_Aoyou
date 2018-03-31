@@ -47,6 +47,8 @@ namespace AsrsControl
             bs.DataSource = dt;
             bindingNavigator1.BindingSource = bs;
             dataGridView1.DataSource = bs;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
      
         #endregion
@@ -55,6 +57,7 @@ namespace AsrsControl
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             taskPresenter.TaskFilter.CellCondition = checkBoxCell.Checked;
+            taskPresenter.TaskFilter.PrivelegeType = this.comboBoxOrderType.Text;
             if (checkBoxCell.Checked)
             {
                 taskPresenter.TaskFilter.Cell = this.textBoxCell.Text;
@@ -83,7 +86,8 @@ namespace AsrsControl
                 SysCfg.EnumAsrsTaskType.OCV测试分拣.ToString()});
 
             this.comboBox3.Items.AddRange(new string[] { "所有", SysCfg.EnumTaskStatus.待执行.ToString(), SysCfg.EnumTaskStatus.执行中.ToString(), SysCfg.EnumTaskStatus.已完成.ToString(), SysCfg.EnumTaskStatus.超时.ToString(), SysCfg.EnumTaskStatus.任务撤销.ToString() });
-
+            this.comboBoxOrderType.Items.AddRange(new string[] { "无","由高到低","由低到高"});
+            this.comboBoxOrderType.SelectedIndex = 0;
             
             this.comboBox2.SelectedIndex = 0;
             this.comboBox3.SelectedIndex = 0;
@@ -95,6 +99,8 @@ namespace AsrsControl
             this.comboBox1.DataBindings.Add("Text", taskPresenter.TaskFilter, "NodeName");
             this.comboBox2.DataBindings.Add("Text", taskPresenter.TaskFilter, "TaskType");
             this.comboBox3.DataBindings.Add("Text", taskPresenter.TaskFilter, "TaskStatus");
+            this.toolTip1.SetToolTip(this.textBoxPrivilege,"请输入0~1000的数值，数值越大，优先级越高");
+           
           
         }
         private void btnDelTask_Click(object sender, EventArgs e)
@@ -119,5 +125,39 @@ namespace AsrsControl
             }
         }
         #endregion   
+
+        private void buttonModifyPri_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int pri = 0;
+                if (!int.TryParse(this.textBoxPrivilege.Text, out pri))
+                {
+                    MessageBox.Show("请输入正确的优先级值0~1000,值越大优先级越高!");
+                    return;
+                }
+                if (pri < 0 || pri > 1000)
+                {
+                    MessageBox.Show("请输入正确的优先级值0~1000,值越大优先级越高!");
+                    return;
+                }
+                foreach (DataGridViewRow dr in this.dataGridView1.SelectedRows)
+                {
+                    string taskID = dr.Cells["任务ID"].Value.ToString();
+                    string reStr="";
+                    if(!taskPresenter.ModifyTaskPri(taskID, pri,ref reStr))
+                    {
+                        MessageBox.Show(reStr);
+                        return;
+                    }
+                }
+                taskPresenter.QueryTask();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString()) ;
+            }
+           
+        }
     }
 }

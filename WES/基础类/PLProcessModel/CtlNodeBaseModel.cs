@@ -689,14 +689,14 @@ namespace FlowCtlBaseModel
         }
         #endregion
         #region 内部功能接口
-        public int GetNextStepID(string palletID)
-        {
-            string strSql = string.Format(@"palletID='{0}' and palletBinded=1 ", palletID);
-            List<MesDBAccess.Model.ProductOnlineModel> products = productOnlineBll.GetModelList(strSql);
-            int nextStepID = 0;
+        //public int GetNextStepID(string palletID)
+        //{
+        //    string strSql = string.Format(@"palletID='{0}' and palletBinded=1 ", palletID);
+        //    List<MesDBAccess.Model.ProductOnlineModel> products = productOnlineBll.GetModelList(strSql);
+        //    int nextStepID = 0;
            
-            return nextStepID;
-        }
+        //    return nextStepID;
+        //}
        
         /// <summary>
         /// 查询是否存在未完成的任务，包括待执行的

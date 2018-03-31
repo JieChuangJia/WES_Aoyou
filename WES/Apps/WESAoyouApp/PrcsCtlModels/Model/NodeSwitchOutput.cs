@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using FlowCtlBaseModel;
 using AsrsInterface;
 namespace PrcsCtlModelsAoyou
@@ -60,7 +62,7 @@ namespace PrcsCtlModelsAoyou
                         }
                         if(this.nodeID=="4008" || this.nodeID=="4009")
                         {
-                            if(this.rfidUID.Length!= 9)
+                            /*if(this.rfidUID.Length!= 9) //检测条码长度
                             {
                                 if (this.db1ValsToSnd[0] != barcodeFailedStat)
                                 {
@@ -69,7 +71,7 @@ namespace PrcsCtlModelsAoyou
                                 }
                                 this.db1ValsToSnd[0] = barcodeFailedStat;
                                 break;
-                            }
+                            }*/
                             //检测是否跟库里有重码
                             string[] houseNames= new string[]{"A1库房","A2库房"};
                             foreach(string houseName in houseNames)
@@ -133,6 +135,24 @@ namespace PrcsCtlModelsAoyou
                             {
                                 break;
                             }
+                        }
+                        else if (this.nodeID=="4010" || this.nodeID == "4011")
+                        {
+                            if (!Process4010(this.rfidUID, ref re, ref reStr))
+                            {
+                                break;
+                            }
+                        }
+                        else if (this.nodeID == "4012")
+                        {
+                            if (!Process4012(this.rfidUID, ref re, ref reStr))
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            break;
                         }
                         this.db1ValsToSnd[0] = re;
                         this.currentTaskPhase++;
@@ -251,6 +271,10 @@ namespace PrcsCtlModelsAoyou
 
             }
         }
+        /// <summary>
+        /// 化成后修改工步为3
+        /// </summary>
+       
         private bool Process4008(string palletID, ref Int16 re, ref string reStr)
         {
             try
@@ -274,13 +298,14 @@ namespace PrcsCtlModelsAoyou
 
             }
         }
+        //注液后处理，修改工步为1
         private bool Process4009(string palletID, ref Int16 re, ref string reStr)
         {
             try
             {
                 //注销
                 re = 0;
-                int updateStep = 0;
+                int updateStep = 1;
                 if (!MesAcc.UpdateStep(updateStep, palletID, ref reStr))
                 {
                     return false;
@@ -297,6 +322,69 @@ namespace PrcsCtlModelsAoyou
                 return false;
 
             }
+        }
+        private bool Process4010(string palletID, ref Int16 re, ref string reStr)
+        {
+            if(palletID.Length<12)
+            {
+               
+                reStr = string.Format("{0}条码长度不足",palletID);
+                if(this.db1ValsToSnd[1] != 1)
+                {
+                    logRecorder.AddDebugLog(nodeName, reStr);
+                }
+                currentTaskDescribe = reStr;
+                this.db1ValsToSnd[1] = 1;
+                return false;
+            }
+            string strRe = MesAcc.ParsePalletID(palletID);
+            if(string.IsNullOrWhiteSpace(strRe))
+            {
+                reStr = string.Format("{0}筐码解析失败,电芯型号未配置",palletID);
+                if (this.db1ValsToSnd[1] != 2)
+                {
+                    logRecorder.AddDebugLog(nodeName, reStr);
+                }
+                currentTaskDescribe = reStr;
+                this.db1ValsToSnd[1] = 2;
+                return false;
+            }
+            JObject parseObj = JsonConvert.DeserializeObject(strRe) as JObject;
+             short palletCata = 0;
+            if ((parseObj == null) || (parseObj["料筐内衬类型"] == null) || (!short.TryParse(parseObj["料筐内衬PLC值"].ToString(),out palletCata)))
+            {
+                reStr = string.Format("{0}筐码解析失败,电芯内衬型号未配置",palletID);
+                if (this.db1ValsToSnd[1] != 2)
+                {
+                    logRecorder.AddDebugLog(nodeName, reStr);
+                }
+                this.db1ValsToSnd[1] = 2;
+                return false;
+             
+            }
+            re = (short)(1 + palletCata);
+            return true;
+        }
+      
+        private bool Process4012(string palletID, ref Int16 re, ref string reStr)
+        {
+            //1 先解绑
+            int step = 0;
+            if (!MesAcc.GetStep(this.rfidUID, out step, ref reStr))
+            {
+                currentTaskDescribe = "查询MES工步失败:" + reStr;
+                return false;
+            }
+            step = 0;
+            if (!MesAcc.UpdateStep(step, this.rfidUID, ref reStr))
+            {
+                currentTaskDescribe = "更新MES工步失败:" + reStr;
+                return false;
+            }
+
+            //2 再分流
+            return Process4010(palletID, ref re, ref reStr);
+           
         }
     }
 }

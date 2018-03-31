@@ -347,8 +347,8 @@ namespace AsrsControl
                     return false;
                 }
             }
-            asrsModel.GenerateOutputTask(cell, null,taskType, false,asrsExtParams);
-           
+            asrsModel.GenerateOutputTask(cell, null,taskType, false,asrsExtParams,1000);
+            
             return true;
         }
         public bool CreateManualMoveGSTask(string startHouseName, CellCoordModel startCell, string endHouseName, CellCoordModel endCell, ref string reStr)
@@ -411,7 +411,7 @@ namespace AsrsControl
                 return false;
             }
             SysCfg.EnumAsrsTaskType taskType = SysCfg.EnumAsrsTaskType.移库;
-            return asrsModel.GenerateOutputTask(startCell,endCell,taskType, false);
+            return asrsModel.GenerateOutputTask(startCell,endCell,taskType, false,null,1000);
             //return true;
         }
         #endregion

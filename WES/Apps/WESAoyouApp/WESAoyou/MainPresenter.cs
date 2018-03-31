@@ -61,7 +61,7 @@ namespace WESAoyou
         {
             try
             {
-                mesAcc = new FlowCtlBaseModel.MesAccWrapper();
+                mesAcc = new PrcsCtlModelsAoyou.MesAccAoyou();
                
                 ctlNodeManager.DevCommManager = devCommManager;
                 // 1加载配置文件
@@ -104,9 +104,11 @@ namespace WESAoyou
                     {
                         asrsCtl.dlgtGetTaskTorun = AsrsGetCheckoutOfGaowen;
                     }
+                    asrsCtl.dlgtGetLogicArea = AsrsAreaToCheckin;
                     if(asrsCtl.HouseName=="B1库房")
                     {
                         asrsCtl.dlgtAsrsOutTaskPost = AsrsOutTaskBusiness;
+                        
                     }
                 }
 
@@ -129,6 +131,7 @@ namespace WESAoyou
                 {
                     asrsCtl.MesAcc = mesAcc;
                 }
+                (ctlNodeManager.GetNodeByID("4004") as PrcsCtlModelsAoyou.NodeSwitchInput).dlgtGetLogicArea = AsrsAreaToCheckin;
                 //6 通信设备分配
                 ctlNodeManager.AllocateCommdev();
 
@@ -446,7 +449,156 @@ namespace WESAoyou
            
            
         }
-        
+        private string AsrsAreaToCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl,int step)
+        {
+            string area = "";
+            if (step == 0)
+            {
+                area = "空筐区";
+                //if (asrsCtl.HouseName == "C1库房" || asrsCtl.HouseName == "C2库房" || asrsCtl.HouseName == "C3库房")
+                //{
+                //    area = "空筐区";
+                //}
+                //else
+                //{
+                //    area = SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step); 
+                //}
+            }
+            else
+            {
+                if (asrsCtl.HouseName == "B1库房")
+                {
+                    string batteryCata = "";
+                    if (palletID.Length >= 11)
+                    {
+                        batteryCata = palletID.Substring(0, 4);
+                    }
+                    else
+                    {
+                        //return area;
+                        batteryCata = "F33A";
+                    }
+                    MesDBAccess.BLL.BatteryFenrongCfgBll batteryFenrongBll = new MesDBAccess.BLL.BatteryFenrongCfgBll();
+                    string strWhere = string.Format("batteryCataCode = '{0}'", batteryCata);
+                    List<MesDBAccess.Model.BatteryFenrongCfgModel> batteryFenrongList = batteryFenrongBll.GetModelList(strWhere, "fenrongZone");
+                    foreach (MesDBAccess.Model.BatteryFenrongCfgModel cfgM in batteryFenrongList)
+                    {
+                        string areaCheckin = cfgM.fenrongZone;
+                        int validCells = 0;
+                        string reStr = "";
+                        if (!asrsResManage.GetHouseAreaLeftGs(asrsCtl.HouseName, areaCheckin, ref validCells, reStr))
+                        {
+                            Console.WriteLine("{0}获取 {1} 剩余货位数量失败", asrsCtl.HouseName, areaCheckin);
+                            continue;
+                        }
+                        if (validCells > 0)
+                        {
+                            area = areaCheckin;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    area = SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step); 
+                }
+                
+            }
+            return area;
+        }
+        #endregion
+        #region 产线配置扩展
+       public bool SendDevlinePalletCfg(string shopSection, ref string reStr)
+        {
+            //throw new NotImplementedException();
+            Console.WriteLine("发送{0} ", shopSection);
+           
+            if(SysCfg.SysCfgModel.SimMode)
+            {
+                return true;
+            }
+            MesDBAccess.BLL.ViewDevLineBatteryCfgBll devLineCfgBll = new MesDBAccess.BLL.ViewDevLineBatteryCfgBll();
+            string[] addrSts = new string[] { "D4001", "D4011", "D4021" };
+            short[] blockNums = new short[] { 4, 6, 4 };
+            string[] shopSections = new string[] { "注液", "化成", "二封" };
+            List<DevInterface.IPlcRW> plcRWS = new List<DevInterface.IPlcRW>();
+            plcRWS.Add(devCommManager.GetPlcByID(11));
+            plcRWS.Add(devCommManager.GetPlcByID(12));
+            plcRWS.Add(devCommManager.GetPlcByID(13));
+            for (int i = 0; i < 3; i++)
+            {
+                if (shopSection != "所有")
+                {
+                    if (shopSection != shopSections[i])
+                    {
+                        continue;
+                    }
+                }
+                short[] vals = new short[blockNums[i]];
+                List<MesDBAccess.Model.ViewDevLineBatteryCfgModel> cfgList = devLineCfgBll.GetModelList(string.Format(" ShopSection='{0}' ", shopSections[i]));
+                foreach (MesDBAccess.Model.ViewDevLineBatteryCfgModel m in cfgList)
+                {
+                    int valIndex = int.Parse(m.LineID) - 1;
+                    vals[valIndex] = (short)m.plcDefVal;
+                }
+               
+                if (!plcRWS[i].WriteMultiDB(addrSts[i], vals.Count(), vals))
+                {
+                    reStr = string.Format("发送{0}料筐配置失败", shopSections[i]);
+                    return false;
+                }
+                //}
+                //else
+                //{
+                //    if (!plcRW2.WriteMultiDB(addrSts[i], vals.Count(), vals))
+                //    {
+                //        reStr = string.Format("发送{0}料筐配置失败", shopSections[i]);
+                //        return false;
+                //    }
+                //}
+            }
+            return true;
+        }
+        public bool ReadPalletCfgFromPlc(string shopSection,ref DataTable dt,ref string reStr)
+       {
+          // Console.WriteLine("读{0}", shopSection);
+           DevInterface.IPlcRW plcRW1 = devCommManager.GetPlcByID(7);
+           DevInterface.IPlcRW plcRW2 = devCommManager.GetPlcByID(10);
+           
+           string[] addrSts = new string[] { "D4001", "D4011", "D4021" };
+           short[] blockNums = new short[] { 4, 6, 4 };
+           string[] shopSections = new string[] { "注液", "化成", "二封" };
+           dt = new DataTable("产线料筐型号配置表");
+           
+           dt.Columns.AddRange(new DataColumn[] {new DataColumn("标识"), new DataColumn("索引"),  new DataColumn("地址"),  new DataColumn("内容"),  new DataColumn("描述") });
+           if (SysCfg.SysCfgModel.SimMode)
+           {
+               return true;
+           }
+           List<DevInterface.IPlcRW> plcRWS = new List<DevInterface.IPlcRW>();
+           plcRWS.Add(devCommManager.GetPlcByID(11));
+           plcRWS.Add(devCommManager.GetPlcByID(12));
+           plcRWS.Add(devCommManager.GetPlcByID(13));
+            int index = 1;
+           for(int shopIndex=0;shopIndex<3;shopIndex++)
+           {
+               short[] vals = null;
+               //注液
+
+               if (!plcRWS[shopIndex].ReadMultiDB(addrSts[shopIndex], blockNums[shopIndex], ref vals))
+                {
+                    return false;
+                }
+             
+               for (int i = 0; i < blockNums[shopIndex]; i++)
+               {
+                   string addr = string.Format("D{0}", int.Parse(addrSts[shopIndex].Substring(1)));
+                   string secName=string.Format("{0}{1}线",shopSections[shopIndex],i+1);
+                   dt.Rows.Add(secName,index++, addr, vals[i], "1:A筐，2：B筐");
+               }
+           }
+           return true;
+       }
         #endregion
 
     }

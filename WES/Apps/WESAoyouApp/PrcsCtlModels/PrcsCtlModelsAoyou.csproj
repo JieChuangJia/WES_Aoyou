@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MesAccAoyou.cs" />
     <Compile Include="Model\NodeGrasp.cs" />
     <Compile Include="Model\NodeSwitchInput.cs" />
     <Compile Include="Model\NodeSwitchOutput.cs" />

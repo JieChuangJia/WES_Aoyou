@@ -16,8 +16,9 @@ namespace ConfigManage
         private UserManageView userManageView = null;
         private SysSettingView sysSettignView = null;
         private BatteryCataCfgView batteryCfgView = null;
-       
+        
         #region 公共接口
+        public BatteryCataCfgView BatteryCfgView { get { return batteryCfgView; } }
         //public string CaptionText { get { return captionText; } set { captionText = value; this.Text = captionText; } }
         public ConfiManageView():base(string.Empty)
         {
@@ -74,9 +75,21 @@ namespace ConfigManage
         }
         public override void ChangeRoleID(int roleID)
         {
+            //if(roleID>2)
+            //{
+            //    this.sysSettignView.Close();
+            //    this.batteryCfgView.Close();
+            //    this.userManageView.Close();
+            //}
             this.sysSettignView.ChangeRoleID(roleID);
             this.userManageView.ChangeRoleID(roleID);
             this.batteryCfgView.ChangeRoleID(roleID);
+            if(roleID>2)
+            {
+                parentPNP.RemoveModuleView(this.sysSettignView);
+                parentPNP.RemoveModuleView(this.batteryCfgView);
+                parentPNP.RemoveModuleView(this.userManageView);
+            }
         }
         #endregion
         private void LoadView_MenuHandler(object sender, EventArgs e)

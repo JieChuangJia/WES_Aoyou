@@ -16,12 +16,3 @@ E:\workspace\项目\之信遨优项目\代码\WES\立库管理\AsrsStorDBAcc\bin
 E:\workspace\项目\之信遨优项目\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.csprojResolveAssemblyReference.cache
 E:\workspace\项目\之信遨优项目\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.dll
 E:\workspace\项目\之信遨优项目\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.pdb
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsStorDBAcc.dll
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsStorDBAcc.pdb
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsInterface.dll
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsModel.dll
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsInterface.pdb
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsModel.pdb
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.csprojResolveAssemblyReference.cache
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.dll
-F:\NpWork\others\遨优\WES\代码\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.pdb

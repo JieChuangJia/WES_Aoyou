@@ -191,5 +191,9 @@ namespace FlowCtlBaseModel
                 return false ;
             }
         }
+        public virtual string ParsePalletID(string palletID)
+        {
+            return string.Empty;
+        }
     }
 }

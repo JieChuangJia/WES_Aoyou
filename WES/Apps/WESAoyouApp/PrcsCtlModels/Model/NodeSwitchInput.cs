@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FlowCtlBaseModel;
+using AsrsControl;
 namespace PrcsCtlModelsAoyou
 {
     public class NodeSwitchInput : CtlNodeBaseModel
     {
+        public delegate string DlgtGetAsrsLogicArea(string palletID, AsrsCtlModel asrsCtl, int curStep);
         private short barcodeFailedStat = 1;
+        public DlgtGetAsrsLogicArea dlgtGetLogicArea = null;
         private List<FlowPathModel> flowPathList = new List<FlowPathModel>();
         public AsrsInterface.IAsrsManageToCtl AsrsResManage { get; set; }
         /// <summary>
@@ -186,8 +189,18 @@ namespace PrcsCtlModelsAoyou
                                  AsrsModel.CellCoordModel requireCell = null;
                                 AsrsControl.AsrsCtlModel asrsCtl = port.AsrsCtl;
                                 AsrsInterface.IAsrsManageToCtl asrsResManage = port.AsrsCtl.AsrsResManage;
+                                string logicArea = "通用分区";
+                                if(dlgtGetLogicArea != null)
+                                {
+                                    logicArea = dlgtGetLogicArea(this.rfidUID, asrsCtl, step);
+                                }
+                                if(string.IsNullOrWhiteSpace(logicArea))
+                                {
+                                    this.currentTaskDescribe = string.Format("{0} 检索货区失败,未配置", this.rfidUID);
+                                    break;
+                                }
                                // AsrsModel.EnumLogicArea logicArea = (AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); 
-                                if (!asrsResManage.CellRequire(asrsCtl.HouseName, "通用分区", ref requireCell, ref reStr))
+                                if (!asrsResManage.CellRequire(asrsCtl.HouseName,logicArea, ref requireCell, ref reStr))
                                 {
                                     Console.WriteLine("{0}申请库位失败,{1}",nodeName, reStr);
                                     break;

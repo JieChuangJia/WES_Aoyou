@@ -42,7 +42,7 @@ namespace ConfigManage
         }
         public override void ChangeRoleID(int roleID)
         {
-            
+           
             
         }
         #endregion
@@ -96,7 +96,6 @@ namespace ConfigManage
             //this.checkBoxHouseB.Checked = SysCfg.SysCfgModel.HouseEnabledB;
          //   this.textBoxA1BurninTime.Text = SysCfg.SysCfgModel.AsrsStoreTime.ToString();
         //    this.checkBoxUnbind.Checked = SysCfg.SysCfgModel.UnbindMode;
-           
             OnDispProcessParams();
 
         }

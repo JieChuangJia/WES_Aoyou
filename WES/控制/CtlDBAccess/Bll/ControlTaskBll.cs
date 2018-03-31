@@ -163,6 +163,30 @@ namespace CtlDBAccess.BLL
             //return dal.DataRowToModel(ds.Tables[0].Rows[0]);
             return GetModelList(strSql.ToString());
         }
+        public List<ControlTaskModel> GetTaskToRunList(int taskType, string taskStatus, string devID,bool priOrder=false)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.AppendFormat("TaskType={0} and TaskStatus='{1}' and DeviceID='{2}' ", taskType, taskStatus, devID);
+            if(priOrder)
+            {
+                strSql.AppendFormat(" order by cast(tag4 as INTEGER) desc,CreateTime asc");
+            }
+            else
+            {
+                strSql.AppendFormat(" order by CreateTime asc");
+            }
+            //DataSet ds = dal.GetList(strSql.ToString());
+            //if(ds == null || ds.Tables== null || ds.Tables.Count<1 )
+            //{
+            //    return null;
+            //}
+            //if(ds.Tables[0].Rows.Count<1)
+            //{
+            //    return null;
+            //}
+            //return dal.DataRowToModel(ds.Tables[0].Rows[0]);
+            return GetModelList(strSql.ToString());
+        }
         public List<ControlTaskModel> GetEmerTaskToRunList(string taskStatus, string devID)
         {
             StringBuilder strSql = new StringBuilder();

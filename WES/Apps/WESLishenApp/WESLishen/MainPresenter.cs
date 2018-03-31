@@ -325,7 +325,7 @@ namespace WESLishen
                 return false;
             }
         }
-        private string AsrsAreaToCheckin(AsrsControl.AsrsCtlModel asrsCtl,int step)
+        private string AsrsAreaToCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl,int step)
         {
             string area = "其它";
             if(step== 0)

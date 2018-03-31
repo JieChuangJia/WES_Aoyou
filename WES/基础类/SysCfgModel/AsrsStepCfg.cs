@@ -111,6 +111,10 @@ namespace SysCfg
             int schIndex = 0;
             bool schOK = false;
             int nextStep = 0;
+            if(curStep==0)
+            {
+                return nextStep;
+            }
             for (int i = 0; i < stepList.Count(); i++)
             {
                 if (curStep < stepList[i])

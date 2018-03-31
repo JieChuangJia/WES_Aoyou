@@ -24,7 +24,7 @@ namespace WESAoyou
     {
         #region 数据
         private string appTitle = "锂电WES系统-捷创嘉智能物流";
-        private string version = "系统版本:1.1.8  2018-3-1";
+        private string version = "系统版本:1.1.10  2018-3-26";
         private int roleID = 3;
         private string userName = "操作员";
         const int CLOSE_SIZE = 10;
@@ -101,6 +101,17 @@ namespace WESAoyou
             childView.Size = this.panelCenterview.Size;
             childView.Show();
 
+        }
+        public void RemoveModuleView(System.Windows.Forms.Form childView)
+        {
+            TabPage tabPage = null;
+            if (this.childList.Contains(childView.Text))
+            {
+                tabPage = this.MainTabControl.TabPages[childView.Text];
+                this.childList.Remove(childView.Text);
+                this.MainTabControl.TabPages.Remove(tabPage);
+                
+            }
         }
         #endregion
         #region ILicenseNotify接口实现
@@ -185,6 +196,8 @@ namespace WESAoyou
 
                     return;
                 }
+                this.configView.BatteryCfgView.dlgtSndPalletCfg = presenter.SendDevlinePalletCfg;
+                this.configView.BatteryCfgView.dlgtGetPalletCfg = presenter.ReadPalletCfgFromPlc;
                 List<string> logSrcs = new List<string>();
                 logSrcs.AddRange(presenter.GetLogSrcList());
                 List<string> storLogSrcs = storageView.GetLogsrcList();

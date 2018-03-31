@@ -11,6 +11,11 @@ namespace PrcsCtlModelsAoyou
     public class PrsCtlnodeManage
     {
         private List<CtlNodeBaseModel> monitorNodeList = null;
+       // public MesAccWrapper MesAcc { get; set; }
+        public PrsCtlnodeManage()
+        {
+          //  MesAcc = new MesAccAoyou();
+        }
      //   public CtlManage.CommDevManage DevCommManager { get; set; }
         public bool CtlInit(XElement CtlnodeRoot, ref string reStr)
         {

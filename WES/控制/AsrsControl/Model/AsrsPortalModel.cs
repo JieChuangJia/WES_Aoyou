@@ -179,9 +179,9 @@ namespace AsrsControl
                       {
                           return false;
                       }
-                      string areaLast = asrsCtlModel.GetAreaToCheckin(lastStep).ToString();// AsrsModel.EnumLogicArea.注液高温区.ToString();
+                      string areaLast = asrsCtlModel.GetAreaToCheckin(lastPalletID,lastStep).ToString();// AsrsModel.EnumLogicArea.注液高温区.ToString();
                       // areaLast=SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(lastStep);
-                      string areaCur = asrsCtlModel.GetAreaToCheckin(step).ToString();//AsrsModel.EnumLogicArea.注液高温区.ToString(); ;
+                      string areaCur = asrsCtlModel.GetAreaToCheckin(palletID,step).ToString();//AsrsModel.EnumLogicArea.注液高温区.ToString(); ;
                       //     areaCur=SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step);
 
                       if (areaLast != areaCur)
@@ -250,7 +250,7 @@ namespace AsrsControl
             }
            */
             string storeAreaZone = "注液高温区"; 
-            storeAreaZone = asrsCtlModel.GetAreaToCheckin(step);//(AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); //AsrsModel.EnumLogicArea.注液高温区; //此处需要根据步号判断
+            storeAreaZone = asrsCtlModel.GetAreaToCheckin(palletID,step);//(AsrsModel.EnumLogicArea)Enum.Parse(typeof(AsrsModel.EnumLogicArea), SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step)); //AsrsModel.EnumLogicArea.注液高温区; //此处需要根据步号判断
             
             int cellEmptCounts = 0;
             if(!asrsCtlModel.AsrsResManage.GetHouseAreaLeftGs(asrsCtlModel.HouseName, storeAreaZone.ToString(), ref cellEmptCounts, reStr))

@@ -58,9 +58,15 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBoxMohu = new System.Windows.Forms.TextBox();
+            this.textBoxPrivilege = new System.Windows.Forms.TextBox();
             this.textBoxCell = new System.Windows.Forms.TextBox();
             this.checkBoxMohu = new System.Windows.Forms.CheckBox();
             this.checkBoxCell = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.buttonModifyPri = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBoxOrderType = new System.Windows.Forms.ComboBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -134,7 +140,7 @@
             // 
             this.buttonRecord.Image = ((System.Drawing.Image)(resources.GetObject("buttonRecord.Image")));
             this.buttonRecord.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonRecord.Location = new System.Drawing.Point(1261, 39);
+            this.buttonRecord.Location = new System.Drawing.Point(1399, 42);
             this.buttonRecord.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRecord.Name = "buttonRecord";
             this.buttonRecord.Size = new System.Drawing.Size(112, 42);
@@ -186,7 +192,7 @@
             // 
             this.btnDelTask.Image = ((System.Drawing.Image)(resources.GetObject("btnDelTask.Image")));
             this.btnDelTask.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelTask.Location = new System.Drawing.Point(1400, 39);
+            this.btnDelTask.Location = new System.Drawing.Point(1519, 42);
             this.btnDelTask.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelTask.Name = "btnDelTask";
             this.btnDelTask.Size = new System.Drawing.Size(102, 42);
@@ -297,7 +303,7 @@
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1675, 30);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1727, 30);
             this.bindingNavigator1.TabIndex = 0;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -310,11 +316,13 @@
             this.panel1.Location = new System.Drawing.Point(4, 105);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1675, 581);
+            this.panel1.Size = new System.Drawing.Size(1727, 581);
             this.panel1.TabIndex = 0;
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -323,7 +331,7 @@
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1675, 539);
+            this.dataGridView1.Size = new System.Drawing.Size(1727, 539);
             this.dataGridView1.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -340,24 +348,29 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 101F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 472F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1683, 690);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1735, 690);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.panel2.Controls.Add(this.textBoxMohu);
+            this.panel2.Controls.Add(this.textBoxPrivilege);
             this.panel2.Controls.Add(this.textBoxCell);
             this.panel2.Controls.Add(this.checkBoxMohu);
             this.panel2.Controls.Add(this.checkBoxCell);
             this.panel2.Controls.Add(this.buttonRecord);
+            this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.buttonModifyPri);
             this.panel2.Controls.Add(this.btnDelTask);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.comboBox3);
+            this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.comboBox2);
             this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.comboBoxOrderType);
             this.panel2.Controls.Add(this.comboBox1);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.dateTimePicker2);
@@ -366,27 +379,34 @@
             this.panel2.Font = new System.Drawing.Font("宋体", 12F);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1677, 95);
+            this.panel2.Size = new System.Drawing.Size(1729, 95);
             this.panel2.TabIndex = 2;
             // 
             // textBoxMohu
             // 
-            this.textBoxMohu.Location = new System.Drawing.Point(829, 48);
+            this.textBoxMohu.Location = new System.Drawing.Point(1089, 44);
             this.textBoxMohu.Name = "textBoxMohu";
-            this.textBoxMohu.Size = new System.Drawing.Size(420, 35);
+            this.textBoxMohu.Size = new System.Drawing.Size(291, 35);
             this.textBoxMohu.TabIndex = 8;
+            // 
+            // textBoxPrivilege
+            // 
+            this.textBoxPrivilege.Location = new System.Drawing.Point(1358, 3);
+            this.textBoxPrivilege.Name = "textBoxPrivilege";
+            this.textBoxPrivilege.Size = new System.Drawing.Size(126, 35);
+            this.textBoxPrivilege.TabIndex = 8;
             // 
             // textBoxCell
             // 
-            this.textBoxCell.Location = new System.Drawing.Point(1077, 3);
+            this.textBoxCell.Location = new System.Drawing.Point(1089, 3);
             this.textBoxCell.Name = "textBoxCell";
-            this.textBoxCell.Size = new System.Drawing.Size(172, 35);
+            this.textBoxCell.Size = new System.Drawing.Size(160, 35);
             this.textBoxCell.TabIndex = 8;
             // 
             // checkBoxMohu
             // 
             this.checkBoxMohu.AutoSize = true;
-            this.checkBoxMohu.Location = new System.Drawing.Point(708, 48);
+            this.checkBoxMohu.Location = new System.Drawing.Point(986, 48);
             this.checkBoxMohu.Name = "checkBoxMohu";
             this.checkBoxMohu.Size = new System.Drawing.Size(108, 28);
             this.checkBoxMohu.TabIndex = 7;
@@ -403,11 +423,59 @@
             this.checkBoxCell.Text = "货位";
             this.checkBoxCell.UseVisualStyleBackColor = true;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1269, 11);
+            this.label7.Margin = new System.Windows.Forms.Padding(15, 4, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(82, 24);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "优先级";
+            // 
+            // buttonModifyPri
+            // 
+            this.buttonModifyPri.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonModifyPri.Location = new System.Drawing.Point(1491, 0);
+            this.buttonModifyPri.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonModifyPri.Name = "buttonModifyPri";
+            this.buttonModifyPri.Size = new System.Drawing.Size(154, 42);
+            this.buttonModifyPri.TabIndex = 4;
+            this.buttonModifyPri.Text = "修改优先级";
+            this.buttonModifyPri.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonModifyPri.UseVisualStyleBackColor = true;
+            this.buttonModifyPri.Click += new System.EventHandler(this.buttonModifyPri_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(696, 51);
+            this.label6.Margin = new System.Windows.Forms.Padding(15, 4, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(130, 24);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "优先级排序";
+            // 
+            // comboBoxOrderType
+            // 
+            this.comboBoxOrderType.FormattingEnabled = true;
+            this.comboBoxOrderType.Location = new System.Drawing.Point(829, 44);
+            this.comboBoxOrderType.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxOrderType.Name = "comboBoxOrderType";
+            this.comboBoxOrderType.Size = new System.Drawing.Size(123, 32);
+            this.comboBoxOrderType.TabIndex = 6;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 50;
+            this.toolTip1.ReshowDelay = 100;
+            // 
             // CtlTaskView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1683, 690);
+            this.ClientSize = new System.Drawing.Size(1735, 690);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -460,5 +528,11 @@
         private System.Windows.Forms.TextBox textBoxCell;
         private System.Windows.Forms.TextBox textBoxMohu;
         private System.Windows.Forms.CheckBox checkBoxMohu;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBoxOrderType;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBoxPrivilege;
+        private System.Windows.Forms.Button buttonModifyPri;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
