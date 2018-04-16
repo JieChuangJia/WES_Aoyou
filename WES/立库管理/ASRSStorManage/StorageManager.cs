@@ -466,6 +466,7 @@ namespace ASRSStorManage
                 reStr = "数据库更新失败！";
                 return false;
             }
+            OnUpdateGsStatus();
             //string operateStr = "库房：" + houseName + "，货位：" + cellCoord.Row + "排" + cellCoord.Col + "列"
             //    + cellCoord.Layer + "层，" + "货位操作：" + gsOper.ToString();
             //AddGSOperRecord(houseName, cellCoord, EnumGSOperateType.系统更新货位操作, operateStr, ref reStr);
