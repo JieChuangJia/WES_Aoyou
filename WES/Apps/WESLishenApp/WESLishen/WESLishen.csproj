@@ -211,6 +211,14 @@
       <Project>{944d95f5-15bd-4c79-8d35-0de37100ad36}</Project>
       <Name>ASRSStorManage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConfigManage\ConfigManage.csproj">
+      <Project>{26e78563-d27e-4464-95d8-d8d4d71e0aef}</Project>
+      <Name>ConfigManage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LishenMesDBAccess\LishenMesDBAccess.csproj">
+      <Project>{586582c7-c074-4413-b660-ef6be03a9e12}</Project>
+      <Name>LishenMesDBAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PrcsCtlModelsLishen\PrcsCtlModelsLishen.csproj">
       <Project>{0ba9cc14-b5fb-4b0a-a99f-61365ad715d2}</Project>
       <Name>PrcsCtlModelsLishen</Name>

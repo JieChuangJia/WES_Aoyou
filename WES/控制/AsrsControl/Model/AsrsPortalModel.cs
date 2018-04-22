@@ -26,6 +26,7 @@ namespace AsrsControl
      //   private bool inputPort = true;
     //    public bool InputPort { get { return inputPort; } set { inputPort = value; } }
         private AsrsCtlModel asrsCtlModel = null;
+        private string emptyPalletCheckoutMode = "自动";
         public int PortCata { get { return portCata; } set { portCata = value; } }
         public int PortSeq { get { return portSeq; } }
         
@@ -33,6 +34,7 @@ namespace AsrsControl
         public SysCfg.EnumAsrsTaskType BindedTaskInput { get { return bindedTaskInput; } set { bindedTaskInput = value; } }
         public SysCfg.EnumAsrsTaskType BindedTaskOutput { get { return bindedTaskOutput; } set { bindedTaskOutput = value; } }
         public AsrsCtlModel AsrsCtl { get { return asrsCtlModel; } }
+        public string EptyPalletCheckoutMode { get { return emptyPalletCheckoutMode; } set { emptyPalletCheckoutMode = value; } }
         /// <summary>
         /// 入口缓存托盘最大数量
         /// </summary>
@@ -125,6 +127,11 @@ namespace AsrsControl
                         }
                     }
                 }
+                
+            }
+            if (selfDataXE.Attribute("emptyPalletCheckoutMode") != null)
+            {
+                emptyPalletCheckoutMode = selfDataXE.Attribute("emptyPalletCheckoutMode").Value.ToString();
             }
             if (selfDataXE.Attribute("barcodeScanRequire") != null)
             {

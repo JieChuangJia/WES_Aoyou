@@ -524,7 +524,8 @@
           <DB1Addr addrStart="D2155" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3155" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="2" bindedTask="空筐出库">
+        <!--emptyPalletCheckoutMode： 空筐出库模式，自动，手动，条件-->
+        <SelfDatainfo portSeq="2" bindedTask="空筐出库" emptyPalletCheckoutMode="自动">
           <PortType>2</PortType>
            <Db1Desc>出库任务状态，1：复位，2：出库完成</Db1Desc>
            <Db2Desc>出口状态,1:禁止，2:允许出库;1线堆积状态,1:正常,2:堆积</Db2Desc>
@@ -583,7 +584,7 @@
           <DB1Addr addrStart="D2175" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3175" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="2" bindedTask="空筐出库">
+        <SelfDatainfo portSeq="2" bindedTask="空筐出库" emptyPalletCheckoutMode="自动">
           <PortType>2</PortType>
            <Db1Desc>出库任务状态，1：复位，2：出库完成</Db1Desc>
            <Db2Desc>出口状态,1:禁止，2:允许出库;1线堆积状态,1:正常,2:堆积</Db2Desc>
@@ -642,7 +643,7 @@
           <DB1Addr addrStart="D2195" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3195" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="2" bindedTask="空筐出库">
+        <SelfDatainfo portSeq="2" bindedTask="空筐出库" emptyPalletCheckoutMode="自动">
           <PortType>2</PortType>
            <Db1Desc>出库任务状态，1：复位，2：出库完成</Db1Desc>
            <Db2Desc>出口状态,1:禁止，2:允许出库;1线堆积状态,1:正常,2:堆积</Db2Desc>

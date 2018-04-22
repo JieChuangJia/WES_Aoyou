@@ -15,13 +15,14 @@ using ProductRecordView;
 using AsrsControl;
 using ASRSStorManage.View;
 using MonitorViews;
+using ConfigManage;
 namespace WESLishen
 {
     public partial class MainForm : Form, ILogDisp, IParentModule, ILicenseNotify,IMainView
     {
         #region 数据
         private string appTitle = "力神锂电WES系统";
-        private string version = "系统版本:1.0.4  2018-1-16";
+        private string version = "系统版本:1.0.5  2018-4-4";
         private int roleID = 3;
         private string userName = "操作员";
         const int CLOSE_SIZE = 10;
@@ -40,7 +41,7 @@ namespace WESLishen
         private AsrsCtlView asrsCtlView = null;
         private StorageMainView storageView = null;
         private CtlNodeMonitorView nodeMonitorView = null;
-
+        private ConfiManageView configView = null;
         #endregion
        
         public MainForm()
@@ -74,6 +75,17 @@ namespace WESLishen
                 this.richTextBoxLog.Text += (string.Format("[{0:yyyy-MM-dd HH:mm:ss.fff}]{1},{2}", log.LogTime, log.LogSource, log.LogContent) + "\r\n");
             }
 
+        }
+        public void RemoveModuleView(System.Windows.Forms.Form childView)
+        {
+            TabPage tabPage = null;
+            if (this.childList.Contains(childView.Text))
+            {
+                tabPage = this.MainTabControl.TabPages[childView.Text];
+                this.childList.Remove(childView.Text);
+                this.MainTabControl.TabPages.Remove(tabPage);
+
+            }
         }
         public void AttachModuleView(System.Windows.Forms.Form childView)
         {
@@ -133,6 +145,7 @@ namespace WESLishen
                 CtlDBAccess.DBUtility.DbHelperSQL.SetConnstr(dbConn1);
                 string dbConn2 = string.Format(@"{0}Initial Catalog=LishenLocalMes;User ID=sa;Password=123456;", dbSrc);
                 MesDBAccess.DBUtility.DbHelperSQL.SetConnstr(dbConn2);
+                LishenMesDBAccess.DBUtility.DbHelperSQL.SetConnstr(dbConn2);
                 AsrsStorDBAcc.DbHelperSQL.SetConnstr(string.Format(@"{0}Initial Catalog=LishenWMSDB;User ID=sa;Password=123456;", dbSrc));
                 #endregion
 
@@ -406,6 +419,12 @@ namespace WESLishen
             logView.RegisterMenus(this.menuStrip1, "日志查询");
             logView.SetLogDispInterface(this);
 
+            configView = new ConfiManageView();
+            childViews.Add(configView);
+            configView.SetParent(this);
+            configView.RegisterMenus(this.menuStrip1, "配置管理");
+            configView.SetLoginterface(logView.GetLogrecorder());
+
             asrsCtlView = new AsrsCtlView("立库控制");
             childViews.Add(asrsCtlView);
             asrsCtlView.SetParent(this);
@@ -432,7 +451,7 @@ namespace WESLishen
             List<string> storLogSrcs = storageView.GetLogsrcList();
             if(storLogSrcs != null)
             {
-                logSrcs.AddRange(logSrcs);
+                logSrcs.AddRange(storLogSrcs);
             }
            
             logView.SetLogsrcList(logSrcs);

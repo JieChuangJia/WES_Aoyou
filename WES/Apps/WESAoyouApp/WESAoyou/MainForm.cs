@@ -203,7 +203,7 @@ namespace WESAoyou
                 List<string> storLogSrcs = storageView.GetLogsrcList();
                 if (storLogSrcs != null)
                 {
-                    logSrcs.AddRange(logSrcs);
+                    logSrcs.AddRange(storLogSrcs);
                 }
                 logView.SetLogsrcList(logSrcs);
 

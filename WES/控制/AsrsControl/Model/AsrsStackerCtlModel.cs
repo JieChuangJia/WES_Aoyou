@@ -56,23 +56,23 @@ namespace AsrsControl
             errcodeMap = new Dictionary<int, string>();
             #region 故障码定义
 		    errcodeMap[1]  ="接收任务:不完整";
-            errcodeMap[2]  ="叉臂伸出的前放有货";
+            errcodeMap[2]  ="叉臂伸出的前方有货";
             errcodeMap[3]  ="叉臂出口有货";
             errcodeMap[4]  ="钢丝绳松故障";
             errcodeMap[5]  ="行走到原点极限故障";
             errcodeMap[6]  ="行走到终点极限故障";
             errcodeMap[7] = "升降到下限极限保护";
             errcodeMap[8] = "升降到上限极限故障行走到原点极限故障";
-            errcodeMap[9] = "行走／货叉变频器故障行走到原点极限故障";
-            errcodeMap[10] = "升降变频器故障行走到原点极限故障";
+            errcodeMap[9] = "行走／货叉变频器故障";
+            errcodeMap[10] = "升降变频器故障";
             errcodeMap[11] = "行走故障，检查是否卡住或激光测距传感器异常行走到原点极限故障";
             errcodeMap[12] = "升降故障，检查升降是否卡住或升降传感器是否异常行走到原点极限故障";
             errcodeMap[13] = "货叉伸出超时，请检查是否卡住！";
-            errcodeMap[14] = "货物偏左故障行走到原点极限故障";
-            errcodeMap[15] = "货物偏右故障行走到原点极限故障";
-            errcodeMap[16] = "取放货异常，请检查货物是否斜偏行走到原点极限故障";
-            errcodeMap[17] = "门被打开行走到原点极限故障";
-            errcodeMap[18] = "通讯故障行走到原点极限故障";
+            errcodeMap[14] = "货物偏左故障";
+            errcodeMap[15] = "货物偏右故障";
+            errcodeMap[16] = "取放货异常，请检查货物是否斜偏";
+            errcodeMap[17] = "门被打开";
+            errcodeMap[18] = "通讯故障行";
             errcodeMap[19] ="其它故障1";
             errcodeMap[20] ="其它故障2";
             errcodeMap[21] ="其它故障3";
@@ -114,6 +114,32 @@ namespace AsrsControl
             //{
             //    return false;
             //}
+            if(this.db2Vals[0] != 0 && (this.db2Vals[0] != this.db2ValsLast[0]))
+            {
+                int errCode = this.db2Vals[0];
+                string errDesc = "未定义的故障码";
+                if(SysCfg.SysCfgModel.StackerErrcodeMap.Keys.Contains(errCode))
+                {
+                    errDesc = SysCfg.SysCfgModel.StackerErrcodeMap[errCode];
+                }
+                string errInfo = string.Format("发生故障,故障码:{0},信息：{1}", this.db2Vals[0], errDesc);
+                ThrowErrorStat(errInfo, EnumNodeStatus.设备故障);
+            }
+            if(this.db2Vals[1] != this.db2ValsLast[1])
+            {
+                if(this.db2Vals[1] == 1 || this.db2Vals[1] ==2)
+                {
+                    logRecorder.AddDebugLog(nodeName, "切换到自动模式");
+                }
+                else if (this.db2Vals[1] == 3)
+                {
+                    logRecorder.AddDebugLog(nodeName, "处于故障状态");
+                }
+                else if (this.db2Vals[1] == 4)
+                {
+                    logRecorder.AddDebugLog(nodeName, "切换到手动模式");
+                }
+            }
             if (!nodeEnabled)
             {
                 return true;
@@ -417,7 +443,7 @@ namespace AsrsControl
             {
                 if(errcodeMap.Keys.Contains(errCode))
                 {
-                    errInfo = string.Format("故障发生：{0},{1}", errCode, errcodeMap[errCode]);
+                    errInfo = string.Format("故障发生：{0},{1}", errCode, SysCfg.SysCfgModel.StackerErrcodeMap[errCode]);
                 }
                 else
                 {

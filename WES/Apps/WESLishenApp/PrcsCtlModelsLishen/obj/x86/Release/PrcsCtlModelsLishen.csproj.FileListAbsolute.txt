@@ -6,6 +6,7 @@ E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModel
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\CtlDBAccess.dll
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\CtlManage.dll
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\FlowCtlBaseModel.dll
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\LishenMesDBAccess.dll
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\LogInterface.dll
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\MesDBAccess.dll
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\ModuleCrossPnP.dll
@@ -23,6 +24,7 @@ E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModel
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\AsrsInterface.pdb
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\AsrsModel.pdb
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\SysCfg.pdb
+E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\LishenMesDBAccess.pdb
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\CtlMonitorInterface.pdb
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\bin\Release\MonitorViews.pdb
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\PrcsCtlModelsLishen\obj\x86\Release\PrcsCtlModelsLishen.csprojResolveAssemblyReference.cache

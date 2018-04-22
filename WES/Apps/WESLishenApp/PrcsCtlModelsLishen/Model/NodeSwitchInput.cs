@@ -5,6 +5,8 @@ using System.Text;
 using FlowCtlBaseModel;
 using MesDBAccess.BLL;
 using MesDBAccess.Model;
+using LishenMesDBAccess.Model;
+using LishenMesDBAccess.BLL;
 namespace PrcsCtlModelsLishen
 {
     public class NodeSwitchInput : CtlNodeBaseModel
@@ -44,7 +46,7 @@ namespace PrcsCtlModelsLishen
             if (db2Vals[0] == 1)
             {
                 currentTaskPhase = 0;
-                DevCmdReset();
+            
                 db1ValsToSnd[0] = 0;
                 if(this.nodeID=="4001")
                 {
@@ -169,29 +171,57 @@ namespace PrcsCtlModelsLishen
             short productCata = 0;
             string strCataName = "";// "正极材料";
             string reStr="";
-            if (!ParsePalletID(this.rfidUID, ref productCata, ref strCataName, ref reStr))
+            string shopName = "";
+            if (!ParsePalletID(this.rfidUID,ref shopName, ref productCata, ref strCataName, ref reStr))
             {
+                this.currentTaskDescribe = reStr;
                 return false;
             }
            // int step = 0;
-           
+            MatProcessBll shopPrsBll = new MatProcessBll();
+            MatProcessModel shopPrs= shopPrsBll.GetModel(shopName);
+            if(shopPrs == null)
+            {
+                this.currentTaskDescribe = shopName+"无烘烤工艺配置,请配置";
+                return false;
+            }
             if (productCata==1) //正极
             {
-              
-                switchRe = 2;
+                if(shopPrs.ZhengjiHongkao>0)
+                {
+                    switchRe = 2 + shopPrs.ZhengjiHongkao;
+                }
+                else
+                {
+                    switchRe = 2;//不烘烤
+                }
+                
               //  step = 1;
             }
             else if (productCata==3)//负极
             {
-               
-               
               //  step = 2;
-                switchRe = 3;
+                if(shopPrs.FujiHongkao>0)
+                {
+                    switchRe = 2 + shopPrs.FujiHongkao;
+                }
+                else
+                {
+                    switchRe = 2;
+                }
+                
             }
             else if (productCata == 2) //隔膜
             {
-              
-                switchRe = 2;
+                if(shopPrs.GemoHongkao>0)
+                {
+                    switchRe = 2 + shopPrs.GemoHongkao;
+                }
+                else
+                {
+                    switchRe = 2;
+                }
+                
             }
             else
             {
@@ -205,26 +235,26 @@ namespace PrcsCtlModelsLishen
             //检索库里的空框类型，生成对应的空框出库任务，如果没有可以出库的空框也给出反馈
             
             short emptypalletReqRe = 0;
-            if(this.db1ValsToSnd[1] ==1)
+          //  if(this.db1ValsToSnd[1] ==1)
+          //  {
+            if (EmptyPalletOutrequire(shopName,productCata, ref emptypalletReqRe, ref reStr))
             {
-                if (EmptyPalletOutrequire(productCata, ref emptypalletReqRe, ref reStr))
-                {
-                    this.db1ValsToSnd[1] = 2;
-                }
-                else
-                {
-                    this.db1ValsToSnd[1] = 3;
-                    this.currentTaskDescribe = string.Format("申请空框类型{0}出库失败,{1}", strCataName, reStr);
-                    return false;
-                }
+                this.db1ValsToSnd[1] = 2;
             }
+            else
+            {
+                this.db1ValsToSnd[1] = 3;
+                logRecorder.AddDebugLog(nodeName, string.Format("无{0}空框{1}可以出库,{2}", shopName,strCataName, reStr));
+              //  return false;
+            }
+         //   }
            
             if (switchRe == 2)
             {
                 if (asrsInPort.PalletBuffer.Count() >= asrsInPort.PortinBufCapacity)
                 {
                     this.currentTaskDescribe = string.Format("入库口托盘缓存已满,分流等待,{0}", this.rfidUID);
-                    this.db1ValsToSnd[0] = 4;
+                    this.db1ValsToSnd[0] = 0;
                     return false;
                 }
                 //在线产品记录
@@ -241,11 +271,11 @@ namespace PrcsCtlModelsLishen
             else
             {
                 this.db1ValsToSnd[0] = (short)switchRe;
-                logRecorder.AddDebugLog(nodeName, string.Format("{0}负极材料，分流进烘烤线", this.rfidUID));
+                logRecorder.AddDebugLog(nodeName, string.Format("{0},材料：{1}，分流进烘烤线{2}", this.rfidUID, strCataName, switchRe - 2));
                 return true;
             }
         }
-        private bool EmptyPalletOutrequire(short palletCata,ref short re,ref string reStr)
+        private bool EmptyPalletOutrequire(string shopName,short palletCata,ref short re,ref string reStr)
         {
             
             string houseName = "A1库房";
@@ -291,12 +321,12 @@ namespace PrcsCtlModelsLishen
                       //  string strCata = "";// this.rfidUID.Substring(10, 1).ToUpper();
                         short productCata = 0;
                         string strCataName = "";// "正极材料";
-
-                        if (!ParsePalletID(palletID, ref productCata, ref strCataName, ref reStr))
+                        string storeShopName = "";
+                        if (!ParsePalletID(palletID, ref storeShopName, ref productCata, ref strCataName, ref reStr))
                         {
                             continue;
                         }
-                        if (productCata ==palletCata)
+                        if ((productCata ==palletCata) && (shopName== storeShopName))
                         {
                             validCells.Add(cellStat);
                         }
@@ -472,7 +502,7 @@ namespace PrcsCtlModelsLishen
             }
             return true;
         }
-        public static bool ParsePalletID(string palletID, ref short cata, ref string strCataName, ref string reStr)
+        public static bool ParsePalletID(string palletID, ref string shopName,ref short cata, ref string strCataName, ref string reStr)
         {
             try
             {
@@ -484,6 +514,30 @@ namespace PrcsCtlModelsLishen
                 if(palletID.Length<11)
                 {
                     reStr = "料筐条码长度不足";
+                    return false;
+                }
+                int seqNo = 0;
+                string strSeqNo=palletID.Substring(palletID.Length - 2, 2);
+                if(!int.TryParse(strSeqNo,out seqNo))
+                {
+                    reStr = "治具流水号解析错误，应当为数字,实际：" + strSeqNo;
+                    return false;
+                }
+                if(seqNo>0 && seqNo<30)
+                {
+                    shopName = "1号车间";
+                }
+                else if(seqNo>30 && seqNo<60)
+                {
+                    shopName = "2号车间";
+                }
+                else if(seqNo>60 && seqNo<90)
+                {
+                    shopName = "3号车间";
+                }
+                else
+                {
+                    reStr = "不可识别的车间标识，治具流水号：" + seqNo.ToString();
                     return false;
                 }
                 string strCata = palletID.Substring(10, 1).ToUpper();
@@ -509,10 +563,10 @@ namespace PrcsCtlModelsLishen
                 }
                 else
                 {
-                    
                     reStr = "无法解析条码" + palletID;
                     return false;
                 }
+
                 return true;
             }
             catch (Exception ex)

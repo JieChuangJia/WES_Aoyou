@@ -211,10 +211,10 @@ namespace FlowCtlBaseModel
         /// <returns></returns>
         public virtual bool ReadDB2(ref string reStr)
         {
-            //if(devStatusRestore)
-            //{
-            //    Array.Copy(db2Vals, db2ValsLast, db2Vals.Count());
-            //}
+            if (devStatusRestore)
+            {
+                Array.Copy(db2Vals, db2ValsLast, db2Vals.Count());
+            }
             int blockNum = this.dicCommuDataDB2.Count();
             if (!SysCfg.SysCfgModel.SimMode)
             {

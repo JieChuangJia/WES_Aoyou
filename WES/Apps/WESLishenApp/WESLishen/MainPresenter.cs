@@ -103,7 +103,8 @@ namespace WESLishen
                 {
                     asrsCtl.MesAcc = mesAcc;
                     asrsCtl.dlgtGetLogicArea = AsrsAreaToCheckin;
-                    asrsCtl.dlgtUpdateStep = UpdateStepAfterCheckin;
+                    asrsCtl.dlgtAsrsTasktypeToCheckin = AsrsTasktypeToCheckin;
+                   // asrsCtl.dlgtUpdateStep = UpdateStepAfterCheckin;
                 }
                
 
@@ -221,6 +222,19 @@ namespace WESLishen
                     return false;
                 }
                 List<AsrsModel.GSMemTempModel> validCells = new List<AsrsModel.GSMemTempModel>();
+                string shopRequire="";
+                if(port.NodeName=="A1库物料出口1")
+                {
+                    shopRequire="1号车间";
+                }
+                else if (port.NodeName == "A1库物料出口2")
+                {
+                    shopRequire="2号车间";
+                }
+                else if (port.NodeName == "A1库物料出口3")
+                {
+                    shopRequire="3号车间";
+                }
                 int r = 1, c = 1, L = 1;
                 for (r = 1; r < asrsCtl.AsrsRow + 1; r++)
                 {
@@ -251,7 +265,17 @@ namespace WESLishen
                                 continue;
                             }
                             MesDBAccess.Model.palletModel pallet = palletDBll.GetModel(storGoods[0]);
-                            if (pallet.palletCata == palletCata.ToString())
+                            short productCata = 0;
+                            string strCataName = "";// "正极材料";
+                         
+                            string shopName = "";
+                            if (!PrcsCtlModelsLishen.NodeSwitchInput.ParsePalletID(storGoods[0], ref shopName, ref productCata, ref strCataName, ref reStr))
+                            {
+                                
+                                continue;
+                            }
+                            //if (pallet.palletCata == palletCata.ToString())
+                            if (productCata == palletCata && shopRequire== shopName)
                             {
                                 validCells.Add(cellStat);
                             }
@@ -325,40 +349,126 @@ namespace WESLishen
                 return false;
             }
         }
-        private string AsrsAreaToCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl,int step)
+        //private string AsrsAreaToCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl,int step)
+        //{
+        //    string area = "其它";
+        //    if(step== 0)
+        //    {
+        //        //不限库区，
+        //        string[] logicAreas = new string[]{"正极材料区","负极材料区","空筐区"};
+        //        foreach(string strArea in logicAreas)
+        //        {
+        //            int validNum = 0;
+        //            string reStr="";
+        //            if(this.asrsResManage.GetHouseAreaLeftGs(asrsCtl.HouseName, strArea, ref validNum, reStr))
+        //            {
+        //                if(validNum>0)
+        //                {
+        //                    area = strArea;
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //        return area;
+                
+        //    }
+        //    else
+        //    {
+        //        area = SysCfg.SysCfgModel.asrsStepCfg.GetAsrsArea(step);
+        //    }
+        //    return area;
+        //}
+        private string AsrsAreaToCheckin(string palletID, AsrsControl.AsrsCtlModel asrsCtl, int step)
         {
             string area = "其它";
-            if(step== 0)
+            short productCata = 0;
+            string strCataName = "";// "正极材料";
+            string reStr = "";
+            string shopName = "";
+           
+           // {
+            if (!PrcsCtlModelsLishen.NodeSwitchInput.ParsePalletID(palletID, ref shopName, ref productCata, ref strCataName, ref reStr))
+            {
+                Console.WriteLine("解析物料信息失败," + reStr);
+                return area;
+            }
+            if (strCataName == "正极材料")
+            {
+                area = "正极材料区";
+            }
+            else if (strCataName == "负极材料")
+            {
+                area = "负极材料区";
+            }
+            else if (strCataName == "隔膜材料")
             {
                 //不限库区，
-                string[] logicAreas = new string[]{"正极材料区","负极材料区","空筐区"};
-                foreach(string strArea in logicAreas)
+                string[] logicAreas = new string[] { "正极材料区", "负极材料区", "空筐区" };
+                int validNum = 0;
+                foreach (string strArea in logicAreas)
                 {
-                    int validNum = 0;
-                    string reStr="";
-                    if(this.asrsResManage.GetHouseAreaLeftGs(asrsCtl.HouseName, strArea, ref validNum, reStr))
+                    if (this.asrsResManage.GetHouseAreaLeftGs(asrsCtl.HouseName, strArea, ref validNum, reStr))
                     {
-                        if(validNum>0)
+                        if (validNum > 0)
                         {
                             area = strArea;
                             break;
                         }
                     }
                 }
-                return area;
-                
+                if (validNum < 1)
+                {
+                    Console.WriteLine("没有可用库位，材料：" + strCataName);
+                    return area;
+                }
+
             }
             else
             {
-                area = SysCfg.SysCfgModel.asrsStepCfg.GetAsrsArea(step);
+                Console.WriteLine("不存在的材料种类" + strCataName);
+                return area;
             }
+          //  }
             return area;
         }
-        private bool UpdateStepAfterCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl, int curStep)
+        private bool AsrsTasktypeToCheckin(AsrsControl.AsrsPortalModel port, ref SysCfg.EnumAsrsTaskType taskType, ref string logicArea, ref string reStr)
         {
-            return true;
-     
+            try
+            {
+                if (port.NodeID == "2003" || port.NodeID=="2005" || port.NodeID=="2007")
+                {
+                    if(port.Db2Vals[1] ==1)
+                    {
+                        taskType = SysCfg.EnumAsrsTaskType.空筐入库;
+                        logicArea = "空筐区";
+                    }
+                    else if(port.Db2Vals[1] ==2)
+                    {
+                        taskType = SysCfg.EnumAsrsTaskType.产品入库;
+                        logicArea = "NG材料区";
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    taskType = port.BindedTaskInput;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                reStr = ex.ToString();
+                return false;
+               
+            }
         }
+        //private bool UpdateStepAfterCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl, int curStep)
+        //{
+        //    return true;
+        //}
         #endregion
     }
 }

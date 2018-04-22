@@ -124,6 +124,10 @@
       <Project>{ca19b9f8-8521-40c8-8918-33b15b2935d2}</Project>
       <Name>SysCfg</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LishenMesDBAccess\LishenMesDBAccess.csproj">
+      <Project>{586582c7-c074-4413-b660-ef6be03a9e12}</Project>
+      <Name>LishenMesDBAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

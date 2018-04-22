@@ -27,6 +27,7 @@ namespace AsrsControl
         public delegate bool DlgtAsrsOutTaskPortBusiness(AsrsPortalModel port, AsrsControl.AsrsTaskParamModel taskParam, ref string reStr);
         public delegate string DlgtGetAsrsLogicArea(string palletID,AsrsCtlModel asrsCtl,int curStep);
         public delegate bool DlgtUpdateStepAfterCheckin(string palletID,AsrsCtlModel asrsCtl, int curStep);
+        public delegate bool DlgtAsrsTasktypeTorun(AsrsPortalModel port, ref SysCfg.EnumAsrsTaskType taskType, ref string logicArea,ref string reStr); //委托：将要申请的任务类型
         #region 数据
        // protected  Dictionary<int, string> mesStepLocalMap = new Dictionary<int, string>();
         private short asrsCheckInFailed = 3; //入库申请失败应答
@@ -58,6 +59,7 @@ namespace AsrsControl
         public DelegateGetTaskTorun dlgtGetTaskTorun = null;
         public DlgtGetAsrsLogicArea dlgtGetLogicArea = null;
         public DlgtUpdateStepAfterCheckin dlgtUpdateStep = null;
+        public DlgtAsrsTasktypeTorun dlgtAsrsTasktypeToCheckin = null;
         public int AsrsRow { get { return asrsRow; } }
         public int AsrsCol { get { return asrsCol; } }
         public int AsrsLayer { get { return asrsLayer; } }
@@ -868,7 +870,7 @@ namespace AsrsControl
            string area = "其它";
             if(dlgtGetLogicArea != null)
             {
-                area = dlgtGetLogicArea(palletID,this, step);//(EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), dlgtGetLogicArea(this,step));
+                area = dlgtGetLogicArea(palletID,this,step);//(EnumLogicArea)Enum.Parse(typeof(EnumLogicArea), dlgtGetLogicArea(this,step));
             }
             else
             {
@@ -892,87 +894,111 @@ namespace AsrsControl
             string reStr = "";
             foreach(AsrsPortalModel port in ports)
             {
-               
                 if (port.PortCata == 2) //只针对入口逻辑
                 {
                     continue;
                 }
-               
                 SysCfg.EnumAsrsTaskType taskType = port.BindedTaskInput;
-                int palletStep = 0;
-                if (!MesAcc.GetStep(port.PalletBuffer[0], out palletStep, ref reStr))
-                {
-                    continue;
-                }
-                if (palletStep == 0)
-                {
-                    //判断第一个料框是否空筐
-                    taskType = SysCfg.EnumAsrsTaskType.空筐入库;
-                    if (!port.EmptyPalletInputEnabled || port.PalletBuffer.Count() < 1)
-                    {
-                        port.CurrentTaskDescribe = "空筐入库申请失败，请检查配置空筐是否允许出库，以及是否有缓存托盘数据";
-                        continue;
-                    }
-                }
-  
+               
                 string palletID = "";
                 #region 判断是否需要读条码
                 if(port.BarcodeScanRequire)
                 {
                     if((port.Db2Vals[0]==2) && (port.Db1ValsToSnd[0] !=2))
                     {
-                       
                         if(SysCfg.SysCfgModel.SimMode)
                         {
                             palletID = port.SimRfidUID;
                         }
                         else
                         {
-                            if (barcodeRW != null)
+                            if (port.BarcodeRW != null)
                             {
-                               palletID = barcodeRW.ReadBarcode();
+                                palletID = port.BarcodeRW.ReadBarcode();
                             }
                         }
                         if(string.IsNullOrWhiteSpace(palletID))
                         {
-                            port.Db1ValsToSnd[0] = 3;
+                            port.Db1ValsToSnd[0] = 5;
+                            port.CurrentTaskDescribe = "读条码失败";
                             continue;
                         }
+                        else
+                        {
+                            port.CurrentTaskDescribe = "读条码成功";
+                            port.Db1ValsToSnd[0] = 1;
+                        }
+
+                        //Console.WriteLine("{0} 扫码结果：{1}", nodeName, palletID);
                         port.PushPalletID(palletID);
                     }
                 }
                 #endregion
                 #region 入库申请
-           
+                string checkinArea = string.Empty;
+                if(dlgtAsrsTasktypeToCheckin != null)
+                {
+                    if (port.PalletBuffer.Count()<1)
+                    {
+                        continue;
+                    }
+                    if(!dlgtAsrsTasktypeToCheckin(port,ref taskType, ref checkinArea,ref reStr))
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if ((port.BindedTaskInput != SysCfg.EnumAsrsTaskType.空筐入库) && port.PalletBuffer.Count() > 0)
+                    {
+                        int palletStep = 0;
+                        if (!MesAcc.GetStep(port.PalletBuffer[0], out palletStep, ref reStr))
+                        {
+                            continue;
+                        }
+                        if (palletStep == 0)
+                        {
+                            //判断第一个料框是否空筐
+                            taskType = SysCfg.EnumAsrsTaskType.空筐入库;
+                            if (!port.EmptyPalletInputEnabled)
+                            {
+                                port.CurrentTaskDescribe = "空筐入库申请失败，请检查配置空筐是否允许出库";
+                                continue;
+                            }
+                        }
+                    }
+                }
                 if (port.AsrsInputEnabled(ref taskType))
                 {
-                    string checkinArea = "注液高温区";
                     string[] cellGoods = null;
                     if (port.PalletBuffer.Count > 0)
                     {
                         cellGoods = port.PalletBuffer.ToArray();
                     }
-
-                    if (taskType == SysCfg.EnumAsrsTaskType.空筐入库)
+                    if(string.IsNullOrWhiteSpace(checkinArea))
                     {
-                        checkinArea = "空筐区";
-                    }
-                    else
-                    {
-                        if (cellGoods.Count() < 1)
+                        if (taskType == SysCfg.EnumAsrsTaskType.空筐入库)
                         {
-                            continue;
+                            checkinArea = "空筐区";
                         }
-                        palletID = cellGoods[0];
-                        int step = 0;
+                        else
+                        {
+                            if (cellGoods.Count() < 1)
+                            {
+                                continue;
+                            }
+                            palletID = cellGoods[0];
+                            int step = 0;
 
-                        if (!MesAcc.GetStep(palletID, out step, ref reStr))
-                        {
-                            Console.WriteLine("{0}查询工步发生异常：", reStr);
-                            continue;
+                            if (!MesAcc.GetStep(palletID, out step, ref reStr))
+                            {
+                                Console.WriteLine("{0}查询工步发生异常：", reStr);
+                                continue;
+                            }
+                            checkinArea = GetAreaToCheckin(palletID, step);
                         }
-                        checkinArea = GetAreaToCheckin(palletID,step);
                     }
+                   
 
                     //申请货位
 
@@ -1022,7 +1048,7 @@ namespace AsrsControl
                 {
                     continue;
                 }
-                if(port.BindedTaskOutput != SysCfg.EnumAsrsTaskType.空筐出库)
+                if ((port.BindedTaskOutput != SysCfg.EnumAsrsTaskType.空筐出库) || (port.EptyPalletCheckoutMode!="自动"))
                 {
                     continue;
                 }
@@ -1828,7 +1854,6 @@ namespace AsrsControl
                                 ref reStr))
                             {
                                 logRecorder.AddLog(new LogInterface.LogModel(nodeName, "更新货位状态失败：" + reStr, LogInterface.EnumLoglevel.错误));
-
                                 return false;
                             }
 

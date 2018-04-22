@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ProcessCfg>
   <sysSet>
-    <RunMode sim="true" RfidSimMode="False" UnBindedMode="False">运行模式</RunMode>
+    <RunMode sim="false" RfidSimMode="False" UnBindedMode="False">运行模式</RunMode>
     <!--线体控制，速度，启动/停止-->
     <LineCtl addrStart="D4000" blockNum="3">线体控制</LineCtl>
     <AsrsStoreCfg StoreTime="72">A库静置时间，单位：小时</AsrsStoreCfg>
@@ -12,6 +12,7 @@
       <HouseArea houseAreaID="2" areaName="空筐区">192,192,192</HouseArea>
       <HouseArea houseAreaID="3" areaName="正极材料区">0,162,232</HouseArea>
       <HouseArea houseAreaID="4" areaName="负极材料区">181,230,29</HouseArea>
+      <HouseArea houseAreaID="5" areaName="NG材料区">241,86,94</HouseArea>
     </HouseAreaColorSet>
    <!--立库出入库工艺流程配置-->
     <AsrsStepCfg>
@@ -22,6 +23,40 @@
         <AsrsPortCfg houseName="A1库房" inPort="1" outPort="2"></AsrsPortCfg>
       </ProcStep>
     </AsrsStepCfg>
+    <StackerWarnDef>
+      <Warn warnCode="1" warnInfo="接收任务不完整"/>
+      <Warn warnCode="2" warnInfo="叉臂伸出的前方有货"/>
+      <Warn warnCode="3" warnInfo="叉臂出口有货"/>
+      <Warn warnCode="4" warnInfo="钢丝绳松故障"/>
+      <Warn warnCode="5" warnInfo="行走到原点极限故障"/>
+      <Warn warnCode="6" warnInfo="行走到终点极限故障"/>
+      <Warn warnCode="7" warnInfo="升降到下限极限保护"/>
+      <Warn warnCode="8" warnInfo="升降到上限极限故障"/>
+      <Warn warnCode="9" warnInfo="行走／货叉变频器故障"/>
+      <Warn warnCode="10" warnInfo="升降变频器故障"/>
+      <Warn warnCode="11" warnInfo="行走故障，检查是否卡住或激光测距传感器异常"/>
+      <Warn warnCode="12" warnInfo="升降故障，检查升降是否卡住或升降传感器是否异常"/>
+      <Warn warnCode="13" warnInfo="货叉伸出超时，请检查是否卡住！"/>
+      <Warn warnCode="14" warnInfo="货物偏左故障"/>
+      <Warn warnCode="15" warnInfo="货物偏右故障"/>
+      <Warn warnCode="16" warnInfo="取放货异常，请检查货物是否斜偏"/>
+      <Warn warnCode="17" warnInfo="门被打开"/>
+      <Warn warnCode="18" warnInfo="通讯故障"/>
+      <Warn warnCode="19" warnInfo="指令错误，同时给入库和出库指令，或没有出库和入库指令"/>
+      <Warn warnCode="20" warnInfo="满筐入库指令错误，堆垛机上有物料"/>
+      <Warn warnCode="21" warnInfo="空筐入库指令错误，堆垛机上有物料"/>
+      <Warn warnCode="22" warnInfo="满筐出库指令错误，堆垛机上有物料"/>
+      <Warn warnCode="23" warnInfo="空筐出库指令错误，堆垛机上有物料"/>
+      <Warn warnCode="24" warnInfo="货叉不在原点"/>
+      <Warn warnCode="25" warnInfo="其它故障1"/>
+      <Warn warnCode="26" warnInfo="其它故障2"/>
+      <Warn warnCode="27" warnInfo="其它故障3"/>
+      <Warn warnCode="28" warnInfo="其它故障4"/>
+      <Warn warnCode="29" warnInfo="其它故障5"/>
+      <Warn warnCode="30" warnInfo="急停按下"/>
+      <Warn warnCode="31" warnInfo="出口信息错误"/>
+      <Warn warnCode="32" warnInfo="入口信息错误"/>
+    </StackerWarnDef>
   </sysSet>
   <CommDevCfg>
     <PLCCfg>
@@ -65,7 +100,7 @@
         <DB2Addr addrStart="D3056" blockNum="5">DB2数据区地址信息</DB2Addr>
       </BaseDatainfo>
       <SelfDatainfo >
-        <Db1Desc>0：复位,1：读码失败,2：入库分流,3:烘烤分流</Db1Desc>
+        <Db1Desc>0：复位,1：读码失败,2：入库分流,3:进烘烤1,4:进烘烤2;1:复位,2:已生成空筐出库任务,3:没有符合型号的空筐可以出</Db1Desc>
         <Db2Desc>入口状态,1:无板，2:有板</Db2Desc>
         <SwitchPath>2001,4002</SwitchPath>
       </SelfDatainfo>
@@ -132,7 +167,7 @@
           <DB2Addr addrStart="D3011" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
         <SelfDatainfo portSeq="1" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false" barcodeScanRequire="false">
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败;空框可出库状态,1:复位,2:有满足型号的可出库空框，已生成出库任务,3:无满足型号的可出库空框</Db1Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>
           <SwitchPath>1001</SwitchPath>
@@ -159,8 +194,8 @@
           <DB2Addr addrStart="D3021" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
         <SelfDatainfo portSeq="3" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
-          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:入库请求失败,5：读码失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求;空筐、NG物料区分,1:空筐,2:NG物料,3:重新烘烤物料</Db2Desc>
           <PortType>1</PortType>
           <SwitchPath>1001</SwitchPath>
         </SelfDatainfo>
@@ -185,8 +220,8 @@
           <DB2Addr addrStart="D3031" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
         <SelfDatainfo portSeq="5" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
-          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:入库请求失败,5：读码失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求;空筐、NG物料区分,1:空筐,2:NG物料,3:重新烘烤物料</Db2Desc>
           <PortType>1</PortType>
           <SwitchPath>1001</SwitchPath>
         </SelfDatainfo>
@@ -210,8 +245,8 @@
           <DB2Addr addrStart="D3041" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
         <SelfDatainfo portSeq="7" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,5：入库申请失败</Db1Desc>
-          <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:入库请求失败,5：读码失败</Db1Desc>
+          <Db2Desc>入口状态,1:复位，2:入库请求;空筐、NG物料区分,1:空筐,2:NG物料,3:重新烘烤物料</Db2Desc>
           <PortType>1</PortType>
           <SwitchPath>1001</SwitchPath>
         </SelfDatainfo>
@@ -234,7 +269,8 @@
           <DB1Addr addrStart="D2061" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3051" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="9" bindedTask="空筐出库" capacity="1">
+        <!--emptyPalletCheckoutMode： 空筐出库模式，自动，手动，条件-->
+        <SelfDatainfo portSeq="9" bindedTask="空筐出库" emptyPalletCheckoutMode="条件" capacity="1">
           <Db1Desc></Db1Desc>
           <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;</Db2Desc>
           <PortType>2</PortType>
