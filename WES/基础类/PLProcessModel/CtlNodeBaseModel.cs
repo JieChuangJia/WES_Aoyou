@@ -334,7 +334,16 @@ namespace FlowCtlBaseModel
             {
                 //增加日志提示
                 LogModel log = new LogModel(this.nodeName, statDescribe, EnumLoglevel.错误);
-                this.logRecorder.AddLog(log);
+                if(this.logRecorder == null)
+                {
+                    Console.WriteLine("{0} 错误：{1}", nodeName, statDescribe);
+                }
+                else
+                {
+                    this.logRecorder.AddLog(log);
+                }
+
+               
             }
             this.currentStat.Status = statEnum;
             this.currentStat.StatDescribe = statDescribe;
@@ -651,7 +660,11 @@ namespace FlowCtlBaseModel
                 if (!ReadDB1())
                 {
                     Console.WriteLine(string.Format("恢复设备状态失败，读DB1区数据失败,{0}", this.nodeName));
-                    logRecorder.AddDebugLog(nodeName, string.Format("恢复设备状态失败，读DB1区数据失败,{0}", this.nodeName));
+                    if(logRecorder != null)
+                    {
+                        logRecorder.AddDebugLog(nodeName, string.Format("恢复设备状态失败，读DB1区数据失败,{0}", this.nodeName));
+                    }
+                    
                     //return false;
                 }
                 else

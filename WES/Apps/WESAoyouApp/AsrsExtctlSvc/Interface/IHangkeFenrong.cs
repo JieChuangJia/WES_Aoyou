@@ -65,5 +65,18 @@ namespace AsrsExtctlSvc.Interface
          [OperationContract]
          bool CellStoreStateNotify(int row, int col, int layer, int stat, ref string reStr);
 
+         /// <summary>
+         /// 货位紧急报警
+         /// </summary>
+         /// <param name="row">立库排号（从1开始）</param>
+         /// <param name="col">立库列（从1开始）</param>
+         /// <param name="layer">立库层（从1开始）</param>
+         /// <param name="reason">紧急状态解释</param>
+         /// <param name="reStr">(out)若接口调用失败返回失败信息</param>
+         /// <returns>true：接口调用成功，false：接口调用失败</returns>
+         [OperationContract]
+         bool CellEmerNotify(int row, int col, int layer, string reason, ref string reStr);
+
+
     }
 }

@@ -127,7 +127,7 @@ namespace AsrsControl
             }
             if(this.db2Vals[1] != this.db2ValsLast[1])
             {
-                if(this.db2Vals[1] == 1 || this.db2Vals[1] ==2)
+                if (this.db2ValsLast[1] ==4 &&(this.db2Vals[1] == 1 || this.db2Vals[1] == 2))
                 {
                     logRecorder.AddDebugLog(nodeName, "切换到自动模式");
                 }
@@ -297,14 +297,18 @@ namespace AsrsControl
                     }
                 case 3:
                     {
-                        if (this.dlgtAsrsPnPCompleted != null)
+                        if(this.currentTask.tag5!="1") //非紧急出库
                         {
-                            if (!dlgtAsrsPnPCompleted(this.taskParamModel,this.currentTask,this.db2Vals[3]))
+                            if (this.dlgtAsrsPnPCompleted != null)
                             {
-                                logRecorder.AddDebugLog(nodeName, "取放货完成后处理失败!");
-                                break;
+                                if (!dlgtAsrsPnPCompleted(this.taskParamModel, this.currentTask, this.db2Vals[3]))
+                                {
+                                    logRecorder.AddDebugLog(nodeName, "取放货完成后处理失败!");
+                                    break;
+                                }
                             }
                         }
+                       
                         currentTaskDescribe = "等待任务完成信号复位";
                         if(db2Vals[2] != 1)
                         {
@@ -441,7 +445,7 @@ namespace AsrsControl
             string errInfo = "工作正常";
             if(errCode != 0)
             {
-                if(errcodeMap.Keys.Contains(errCode))
+                if (SysCfg.SysCfgModel.StackerErrcodeMap.Keys.Contains(errCode))
                 {
                     errInfo = string.Format("故障发生：{0},{1}", errCode, SysCfg.SysCfgModel.StackerErrcodeMap[errCode]);
                 }
@@ -509,6 +513,10 @@ namespace AsrsControl
              for (int i = 0; i < Math.Min(7, taskParamModel.ReserveParams.Count); i++)
              {
                  this.db1ValsToSnd[12 + i] = taskParamModel.ReserveParams[i];
+             }
+             if(ctlTask.tag5 == "1")
+             {
+                 this.db1ValsToSnd[12] = 1; //紧急出库
              }
              //if (ctlTask.TaskType == (int)SysCfg.EnumAsrsTaskType.产品出库)
              //{

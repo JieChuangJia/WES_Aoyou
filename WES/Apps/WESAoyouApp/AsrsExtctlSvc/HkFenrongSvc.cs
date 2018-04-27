@@ -5,6 +5,8 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using AsrsControl;
+using CtlDBAccess.Model;
+using CtlDBAccess.BLL;
 using AsrsInterface;
 using AsrsModel;
 using AsrsExtctlSvc.Interface;
@@ -18,6 +20,7 @@ namespace AsrsExtctlSvc
         private IAsrsManageToCtl asrsResManage = null;
         private string houseName = "";
         public ILogRecorder logRecorder = null;
+        public AsrsControl.AsrsCtlModel AsrsCtl { get; set; }
         public HkFenrongSvc(IAsrsManageToCtl asrsResM,string houseName)
         {
             asrsResManage = asrsResM;
@@ -217,6 +220,68 @@ namespace AsrsExtctlSvc
                 //        return false;
                 //    }
                 //}
+                return true;
+            }
+            catch (Exception ex)
+            {
+                reStr = ex.ToString();
+                return false;
+            }
+        }
+        public bool CellEmerNotify(int row, int col, int layer, string reason, ref string reStr)
+        {
+            try
+            {
+                if (logRecorder != null)
+                {
+                    logRecorder.AddDebugLog(logSrc, string.Format("hello:收到货位{0}-{1}-{2} 温度报警出库调用", row, col, layer));
+                }
+                CellCoordModel cell = new CellCoordModel(row, col, layer);
+                EnumCellStatus cellStoreStat = EnumCellStatus.空闲;
+                EnumGSTaskStatus cellTaskStat = EnumGSTaskStatus.完成;
+                if (!this.asrsResManage.GetCellStatus(houseName, cell, ref cellStoreStat, ref cellTaskStat))
+                {
+                    reStr = string.Format("货位不存在：{0},{1}-{2}-{3}", houseName, row, col, layer);
+                    //  logRecorder.AddDebugLog(objectName, "充电完成事件错误,"+reStr);
+                    return false;
+                }
+                EnumGSEnabledStatus cellEnabledStatus = EnumGSEnabledStatus.禁用;
+                if (!this.asrsResManage.GetCellEnabledStatus(houseName, cell, ref cellEnabledStatus))
+                {
+
+                    reStr = string.Format("货位禁用：{0},{1}-{2}-{3}", houseName, row, col, layer);
+                    //logRecorder.AddDebugLog(objectName, "充电完成事件错误," + reStr);
+                    return false;
+                }
+                if (cellEnabledStatus == EnumGSEnabledStatus.禁用)
+                {
+                    reStr = string.Format("货位禁用：{0},{1}-{2}-{3}", houseName, row, col, layer);
+                    //logRecorder.AddDebugLog(objectName, "充电完成事件错误," + reStr);
+                    return false;
+                }
+                if (cellTaskStat == EnumGSTaskStatus.出库允许)
+                {
+                    return true;
+                }
+                if (cellTaskStat == EnumGSTaskStatus.锁定)
+                {
+                    reStr = string.Format("货位任务锁定：{0},{1}-{2}-{3},", houseName, row, col, layer) + reStr;
+                    //logRecorder.AddDebugLog(objectName, "充电完成事件错误," + reStr);
+                    return false;
+                }
+                cellTaskStat = EnumGSTaskStatus.出库允许;
+                if (!this.asrsResManage.UpdateCellStatus(houseName, cell, cellStoreStat, cellTaskStat, ref reStr))
+                {
+                    reStr = string.Format("更新货位状态失败：{0},{1}-{2}-{3},", houseName, row, col, layer) + reStr;
+                    // logRecorder.AddDebugLog(objectName, "充电完成事件错误," + reStr);
+                    return false;
+                }
+
+                //生成紧急出库任务
+                if (!AsrsCtl.GenerateEmerOutputTask(new CellCoordModel(row, col, layer), SysCfg.EnumAsrsTaskType.产品出库, true, ref reStr))
+                {
+                    return false;
+                }
                 return true;
             }
             catch (Exception ex)

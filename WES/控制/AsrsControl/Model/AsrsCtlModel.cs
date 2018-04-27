@@ -773,7 +773,7 @@ namespace AsrsControl
                 return false;
             }
         }
-        public bool GenerateEmerOutputTask(CellCoordModel cell, SysCfg.EnumAsrsTaskType taskType, bool autoTaskMode, int EmerGrade, ref string reStr)
+        public bool GenerateEmerOutputTask(CellCoordModel cell, SysCfg.EnumAsrsTaskType taskType, bool autoTaskMode, ref string reStr)
         {
             //zwx,此处需要修改
             //if(this.houseName != EnumStoreHouse.B1库房.ToString())
@@ -795,28 +795,22 @@ namespace AsrsControl
             asrsTask.TaskID = System.Guid.NewGuid().ToString();
             asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
             asrsTask.TaskType = (int)taskType;
+            
             AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
             taskParam.InputPort = 0;
-
+            taskParam.OutputPort = 0;
             taskParam.CellPos1 = cell;
             List<string> storGoods = new List<string>();
             if (asrsResManage.GetStockDetail(houseName, cell, ref storGoods))
             {
                 taskParam.InputCellGoods = storGoods.ToArray();
             }
-            if (taskType == SysCfg.EnumAsrsTaskType.空筐出库)
-            {
-                taskParam.OutputPort = 3;
-            }
-            else if (taskType == SysCfg.EnumAsrsTaskType.产品出库)
-            {
-                taskParam.OutputPort = 3;
-            }
-            else
-            {
-                reStr = "不支持的任务类型，" + taskType.ToString();
-                return false;
-            }
+            asrsTask.tag1 = houseName;
+            asrsTask.tag2 = string.Format("{0}-{1}-{2}", cell.Row, cell.Col, cell.Layer);
+            asrsTask.tag5 = "1";
+            asrsTask.Remark = taskType.ToString();
+
+           
             asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
             //申请完成后要锁定货位
            
@@ -837,10 +831,6 @@ namespace AsrsControl
             }
             else
             {
-                asrsTask.tag1 = houseName;
-                asrsTask.tag2 = string.Format("{0}-{1}-{2}", cell.Row, cell.Col, cell.Layer);
-                asrsTask.Remark = taskType.ToString();
-                asrsTask.tag5= EmerGrade.ToString();
                 ctlTaskBll.Add(asrsTask);
                 string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3},{4}", taskType.ToString(), cell.Row, cell.Col, cell.Layer,asrsTask.TaskParam);
                 logRecorder.AddDebugLog(nodeName, logInfo);
@@ -1529,7 +1519,7 @@ namespace AsrsControl
                 List<ControlTaskModel> emerTaskList = ctlTaskBll.GetEmerTaskToRunList(SysCfg.EnumTaskStatus.待执行.ToString(), stacker.NodeID);
                 if (emerTaskList != null && emerTaskList.Count > 0)
                 {
-                    List<AsrsPortalModel> validPorts = GetOutPortsOfBindedtask(SysCfg.EnumAsrsTaskType.产品出库);
+                   /* List<AsrsPortalModel> validPorts = GetOutPortsOfBindedtask(SysCfg.EnumAsrsTaskType.产品出库);
                     AsrsPortalModel port = null;
                     if (validPorts != null && validPorts.Count() > 0)
                     {
@@ -1539,7 +1529,7 @@ namespace AsrsControl
                     if (port.Db2Vals[0] != 2)
                     {
                         return;
-                    }
+                    }*/
                     ControlTaskModel task = emerTaskList[0];
                     if (stacker.CurrentTask == null && stacker.Db2Vals[1] == 1)
                     {
@@ -1879,25 +1869,27 @@ namespace AsrsControl
                     case (int)SysCfg.EnumAsrsTaskType.产品出库:
                         {
                            // int stepUpdate = 3;
-                            //通知站台出库完成
-                           if(ports.Count()>= taskParamModel.OutputPort)
+                           if(taskParamModel.OutputPort>0)
                            {
-                               AsrsPortalModel outPort = ports[taskParamModel.OutputPort-1];
-                               if(dlgtAsrsOutTaskPost != null)
+                               //通知站台出库完成
+                               if (ports.Count() >= taskParamModel.OutputPort)
                                {
-                                   if(!dlgtAsrsOutTaskPost(outPort,taskParamModel,ref reStr))
+                                   AsrsPortalModel outPort = ports[taskParamModel.OutputPort - 1];
+                                   if (dlgtAsrsOutTaskPost != null)
                                    {
+                                       if (!dlgtAsrsOutTaskPost(outPort, taskParamModel, ref reStr))
+                                       {
+                                           return false;
+                                       }
+                                   }
+                                   outPort.Db1ValsToSnd[0] = 2;
+                                   if (!outPort.NodeCmdCommit(true, ref reStr))
+                                   {
+                                       reStr = string.Format("出库站台{0}状态'出库完成'提交失败", outPort.PortSeq);
                                        return false;
                                    }
                                }
-                               outPort.Db1ValsToSnd[0] = 2;
-                               if (!outPort.NodeCmdCommit(true, ref reStr))
-                               {
-                                   reStr = string.Format("出库站台{0}状态'出库完成'提交失败", outPort.PortSeq);
-                                   return false;
-                               }
                            }
-
                             #region 上传MES 出入库时间，库位，托盘号
                             DateTime checkInTime = DateTime.Now;
                             DateTime checkOutTime = DateTime.Now;

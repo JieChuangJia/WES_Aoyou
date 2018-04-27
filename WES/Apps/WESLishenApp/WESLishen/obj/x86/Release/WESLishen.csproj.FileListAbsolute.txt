@@ -112,3 +112,6 @@ E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\WESLishen\ob
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\WESLishen\obj\x86\Release\WESLishen.exe.licenses
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\WESLishen\obj\x86\Release\WESLishen.exe
 E:\workspace\项目\之信遨优项目\代码\WES\Apps\WESLishenApp\WESLishen\obj\x86\Release\WESLishen.pdb
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\WESLishen\bin\Release\WESLishen.exe.config
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\WESLishen\obj\x86\Release\WESLishen.exe
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\WESLishen\obj\x86\Release\WESLishen.pdb

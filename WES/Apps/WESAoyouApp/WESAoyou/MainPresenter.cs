@@ -175,7 +175,7 @@ namespace WESAoyou
                 ServiceEndpoint endpoint = new ServiceEndpoint(_Contract, _Binding, _Address);
                 AsrsExtctlSvc.HkFenrongSvc hkFenrongSvc = new AsrsExtctlSvc.HkFenrongSvc(this.asrsResManage, "B1库房");
                 hkFenrongSvc.logRecorder = logRecorder;
-               
+                hkFenrongSvc.AsrsCtl = asrsPresenter.GetAsrsCtlByName("B1库房");
                 //添加终结点ABC
                 ServiceHost host = new ServiceHost(hkFenrongSvc, _baseAddress);
                 host.Description.Endpoints.Add(endpoint);
