@@ -74,7 +74,7 @@
             this.label32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label32.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label32.Location = new System.Drawing.Point(226, 26);
+            this.label32.Location = new System.Drawing.Point(8, 43);
             this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(390, 57);
@@ -97,20 +97,22 @@
             // 
             // btnWarnReset
             // 
+            this.btnWarnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnWarnReset.BackColor = System.Drawing.Color.Chartreuse;
             this.btnWarnReset.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnWarnReset.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnWarnReset.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.btnWarnReset.Image = ((System.Drawing.Image)(resources.GetObject("btnWarnReset.Image")));
             this.btnWarnReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnWarnReset.Location = new System.Drawing.Point(9, 20);
+            this.btnWarnReset.Location = new System.Drawing.Point(565, 18);
             this.btnWarnReset.Margin = new System.Windows.Forms.Padding(4);
             this.btnWarnReset.Name = "btnWarnReset";
-            this.btnWarnReset.Size = new System.Drawing.Size(192, 63);
+            this.btnWarnReset.Size = new System.Drawing.Size(45, 23);
             this.btnWarnReset.TabIndex = 42;
             this.btnWarnReset.Text = "报警复位";
             this.btnWarnReset.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnWarnReset.UseVisualStyleBackColor = false;
+            this.btnWarnReset.Visible = false;
             this.btnWarnReset.Click += new System.EventHandler(this.btnWarnReset_Click);
             // 
             // timer1

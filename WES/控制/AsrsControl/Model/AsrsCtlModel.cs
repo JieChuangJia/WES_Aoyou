@@ -2053,7 +2053,11 @@ namespace AsrsControl
             List<AsrsPortalModel> validPorts = new List<AsrsPortalModel>();
             foreach(AsrsPortalModel port in ports)
             {
-                if(port.BindedTaskOutput == taskType)
+                //if(port.BindedTaskOutput == taskType)
+                //{
+                //    validPorts.Add(port);
+                //}
+                if(port.BindedTaskList.Contains(taskType))
                 {
                     validPorts.Add(port);
                 }

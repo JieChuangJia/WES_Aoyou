@@ -24,3 +24,4 @@ E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\立库�
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\立库管理\AsrsStorDBAcc\bin\Release\AsrsModel.pdb
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.dll
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.pdb
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\立库管理\AsrsStorDBAcc\obj\x86\Release\AsrsStorDBAcc.csprojResolveAssemblyReference.cache

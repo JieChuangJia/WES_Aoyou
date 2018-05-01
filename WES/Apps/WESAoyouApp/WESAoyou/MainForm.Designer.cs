@@ -93,7 +93,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel3);
             this.splitContainer1.Size = new System.Drawing.Size(1655, 537);
-            this.splitContainer1.SplitterDistance = 448;
+            this.splitContainer1.SplitterDistance = 450;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -112,7 +112,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1651, 444);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1651, 446);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -157,7 +157,7 @@
             this.panelCenterview.Location = new System.Drawing.Point(1, 83);
             this.panelCenterview.Margin = new System.Windows.Forms.Padding(1);
             this.panelCenterview.Name = "panelCenterview";
-            this.panelCenterview.Size = new System.Drawing.Size(1649, 360);
+            this.panelCenterview.Size = new System.Drawing.Size(1649, 362);
             this.panelCenterview.TabIndex = 2;
             // 
             // MainTabControl
@@ -169,7 +169,7 @@
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.Padding = new System.Drawing.Point(0, 0);
             this.MainTabControl.SelectedIndex = 0;
-            this.MainTabControl.Size = new System.Drawing.Size(1649, 360);
+            this.MainTabControl.Size = new System.Drawing.Size(1649, 362);
             this.MainTabControl.TabIndex = 0;
             // 
             // panel2
@@ -189,7 +189,7 @@
             this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 288F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 402F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 581F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.panel4, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel5, 0, 0);
@@ -212,9 +212,9 @@
             this.panel4.Controls.Add(this.labelVersion);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.panel4.Location = new System.Drawing.Point(696, 4);
+            this.panel4.Location = new System.Drawing.Point(875, 4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(949, 37);
+            this.panel4.Size = new System.Drawing.Size(770, 37);
             this.panel4.TabIndex = 0;
             // 
             // label6
@@ -230,10 +230,10 @@
             // 
             // labelUser
             // 
-            this.labelUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelUser.AutoSize = true;
+            this.labelUser.Dock = System.Windows.Forms.DockStyle.Right;
             this.labelUser.ForeColor = System.Drawing.Color.PaleGoldenrod;
-            this.labelUser.Location = new System.Drawing.Point(565, 14);
+            this.labelUser.Location = new System.Drawing.Point(610, 0);
             this.labelUser.Name = "labelUser";
             this.labelUser.Size = new System.Drawing.Size(62, 18);
             this.labelUser.TabIndex = 0;
@@ -241,10 +241,10 @@
             // 
             // labelVersion
             // 
-            this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelVersion.AutoSize = true;
+            this.labelVersion.Dock = System.Windows.Forms.DockStyle.Right;
             this.labelVersion.ForeColor = System.Drawing.Color.PaleGoldenrod;
-            this.labelVersion.Location = new System.Drawing.Point(717, 14);
+            this.labelVersion.Location = new System.Drawing.Point(672, 0);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(98, 18);
             this.labelVersion.TabIndex = 0;
@@ -301,12 +301,13 @@
             this.toolStrip2.Location = new System.Drawing.Point(292, 1);
             this.toolStrip2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(398, 43);
+            this.toolStrip2.Size = new System.Drawing.Size(577, 43);
             this.toolStrip2.TabIndex = 2;
             this.toolStrip2.Text = "toolStrip2";
             // 
             // btnStart
             // 
+            this.btnStart.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnStart.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStart.BackgroundImage")));
             this.btnStart.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
             this.btnStart.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
@@ -322,6 +323,7 @@
             // 
             // btnPause
             // 
+            this.btnPause.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnPause.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPause.BackgroundImage")));
             this.btnPause.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
             this.btnPause.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
@@ -334,6 +336,7 @@
             // 
             // btnExit
             // 
+            this.btnExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
             this.btnExit.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
             this.btnExit.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
@@ -354,7 +357,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1651, 83);
+            this.panel3.Size = new System.Drawing.Size(1651, 81);
             this.panel3.TabIndex = 2;
             // 
             // toolStrip1
@@ -407,7 +410,7 @@
             this.richTextBoxLog.Location = new System.Drawing.Point(0, 29);
             this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(1649, 56);
+            this.richTextBoxLog.Size = new System.Drawing.Size(1649, 54);
             this.richTextBoxLog.TabIndex = 0;
             this.richTextBoxLog.Text = "";
             this.richTextBoxLog.TextChanged += new System.EventHandler(this.richTextBoxLog_TextChanged);
