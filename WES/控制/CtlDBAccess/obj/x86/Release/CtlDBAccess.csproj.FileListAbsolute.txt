@@ -10,4 +10,3 @@ E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlDBAccess\bin\Release\CtlDBAccess.pdb
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlDBAccess\obj\x86\Release\CtlDBAccess.dll
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlDBAccess\obj\x86\Release\CtlDBAccess.pdb
-E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlDBAccess\obj\x86\Release\CtlDBAccess.csprojResolveAssemblyReference.cache
