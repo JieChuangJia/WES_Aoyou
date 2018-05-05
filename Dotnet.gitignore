@@ -1,0 +1,4 @@
+#C#
+*.dll
+*.cache
+*.pdb
