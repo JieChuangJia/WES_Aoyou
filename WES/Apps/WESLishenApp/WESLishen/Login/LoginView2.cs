@@ -21,7 +21,12 @@ namespace NbssECAMS
         private void LoginView2_Load(object sender, EventArgs e)
         {
             this.cb_UserRole.Items.Clear();
-            this.cb_UserRole.Items.AddRange(new string[] {"操作员","管理员","系统维护"});
+            List<User_ListModel> userList= bllUser.GetModelList("");
+            foreach(User_ListModel m in userList)
+            {
+                this.cb_UserRole.Items.Add(m.UserName);
+            }
+         //   this.cb_UserRole.Items.AddRange(new string[] {"操作员","管理员","系统维护"});
             this.cb_UserRole.SelectedIndex = 0;
         }
         public int GetLoginRole(ref string userName)

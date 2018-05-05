@@ -8,3 +8,4 @@ E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlMonitorInterface\bin\Release\CtlMonitorInterface.pdb
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlMonitorInterface\obj\x86\Release\CtlMonitorInterface.dll
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlMonitorInterface\obj\x86\Release\CtlMonitorInterface.pdb
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\控制\CtlMonitorInterface\obj\x86\Release\CtlMonitorInterface.csprojResolveAssemblyReference.cache

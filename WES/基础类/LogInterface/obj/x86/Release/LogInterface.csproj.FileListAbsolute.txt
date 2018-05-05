@@ -10,3 +10,4 @@ E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础�
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\LogInterface\bin\Release\LogInterface.pdb
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\LogInterface\obj\x86\Release\LogInterface.dll
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\LogInterface\obj\x86\Release\LogInterface.pdb
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\LogInterface\obj\x86\Release\LogInterface.csprojResolveAssemblyReference.cache
