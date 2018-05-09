@@ -28,6 +28,8 @@ namespace ASRSStorManage.Presenter
      
 
         StockListBLL bllStockList = new StockListBLL();
+        StockBLL bllStock = new StockBLL();
+
         StoreHouseLogicAreaBLL bllLogicArea = new StoreHouseLogicAreaBLL();
         Dictionary<string, Color> gsStatusColor = new Dictionary<string, Color>();
         Dictionary<long, Color> areaColor = new Dictionary<long, Color>();
@@ -357,22 +359,43 @@ namespace ASRSStorManage.Presenter
         }
         public void AddStockList(long  gsID,string boxCodeList)
         {
-            List<View_StockModel> stockView = bllViewStock.GetModelListByGSID(gsID);
-            if (stockView == null||stockView.Count==0)
+            GoodsSiteModel gsm = bllGs.GetModel(gsID);
+            if(gsm == null)
             {
                 return;
             }
+            if(gsm.GoodsSiteStatus == EnumCellStatus.空料框.ToString())
+            {
+                this.view.ShowMessage("空料框状态不允许修改库存信息，若需求更改库存请更改货位状态为非空料框状态！");
+                return;
+            }
+            List<View_StockModel> stockView = bllViewStock.GetModelListByGSID(gsID);
             char[] splitArr = { ',', '，' };
 
             string[] stockListStr = boxCodeList.Split(splitArr);
+            long stockID = 0;
+            if (stockView == null||stockView.Count==0)//没有增加stock
+            {
+                StockModel stock = new StockModel();
+                stock.GoodsSiteID = gsID;
+                stock.IsFull = true;
+                stockID = bllStock.Add(stock);
+            }
+            else//更新原有stock
+            {
+                stockID = stockView[0].StockID;
+            }
+
             for (int i = 0; i < stockListStr.Length; i++)
             {
                 StockListModel slm = new StockListModel();
-                slm.StockID = stockView[0].StockID;
+                slm.StockID = stockID;
                 slm.MeterialboxCode = stockListStr[i];
                 slm.InHouseTime = DateTime.Now;
                 bllStockList.Add(slm);
             }
+            string reStr = "";
+            this.iStorageManage.AddGSOperRecord(this.currHouseName, new CellCoordModel(gsm.GoodsSiteRow, gsm.GoodsSiteColumn, gsm.GoodsSiteLayer), EnumGSOperateType.手动增加库存, "手动增加或者修改库存信息！", ref reStr);
             GetGSDetail(gsID);
         }
         public void SearchBoxByCode(string boxCode)

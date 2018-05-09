@@ -85,6 +85,15 @@
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgv_GoodsSiteDetail = new System.Windows.Forms.DataGridView();
+            this.StockListID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_ProductBatch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.goodsSiteID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TrayID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gsStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.updateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_StayHouseTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Col_Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cms_DeleteStockList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmi_DeleteStockList = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_AddStockList = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,15 +110,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.pl_InnerParent = new System.Windows.Forms.Panel();
             this.pl_ExterProParent = new System.Windows.Forms.Panel();
-            this.StockListID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_ProductBatch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.goodsSiteID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TrayID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gsStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.updateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_StayHouseTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Col_Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.cms_Property.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -298,7 +298,7 @@
             this.tsb_UnuseGs.Image = ((System.Drawing.Image)(resources.GetObject("tsb_UnuseGs.Image")));
             this.tsb_UnuseGs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_UnuseGs.Name = "tsb_UnuseGs";
-            this.tsb_UnuseGs.Size = new System.Drawing.Size(84, 29);
+            this.tsb_UnuseGs.Size = new System.Drawing.Size(84, 28);
             this.tsb_UnuseGs.Text = "禁用货位";
             this.tsb_UnuseGs.Click += new System.EventHandler(this.tsb_UnuseGs_Click);
             // 
@@ -307,7 +307,7 @@
             this.tsb_UsrGs.Image = ((System.Drawing.Image)(resources.GetObject("tsb_UsrGs.Image")));
             this.tsb_UsrGs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_UsrGs.Name = "tsb_UsrGs";
-            this.tsb_UsrGs.Size = new System.Drawing.Size(84, 29);
+            this.tsb_UsrGs.Size = new System.Drawing.Size(84, 28);
             this.tsb_UsrGs.Text = "启用货位";
             this.tsb_UsrGs.Click += new System.EventHandler(this.tsb_UsrGs_Click);
             // 
@@ -316,7 +316,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(108, 29);
+            this.toolStripButton1.Size = new System.Drawing.Size(108, 28);
             this.toolStripButton1.Text = "货位批量设置";
             this.toolStripButton1.Click += new System.EventHandler(this.tsb_MultiUseFobit_Click);
             // 
@@ -325,7 +325,7 @@
             this.tsb_LogicAreaColorSet.Image = ((System.Drawing.Image)(resources.GetObject("tsb_LogicAreaColorSet.Image")));
             this.tsb_LogicAreaColorSet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_LogicAreaColorSet.Name = "tsb_LogicAreaColorSet";
-            this.tsb_LogicAreaColorSet.Size = new System.Drawing.Size(108, 29);
+            this.tsb_LogicAreaColorSet.Size = new System.Drawing.Size(108, 28);
             this.tsb_LogicAreaColorSet.Text = "逻辑库区颜色";
             this.tsb_LogicAreaColorSet.Click += new System.EventHandler(this.tsb_LogicAreaColorSet_Click);
             // 
@@ -631,6 +631,7 @@
             this.updateTime,
             this.col_StayHouseTime,
             this.Col_Remark});
+            this.dgv_GoodsSiteDetail.ContextMenuStrip = this.cms_DeleteStockList;
             this.dgv_GoodsSiteDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_GoodsSiteDetail.Location = new System.Drawing.Point(3, 17);
             this.dgv_GoodsSiteDetail.Name = "dgv_GoodsSiteDetail";
@@ -640,6 +641,51 @@
             this.dgv_GoodsSiteDetail.Size = new System.Drawing.Size(373, 100);
             this.dgv_GoodsSiteDetail.TabIndex = 0;
             // 
+            // StockListID
+            // 
+            this.StockListID.HeaderText = "库存列表编号";
+            this.StockListID.Name = "StockListID";
+            // 
+            // col_ProductBatch
+            // 
+            this.col_ProductBatch.HeaderText = "产品批次";
+            this.col_ProductBatch.Name = "col_ProductBatch";
+            // 
+            // goodsSiteID
+            // 
+            this.goodsSiteID.HeaderText = "货位编号";
+            this.goodsSiteID.Name = "goodsSiteID";
+            // 
+            // TrayID
+            // 
+            this.TrayID.HeaderText = "料框条码";
+            this.TrayID.Name = "TrayID";
+            // 
+            // GsName
+            // 
+            this.GsName.HeaderText = "货位名称";
+            this.GsName.Name = "GsName";
+            // 
+            // gsStatus
+            // 
+            this.gsStatus.HeaderText = "货位状态";
+            this.gsStatus.Name = "gsStatus";
+            // 
+            // updateTime
+            // 
+            this.updateTime.HeaderText = "更新时间";
+            this.updateTime.Name = "updateTime";
+            // 
+            // col_StayHouseTime
+            // 
+            this.col_StayHouseTime.HeaderText = "在库时间";
+            this.col_StayHouseTime.Name = "col_StayHouseTime";
+            // 
+            // Col_Remark
+            // 
+            this.Col_Remark.HeaderText = "备注";
+            this.Col_Remark.Name = "Col_Remark";
+            // 
             // cms_DeleteStockList
             // 
             this.cms_DeleteStockList.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -648,13 +694,14 @@
             this.tsmi_AddStockList,
             this.tsmi_ModifyCode});
             this.cms_DeleteStockList.Name = "contextMenuStrip1";
-            this.cms_DeleteStockList.Size = new System.Drawing.Size(101, 70);
+            this.cms_DeleteStockList.Size = new System.Drawing.Size(153, 92);
             // 
             // tsmi_DeleteStockList
             // 
             this.tsmi_DeleteStockList.Name = "tsmi_DeleteStockList";
-            this.tsmi_DeleteStockList.Size = new System.Drawing.Size(100, 22);
+            this.tsmi_DeleteStockList.Size = new System.Drawing.Size(152, 22);
             this.tsmi_DeleteStockList.Text = "删除";
+            this.tsmi_DeleteStockList.Visible = false;
             this.tsmi_DeleteStockList.Click += new System.EventHandler(this.tsmi_DeleteStockList_Click);
             // 
             // tsmi_AddStockList
@@ -836,51 +883,6 @@
             this.pl_ExterProParent.Name = "pl_ExterProParent";
             this.pl_ExterProParent.Size = new System.Drawing.Size(351, 167);
             this.pl_ExterProParent.TabIndex = 2;
-            // 
-            // StockListID
-            // 
-            this.StockListID.HeaderText = "库存列表编号";
-            this.StockListID.Name = "StockListID";
-            // 
-            // col_ProductBatch
-            // 
-            this.col_ProductBatch.HeaderText = "产品批次";
-            this.col_ProductBatch.Name = "col_ProductBatch";
-            // 
-            // goodsSiteID
-            // 
-            this.goodsSiteID.HeaderText = "货位编号";
-            this.goodsSiteID.Name = "goodsSiteID";
-            // 
-            // TrayID
-            // 
-            this.TrayID.HeaderText = "料框条码";
-            this.TrayID.Name = "TrayID";
-            // 
-            // GsName
-            // 
-            this.GsName.HeaderText = "货位名称";
-            this.GsName.Name = "GsName";
-            // 
-            // gsStatus
-            // 
-            this.gsStatus.HeaderText = "货位状态";
-            this.gsStatus.Name = "gsStatus";
-            // 
-            // updateTime
-            // 
-            this.updateTime.HeaderText = "更新时间";
-            this.updateTime.Name = "updateTime";
-            // 
-            // col_StayHouseTime
-            // 
-            this.col_StayHouseTime.HeaderText = "在库时间";
-            this.col_StayHouseTime.Name = "col_StayHouseTime";
-            // 
-            // Col_Remark
-            // 
-            this.Col_Remark.HeaderText = "备注";
-            this.Col_Remark.Name = "Col_Remark";
             // 
             // StorageView
             // 

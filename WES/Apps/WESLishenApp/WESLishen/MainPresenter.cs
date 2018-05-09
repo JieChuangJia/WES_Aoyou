@@ -110,6 +110,8 @@ namespace WESLishen
 
                 //6 通信设备分配
                 ctlNodeManager.AllocateCommdev();
+                asrsPresenter.DevStatusRestore();
+                prsNodeManager.DevStatusRestore();
 
                 //建立节点路径
                 ctlNodeManager.BuildNodePath();

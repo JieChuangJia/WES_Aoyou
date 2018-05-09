@@ -271,7 +271,7 @@
         </BaseDatainfo>
         <!--emptyPalletCheckoutMode： 空筐出库模式，自动，手动，条件-->
         <SelfDatainfo portSeq="9" bindedTask="空筐出库" emptyPalletCheckoutMode="条件" capacity="1">
-          <Db1Desc></Db1Desc>
+          <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
           <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;</Db2Desc>
           <PortType>2</PortType>
         </SelfDatainfo>

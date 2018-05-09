@@ -1930,6 +1930,16 @@ namespace AsrsControl
                         }
                     case (int)SysCfg.EnumAsrsTaskType.移库:
                         {
+                            //先获取原货位状态
+                            EnumCellStatus cellStoreStat1 = EnumCellStatus.空闲;
+                            EnumGSTaskStatus cellTaskStat1 = EnumGSTaskStatus.完成;
+
+                            if(!this.asrsResManage.GetCellStatus(houseName, taskParamModel.CellPos1, ref cellStoreStat1, ref cellTaskStat1))
+                            {
+                                reStr = string.Format("{0}移库任务处理过程中发生错误，原库位{1}-{2}-{3}状态获取失败",houseName,taskParamModel.CellPos1.Row,taskParamModel.CellPos1.Col,taskParamModel.CellPos1.Layer);
+                                return false;
+                            }
+
                             //1 货位1的处理
                             if (!this.asrsResManage.UpdateCellStatus(this.houseName, taskParamModel.CellPos1,
                                 EnumCellStatus.空闲,
@@ -1951,10 +1961,11 @@ namespace AsrsControl
                             }
 
                             this.asrsResManage.AddGSOperRecord(this.houseName, taskParamModel.CellPos1, gsOPType, "", ref reStr);
+                            this.asrsResManage.AddGSOperRecord(this.houseName, taskParamModel.CellPos2, EnumGSOperateType.入库, "", ref reStr);
 
                             //货位2的处理
                             if (!this.asrsResManage.UpdateCellStatus(this.houseName, taskParamModel.CellPos2,
-                               EnumCellStatus.满位,
+                               cellStoreStat1,
                                EnumGSTaskStatus.完成,
                                ref reStr))
                             {
@@ -1981,7 +1992,7 @@ namespace AsrsControl
                             {
                                 for (int i = 0; i < taskParamModel.InputCellGoods.Count();i++ )
                                 {
-                                     string logStr = string.Format("产品入库:{0},货位：{1}-{2}-{3}", houseName,taskParamModel.CellPos1.Row,taskParamModel.CellPos1.Col,taskParamModel.CellPos1.Layer);
+                                     string logStr = string.Format("移库:{0},起始货位：{1}-{2}-{3},{4}-{5}-{6}", houseName,taskParamModel.CellPos1.Row,taskParamModel.CellPos1.Col,taskParamModel.CellPos1.Layer,taskParamModel.CellPos2.Row,taskParamModel.CellPos2.Col,taskParamModel.CellPos2.Layer);
                                     AddProduceRecord(taskParamModel.InputCellGoods[i], logStr);
                                 }
                                 if (!this.asrsResManage.AddStack(houseName, taskParamModel.CellPos2, batchName, taskParamModel.InputCellGoods, ref reStr))

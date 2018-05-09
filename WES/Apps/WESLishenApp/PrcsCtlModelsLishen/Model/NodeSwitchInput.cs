@@ -356,7 +356,7 @@ namespace PrcsCtlModelsLishen
                 AsrsModel.CellCoordModel cell = new AsrsModel.CellCoordModel(row, col, layer);
                 if (AsrsCtl.GenerateOutputTask(cell, SysCfg.EnumAsrsTaskType.空筐出库, true, AsrsPort.PortSeq, ref reStr, new List<short> { palletCata }))
                 {
-                    AsrsPort.Db1ValsToSnd[0] = 2;
+                 //   AsrsPort.Db1ValsToSnd[0] = 2; //
                     return true;
                 }
                 else
@@ -517,32 +517,56 @@ namespace PrcsCtlModelsLishen
                     return false;
                 }
                 int seqNo = 0;
-                string strSeqNo=palletID.Substring(palletID.Length - 2, 2);
+                string strSeqNo=palletID.Substring(11, 2);
                 if(!int.TryParse(strSeqNo,out seqNo))
                 {
                     reStr = "治具流水号解析错误，应当为数字,实际：" + strSeqNo;
                     return false;
                 }
-                if(seqNo>0 && seqNo<30)
-                {
-                    shopName = "1号车间";
-                }
-                else if(seqNo>30 && seqNo<60)
-                {
-                    shopName = "2号车间";
-                }
-                else if(seqNo>60 && seqNo<90)
-                {
-                    shopName = "3号车间";
-                }
-                else
-                {
-                    reStr = "不可识别的车间标识，治具流水号：" + seqNo.ToString();
-                    return false;
-                }
                 string strCata = palletID.Substring(10, 1).ToUpper();
                 cata = 0;
                 strCataName = "";
+                if(strCata=="S")
+                {
+                    if (seqNo > 0 && seqNo < 30)
+                    {
+                        shopName = "1号车间";
+                    }
+                    else if (seqNo > 30 && seqNo < 60)
+                    {
+                        shopName = "2号车间";
+                    }
+                    else if (seqNo > 60 && seqNo < 90)
+                    {
+                        shopName = "3号车间";
+                    }
+                    else
+                    {
+                        reStr = "不可识别的车间标识，治具流水号：" + seqNo.ToString();
+                        return false;
+                    }
+       
+                }
+                else
+                {
+                    if (seqNo > 0 && seqNo < 19)
+                    {
+                        shopName = "1号车间";
+                    }
+                    else if (seqNo > 20 && seqNo < 69)
+                    {
+                        shopName = "2号车间";
+                    }
+                    else if (seqNo > 70 && seqNo < 89)
+                    {
+                        shopName = "3号车间";
+                    }
+                    else
+                    {
+                        reStr = "不可识别的车间标识，治具流水号：" + seqNo.ToString();
+                        return false;
+                    }
+                }
                 if (strCata == "C")
                 {
                     strCataName = "正极材料";

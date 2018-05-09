@@ -73,5 +73,21 @@ namespace PrcsCtlModelsLishen
                 node.LogRecorder = logRecorder;
             }
         }
+        public bool DevStatusRestore()
+        {
+            try
+            {
+                foreach (CtlNodeBaseModel node in monitorNodeList)
+                {
+                    node.DevStatusRestore();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
     }
 }

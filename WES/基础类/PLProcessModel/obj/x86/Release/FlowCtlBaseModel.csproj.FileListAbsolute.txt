@@ -59,6 +59,6 @@ E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础�
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\PLProcessModel\bin\Release\DevAccess.pdb
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\PLProcessModel\bin\Release\DevInterface.pdb
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\PLProcessModel\bin\Release\DevAccess.XmlSerializers.dll
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\PLProcessModel\obj\x86\Release\FlowCtlBaseModel.csprojResolveAssemblyReference.cache
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\PLProcessModel\obj\x86\Release\FlowCtlBaseModel.dll
 E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\PLProcessModel\obj\x86\Release\FlowCtlBaseModel.pdb
-E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\基础类\PLProcessModel\obj\x86\Release\FlowCtlBaseModel.csprojResolveAssemblyReference.cache
