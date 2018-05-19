@@ -345,6 +345,7 @@ namespace WESAoyou
                 return false;
             }
         }
+         //分容库出库后处理，利用货位“排”号通知转台是否旋转
         private bool AsrsOutTaskBusiness(AsrsControl.AsrsPortalModel outPort, AsrsControl.AsrsTaskParamModel taskParam,ref string reStr)
         {
             try

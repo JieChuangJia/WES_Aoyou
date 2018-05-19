@@ -762,10 +762,18 @@ namespace AsrsControl
                 asrsTask.tag2 = string.Format("{0}-{1}-{2}", cell.Row, cell.Col, cell.Layer);
                 asrsTask.tag4 = priGrade.ToString();
                 asrsTask.Remark = taskType.ToString();
-                ctlTaskBll.Add(asrsTask);
-                string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3},{4}", taskType.ToString(), cell.Row, cell.Col, cell.Layer, asrsTask.TaskParam);
-                logRecorder.AddDebugLog(nodeName, logInfo);
-                return true;
+                if(ctlTaskBll.Add(asrsTask))
+                {
+                    string logInfo = string.Format("生成新的任务:{0},货位：{1}-{2}-{3},{4}", taskType.ToString(), cell.Row, cell.Col, cell.Layer, asrsTask.TaskParam);
+                    logRecorder.AddDebugLog(nodeName, logInfo);
+                    return true;
+                }
+                else
+                {
+                    reStr = "生成入库任务失败，添加到数据库错误";
+                    return false;
+                }
+               
             }
             catch (Exception ex)
             {
@@ -1582,7 +1590,6 @@ namespace AsrsControl
                 {
                     //ControlTaskModel task = ctlTaskBll.GetTaskToRun((int)taskType, EnumTaskStatus.待执行.ToString(),stacker.NodeID);
                    
-
                     //遍历所有可执行任务，找到第一个可用的
                     List<ControlTaskModel> taskList = ctlTaskBll.GetTaskToRunList((int)taskType, SysCfg.EnumTaskStatus.待执行.ToString(), stacker.NodeID,true);
                     ControlTaskModel task = GetTaskTorun(taskList, (SysCfg.EnumAsrsTaskType)taskType);
@@ -1637,7 +1644,6 @@ namespace AsrsControl
                         }
                         if (taskType == SysCfg.EnumAsrsTaskType.产品出库 || taskType == SysCfg.EnumAsrsTaskType.空筐出库)
                         {
-
                             //List<AsrsPortalModel> validPorts = GetOutPortsOfBindedtask(taskType);
                             AsrsPortalModel port = ports[paramModel.OutputPort-1];
                             if (port.Db2Vals[0] != 2)

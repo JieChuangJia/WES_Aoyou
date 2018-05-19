@@ -100,16 +100,9 @@ namespace WESAoyou
                 foreach (AsrsControl.AsrsCtlModel asrsCtl in asrsPresenter.AsrsCtls)
                 {
                     asrsCtl.dlgtAsrsOutportBusiness = AsrsOutportBusiness;
-                    if(asrsCtl.HouseName == "A1库房" || asrsCtl.HouseName == "A2库房")
-                    {
-                        asrsCtl.dlgtGetTaskTorun = AsrsGetCheckoutOfGaowen;
-                    }
+                   
                     asrsCtl.dlgtGetLogicArea = AsrsAreaToCheckin;
-                    if(asrsCtl.HouseName=="B1库房")
-                    {
-                        asrsCtl.dlgtAsrsOutTaskPost = AsrsOutTaskBusiness;
-                        
-                    }
+                   
                 }
 
                 //4 初始化流水线控制系统
@@ -345,7 +338,7 @@ namespace WESAoyou
                 return false;
             }
         }
-        private bool AsrsOutTaskBusiness(AsrsControl.AsrsPortalModel outPort, AsrsControl.AsrsTaskParamModel taskParam,ref string reStr)
+        private bool AsrsOutTaskBusiness(AsrsControl.AsrsPortalModel outPort, AsrsControl.AsrsTaskParamModel taskParam, ref string reStr)
         {
             try
             {
@@ -356,99 +349,18 @@ namespace WESAoyou
                     return false;
                 }
                 System.Threading.Thread.Sleep(500);
-               
+
                 return true;
             }
             catch (Exception ex)
             {
                 reStr = ex.ToString();
                 return false;
-              
+
             }
-            
+
         }
-        public CtlDBAccess.Model.ControlTaskModel AsrsGetCheckoutOfGaowen(AsrsControl.AsrsCtlModel asrsCtl, IAsrsManageToCtl asrsResManage, IList<CtlDBAccess.Model.ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType)
-        {
-            try
-            {
-                if (taskList == null)
-                {
-                    return null;
-                }
-                //AsrsPortalModel port = null;
-                //if(asrsCtl.HouseName == AsrsModel.EnumStoreHouse.A1库房.ToString())
-                //{
-                //    port = ctlNodeManager.GetNodeByID("2002") as AsrsPortalModel;
-                //}
-                //else if (asrsCtl.HouseName == AsrsModel.EnumStoreHouse.A2库房.ToString())
-                //{
-                //    port = ctlNodeManager.GetNodeByID("2006") as AsrsPortalModel;
-                //}
-                //else
-                //{
-                //    return null;
-                //}
-                 string houseName = asrsCtl.HouseName;
-                 CtlDBAccess.Model.ControlTaskModel task = null;
-                foreach (CtlDBAccess.Model.ControlTaskModel t in taskList)
-                {
-                    if(t.TaskStatus != "待执行")
-                    {
-                        continue;
-                    }
-                    string reStr = "";
-                    AsrsTaskParamModel paramModel = new AsrsTaskParamModel();
-                    if (!paramModel.ParseParam(taskType, t.TaskParam, ref reStr))
-                    {
-                        continue;
-                    }
-                    AsrsPortalModel port = asrsCtl.Ports[paramModel.OutputPort-1];
-                    int switchPathSeq = 1;
-                    CellCoordModel cell = paramModel.CellPos1;
-                    string area = "注液高温区";
-                    if(!this.asrsResManage.GetLogicAreaName(houseName, cell, ref area))
-                    {
-                        continue;
-                    }
-                    if(area == "注液高温区")
-                    {
-                        switchPathSeq = 1;
-                    }
-                    else if (area == "化成高温区")
-                    {
-                        switchPathSeq = 2;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                    if(port.Db2Vals[switchPathSeq] !=1)
-                    {
-                        continue;
-                    }
-                    AsrsModel.EnumGSEnabledStatus cellEnabledStatus = AsrsModel.EnumGSEnabledStatus.启用;
-                    if (!asrsResManage.GetCellEnabledStatus(houseName, paramModel.CellPos1, ref cellEnabledStatus))
-                    {
-                        // reStr = "获取货位启用状态失败";
-                        continue;
-                    }
-                    if (cellEnabledStatus == AsrsModel.EnumGSEnabledStatus.禁用)
-                    {
-                        continue;
-                    }
-                    task = t;
-                    break;
-                }
-                return task;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return null;
-            }
-           
-           
-        }
+       
         private string AsrsAreaToCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl,int step)
         {
             string area = "";

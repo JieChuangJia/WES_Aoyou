@@ -237,17 +237,21 @@ namespace PrcsCtlModelsLishen
             short emptypalletReqRe = 0;
           //  if(this.db1ValsToSnd[1] ==1)
           //  {
-            if (EmptyPalletOutrequire(shopName,productCata, ref emptypalletReqRe, ref reStr))
+            if(AsrsPort.Db2Vals[0] == 2) //允许出库时才生成任务
             {
-                this.db1ValsToSnd[1] = 2;
+                if (EmptyPalletOutrequire(shopName, productCata, ref emptypalletReqRe, ref reStr))
+                {
+                    this.db1ValsToSnd[1] = 2;
+                }
+                else
+                {
+                    this.db1ValsToSnd[1] = 3;
+                    logRecorder.AddDebugLog(nodeName, string.Format("无{0}空框{1}可以出库,{2}", shopName, strCataName, reStr));
+                    //  return false;
+                }
             }
-            else
-            {
-                this.db1ValsToSnd[1] = 3;
-                logRecorder.AddDebugLog(nodeName, string.Format("无{0}空框{1}可以出库,{2}", shopName,strCataName, reStr));
-              //  return false;
-            }
-         //   }
+            
+        
            
             if (switchRe == 2)
             {
@@ -279,6 +283,12 @@ namespace PrcsCtlModelsLishen
         {
             
             string houseName = "A1库房";
+            List<CtlDBAccess.Model.ControlTaskModel> taskList=ctlTaskBll.GetModelList(string.Format("TaskType= {0} and (TaskStatus='{1}' or TaskStatus='{2}')", (int)SysCfg.EnumAsrsTaskType.空筐出库, SysCfg.EnumTaskStatus.待执行.ToString(), SysCfg.EnumTaskStatus.执行中.ToString()));
+            if(taskList != null && taskList.Count()>1)
+            {
+                reStr = "已经存在待执行空筐出库任务";
+                return false;
+            }
             //遍历所有库位，判断材料类别，按照先入先出规则，匹配出库的货位。
             Dictionary<string, AsrsModel.GSMemTempModel> asrsStatDic = new Dictionary<string, AsrsModel.GSMemTempModel>();
             
@@ -549,11 +559,11 @@ namespace PrcsCtlModelsLishen
                 }
                 else
                 {
-                    if (seqNo > 0 && seqNo < 19)
+                    if (seqNo > 0 && seqNo < 20)
                     {
                         shopName = "1号车间";
                     }
-                    else if (seqNo > 20 && seqNo < 69)
+                    else if (seqNo > 20 && seqNo < 70)
                     {
                         shopName = "2号车间";
                     }

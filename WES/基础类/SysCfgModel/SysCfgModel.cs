@@ -16,7 +16,7 @@ namespace SysCfg
         public static string xmlCfgStr = "";
         public static AsrsStepCfg asrsStepCfg = null;
         public static bool PlcCommSynMode = true;//同步通信模式
-        public static bool UnbindMode = true;//ASRS动作调试模式，没有数据绑定
+        public static bool UnbindMode = false;//ASRS动作调试模式，没有数据绑定
         public static bool RfidSimMode = false;
         public static int ZhuyeMode = 0; //注液模式，1：一次注液分一步模式，2:一次注液分两步模式
         public static bool MesOnlineMode = false; //MES联机模式
