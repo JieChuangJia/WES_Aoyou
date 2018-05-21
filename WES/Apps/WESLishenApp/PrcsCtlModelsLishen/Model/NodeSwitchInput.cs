@@ -245,8 +245,12 @@ namespace PrcsCtlModelsLishen
                 }
                 else
                 {
+                    if (this.db1ValsToSnd[1] != 3)
+                    {
+                        logRecorder.AddDebugLog(nodeName, string.Format("无{0}空框{1}可以出库,{2}", shopName, strCataName, reStr));
+                    }
                     this.db1ValsToSnd[1] = 3;
-                    logRecorder.AddDebugLog(nodeName, string.Format("无{0}空框{1}可以出库,{2}", shopName, strCataName, reStr));
+                    
                     //  return false;
                 }
             }
