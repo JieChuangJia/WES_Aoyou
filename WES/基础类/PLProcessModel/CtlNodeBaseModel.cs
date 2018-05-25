@@ -380,6 +380,11 @@ namespace FlowCtlBaseModel
                 reStr = "节点已经被禁用";
                 return false;
             }
+            if (!plcRW.IsConnect)
+            {
+                reStr = "PLC通信断开";
+                return false;
+            }
             return true;
         }
          /// <summary>
