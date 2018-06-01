@@ -110,6 +110,10 @@ namespace WESAoyou
                         asrsCtl.dlgtAsrsOutTaskPost = AsrsOutTaskBusiness;
                         
                     }
+                    foreach(AsrsPortalModel port in asrsCtl.Ports)
+                    {
+                        port.dlgtGroupEnabled = AsrsCheckinGroupEnabled;
+                    }
                 }
 
                 //4 初始化流水线控制系统
@@ -506,6 +510,74 @@ namespace WESAoyou
                 
             }
             return area;
+        }
+
+        /// <summary>
+        /// 是否组盘入库允许
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="palletID"></param>
+        /// <param name="reStr"></param>
+        /// <returns></returns>
+        private bool AsrsCheckinGroupEnabled(AsrsPortalModel port,string palletID,ref string reStr)
+        {
+            if (port.PortinBufCapacity<2)
+            {
+                return true;
+            }
+            else //只有入口最大允许缓存数量大于1时才考虑库区，批次
+            {
+                if (port.PalletBuffer.Count() > 0)
+                {
+                    //1 判断是否同一个库区
+                    string lastPalletID = port.PalletBuffer[0];
+                    int lastStep = 0;
+                    if (!port.MesAcc.GetStep(lastPalletID, out lastStep, ref reStr))
+                    {
+                        return false;
+                    }
+                    int step = 0;
+                    if (!port.MesAcc.GetStep(palletID, out step, ref reStr))
+                    {
+                        return false;
+                    }
+                    string areaLast = port.AsrsCtl.GetAreaToCheckin(lastPalletID, lastStep).ToString();// AsrsModel.EnumLogicArea.注液高温区.ToString();
+                    // areaLast=SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(lastStep);
+                    string areaCur = port.AsrsCtl.GetAreaToCheckin(palletID, step).ToString();//AsrsModel.EnumLogicArea.注液高温区.ToString(); ;
+                    //     areaCur=SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(step);
+
+                    if (areaLast != areaCur)
+                    {
+                        reStr = string.Format("托盘{0}待进入的立库分区{1},跟当前缓存托盘待进入的分区{2}不同", palletID, areaCur, areaLast);
+                        return false;
+                    }
+                    //2 是否同批
+                    string batchLast = "";
+                    string batch = "";
+                    if (!port.MesAcc.GetTrayCellLotNO(palletID, out batch, ref reStr))
+                    {
+                        return false;
+                    }
+                    if (!port.MesAcc.GetTrayCellLotNO(lastPalletID, out batchLast, ref reStr))
+                    {
+                        return false;
+                    }
+                    if (batchLast != batch)
+                    {
+                        reStr = string.Format("托盘{0} 批次{1},与入口缓存的托盘{2} 批次{3}不同", palletID, batch, lastPalletID, batchLast);
+                        return false;
+                    }
+                    //3 是否同型号
+                    string lastCata = lastPalletID.Substring(0, 4);
+                    string cata = palletID.Substring(0, 4);
+                    if(lastCata != cata)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+                return true;
+            }
         }
         #endregion
         #region 产线配置扩展
