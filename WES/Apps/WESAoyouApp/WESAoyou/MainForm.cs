@@ -24,7 +24,7 @@ namespace WESAoyou
     {
         #region 数据
         private string appTitle = "锂电WES系统-捷创嘉智能物流";
-        private string version = "系统版本:1.1.12  2018-5-28";
+        private string version = "系统版本:1.1.13  2018-6-3";
         private int roleID = 3;
         private string userName = "操作员";
         const int CLOSE_SIZE = 10;
@@ -45,6 +45,9 @@ namespace WESAoyou
         private StorageMainView storageView = null;
         private CtlNodeMonitorView nodeMonitorView = null;
         private ConfiManageView configView = null;
+
+        //扩展子窗体
+        private ExtentViews.AsrsCheckoutModifyView asrsCheckoutModifyView = null;
         #endregion
        
         public MainForm()
@@ -223,6 +226,7 @@ namespace WESAoyou
                     }
                 }
                 asrsCtlView.SetTaskNodeNames(taskNodeMap);
+               
 
                 string licenseFile = AppDomain.CurrentDomain.BaseDirectory + @"\NBSSLicense.lic";
                 this.licenseMonitor = new LicenseMonitor(this, 60000, licenseFile, "zzkeyFT1");
@@ -455,6 +459,10 @@ namespace WESAoyou
         }
         private bool LoadModules()
         {
+            string reStr="";
+            //扩展view
+            asrsCheckoutModifyView = new ExtentViews.AsrsCheckoutModifyView("非正常出库调整");
+
             logView = new LogView("日志");
             childViews.Add(logView);
             logView.SetParent(this);
@@ -477,6 +485,12 @@ namespace WESAoyou
 
             asrsCtlView = new AsrsCtlView("立库控制");
             childViews.Add(asrsCtlView);
+           
+            if(!asrsCtlView.RegistExtView(asrsCheckoutModifyView,ref reStr))
+            {
+                Console.WriteLine(reStr);
+                return false;
+            }
             asrsCtlView.SetParent(this);
             asrsCtlView.RegisterMenus(this.menuStrip1, "立库控制");
             asrsCtlView.SetLoginterface(logView.GetLogrecorder());
@@ -501,7 +515,7 @@ namespace WESAoyou
 
             AsrsInterface.IAsrsManageToCtl asrsResManage = null;
             AsrsInterface.IAsrsCtlToManage asrsCtl = presenter.GetAsrsCtlInterfaceObj();
-            string reStr = "";
+
             if (!storageView.Init(asrsCtl, ref asrsResManage, ref reStr))
             {
                // logView.GetLogrecorder().AddLog(new LogModel("主模块", "立库管理层模块初始化错误," + reStr, EnumLoglevel.错误));
@@ -509,7 +523,8 @@ namespace WESAoyou
                 return false;
             }
             asrsCtlView.SetAsrsResManage(asrsResManage);
-
+            asrsCheckoutModifyView.SetAsrsResManage(asrsResManage);
+            asrsCheckoutModifyView.AsrsPresenter = presenter.AsrsPresenter;
             AttachModuleView(nodeMonitorView);
             foreach (BaseChildView childView in childViews)
             {

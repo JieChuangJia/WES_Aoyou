@@ -237,6 +237,10 @@
       <Project>{5ab1d7f4-0d37-4d6d-9939-1d6026cd33fd}</Project>
       <Name>ConfigManage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExtentViews\ExtentViews.csproj">
+      <Project>{16f0dab5-3f9f-479f-93b7-60c1629492a2}</Project>
+      <Name>ExtentViews</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PrcsCtlModels\PrcsCtlModelsAoyou.csproj">
       <Project>{362f4d48-1622-4fa6-b26e-5f2b58a9949b}</Project>
       <Name>PrcsCtlModelsAoyou</Name>

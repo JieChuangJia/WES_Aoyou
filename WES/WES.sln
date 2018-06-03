@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LishenMesDBAccess", "Apps\W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigManage", "Apps\WESLishenApp\ConfigManage\ConfigManage.csproj", "{26E78563-D27E-4464-95D8-D8D4D71E0AEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtentViews", "Apps\WESAoyouApp\ExtentViews\ExtentViews.csproj", "{16F0DAB5-3F9F-479F-93B7-60C1629492A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -424,6 +426,17 @@ Global
 		{26E78563-D27E-4464-95D8-D8D4D71E0AEF}.Release|Mixed Platforms.Build.0 = Release|x86
 		{26E78563-D27E-4464-95D8-D8D4D71E0AEF}.Release|x86.ActiveCfg = Release|x86
 		{26E78563-D27E-4464-95D8-D8D4D71E0AEF}.Release|x86.Build.0 = Release|x86
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Release|x86.ActiveCfg = Release|x86
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -460,5 +473,6 @@ Global
 		{7FBBB635-16FF-4E06-B818-35A1D28323ED} = {8D77D164-614E-4965-B89D-D0E0FF3D2B8E}
 		{586582C7-C074-4413-B660-EF6BE03A9E12} = {4AA35604-4C2B-493C-8503-59D49B886DDD}
 		{26E78563-D27E-4464-95D8-D8D4D71E0AEF} = {4AA35604-4C2B-493C-8503-59D49B886DDD}
+		{16F0DAB5-3F9F-479F-93B7-60C1629492A2} = {8D77D164-614E-4965-B89D-D0E0FF3D2B8E}
 	EndGlobalSection
 EndGlobal

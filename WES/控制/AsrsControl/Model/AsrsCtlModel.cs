@@ -561,7 +561,8 @@ namespace AsrsControl
                     
                     if(checkOutBatch == "所有")
                     {
-                        GenerateOutputTask(cell, null, taskType, true);
+                        ControlTaskModel asrsTask = null;
+                        GenerateOutputTask(cell, null, taskType, true,ref asrsTask);
                     }
                     else
                     {
@@ -588,13 +589,14 @@ namespace AsrsControl
                             //    continue;
                             //}
                         }
+                        ControlTaskModel asrsTask = null;
                         if (checkOutBatch == "空" && string.IsNullOrWhiteSpace(palletBatch))
                         {
-                            GenerateOutputTask(cell, null, taskType, true);
+                            GenerateOutputTask(cell, null, taskType, true,ref asrsTask);
                         }
                         else if (palletBatch == checkOutBatch)
                         {
-                            GenerateOutputTask(cell, null, taskType, true);
+                            GenerateOutputTask(cell, null, taskType, true,ref asrsTask);
                         }
                         else
                         {
@@ -605,17 +607,24 @@ namespace AsrsControl
                 }
                 else
                 {
-                    GenerateOutputTask(cell,null, taskType, true);
+                    ControlTaskModel asrsTask = null;
+                    GenerateOutputTask(cell,null, taskType, true,ref asrsTask);
                 }
                 
              
             }
         }
-        public bool GenerateOutputTask(CellCoordModel cell, CellCoordModel cell2, SysCfg.EnumAsrsTaskType taskType, bool autoTaskMode,List<short> reserveParams=null,int priGrade=0)
+        public bool GenerateOutputTask(CellCoordModel cell, CellCoordModel cell2, SysCfg.EnumAsrsTaskType taskType, bool autoTaskMode, ref ControlTaskModel asrsTask, List<short> reserveParams = null, int priGrade = 0)
         {
            // throw new NotImplementedException();
-          
-            ControlTaskModel asrsTask = new ControlTaskModel();
+
+            List<ControlTaskModel> runningTasks = ctlTaskBll.GetRelatedRunningTask(this.houseName, cell.GetStr());
+            if(runningTasks != null && runningTasks.Count()>0)
+            {
+                Console.WriteLine("{0}:{1}存在待执行或执行中的任务", houseName, cell.GetStr());
+                return false;
+            }
+            asrsTask = new ControlTaskModel();
             asrsTask.DeviceID = this.stacker.NodeID;
             if(autoTaskMode)
             {
@@ -1091,7 +1100,8 @@ namespace AsrsControl
 
                             if (cellStat.GSTaskStatus != EnumGSTaskStatus.锁定.ToString() && cellStat.GSEnabled)
                             {
-                                if (GenerateOutputTask(cell, null, SysCfg.EnumAsrsTaskType.空筐出库, true))
+                                ControlTaskModel asrsTask = null;
+                                if (GenerateOutputTask(cell, null, SysCfg.EnumAsrsTaskType.空筐出库, true,ref asrsTask))
                                 {
                                     exitFlag = true;
                                     port.Db1ValsToSnd[0] = 2;

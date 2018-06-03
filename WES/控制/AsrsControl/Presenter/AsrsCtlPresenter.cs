@@ -347,9 +347,9 @@ namespace AsrsControl
                     return false;
                 }
             }
-            asrsModel.GenerateOutputTask(cell, null,taskType, false,asrsExtParams,1000);
-            
-            return true;
+            ControlTaskModel asrsTask = null;
+            return asrsModel.GenerateOutputTask(cell, null,taskType, false,ref asrsTask,asrsExtParams,1000);
+          
         }
         public bool CreateManualMoveGSTask(string startHouseName, CellCoordModel startCell, string endHouseName, CellCoordModel endCell, ref string reStr)
         {
@@ -411,7 +411,8 @@ namespace AsrsControl
                 return false;
             }
             SysCfg.EnumAsrsTaskType taskType = SysCfg.EnumAsrsTaskType.移库;
-            return asrsModel.GenerateOutputTask(startCell,endCell,taskType, false,null,1000);
+            ControlTaskModel asrsTask = null;
+            return asrsModel.GenerateOutputTask(startCell,endCell,taskType, false,ref asrsTask,null,1000);
             //return true;
         }
         #endregion
@@ -502,7 +503,8 @@ namespace AsrsControl
                         }
                         if (cellStoreStat == EnumCellStatus.空料框 && cellTaskStat != EnumGSTaskStatus.锁定)
                         {
-                            if(asrsHouse.GenerateOutputTask(cell, null,SysCfg.EnumAsrsTaskType.空筐出库, true))
+                            ControlTaskModel asrsTask=null;
+                            if(asrsHouse.GenerateOutputTask(cell, null,SysCfg.EnumAsrsTaskType.空筐出库, true,ref asrsTask))
                             {
                                 exitFlag = true;
                                 emptyPalletOutport.Db1ValsToSnd[0] = 2;

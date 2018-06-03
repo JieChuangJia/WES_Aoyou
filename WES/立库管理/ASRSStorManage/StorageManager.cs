@@ -781,6 +781,7 @@ namespace ASRSStorManage
                 gsModel.GSStatus = allGses[i].GoodsSiteStatus;
                 gsModel.GSTaskStatus = allGses[i].GoodsSiteTaskStatus;
                 gsModel.ExtProp1 = allGses[i].GoodsSite_Reserve;
+              
                 string keyStr = allGses[i].StoreHouseName + ":" + allGses[i].GoodsSitePos;
                 gsTempDic[keyStr] = gsModel;
             }

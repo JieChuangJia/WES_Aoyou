@@ -35,5 +35,32 @@ namespace AsrsModel
             this.col = col;
             this.layer = layer;
         }
+        public bool Parse(string strPos)
+        {
+            try
+            {
+                string[] strArray = strPos.Split(new string[] { "-", ":" }, StringSplitOptions.RemoveEmptyEntries);
+                if (strArray == null || strArray.Count() < 3)
+                {
+                    return false;
+                }
+                this.row = int.Parse(strArray[0]);
+                this.col = int.Parse(strArray[1]);
+                this.layer = int.Parse(strArray[2]);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+           
+
+        }
+        public string GetStr()
+        {
+            string str = string.Format("{0}-{1}-{2}",row,col,layer);
+            return str;
+        }
     }
 }

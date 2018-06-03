@@ -223,6 +223,11 @@ namespace CtlDBAccess.BLL
               
            // }
         }
+        public List<ControlTaskModel> GetRelatedRunningTask(string houseName,string strCell)
+        {
+            string strWhere = string.Format("TaskStatus = '待执行' or TaskStatus='执行中' and tag1='{0}' and tag2='{1}'", houseName, strCell);
+            return GetModelList(strWhere);
+        }
         #endregion  ExtensionMethod
     }
 }

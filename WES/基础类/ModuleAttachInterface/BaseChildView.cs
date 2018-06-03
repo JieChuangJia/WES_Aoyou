@@ -14,8 +14,12 @@ namespace ModuleCrossPnP
        // protected string captionText = "";
         protected ILogRecorder logRecorder = null;
         protected IParentModule parentPNP = null;
+        protected MenuStrip menuStrip = null;
+        //protected List<BaseChildView> childViews = new List<BaseChildView>();
+        protected IDictionary<string, BaseChildView> childViewDic = new Dictionary<string, BaseChildView>();
         #region  公有接口
        // public string CaptionText { get { return captionText; } set { captionText = value; this.Text = captionText; } }
+        public IDictionary<string, BaseChildView> ChildViewDic { get { return childViewDic; } }
         public BaseChildView()
         { }
         public BaseChildView(string captionText)
@@ -24,10 +28,29 @@ namespace ModuleCrossPnP
             this.Text = captionText;
           //  this.captionText = captionText;
         }
+        public bool RegistExtView(BaseChildView extView,ref string reStr)
+        {
+            try
+            {
+                if(extView==null)
+                {
+                    reStr = "空对象";
+                    return false;
+                }
+                childViewDic[extView.Text] = extView;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                reStr = ex.ToString();
+                return false;
+            }
+        }
         #endregion
         #region IModuleAttach接口实现
         public virtual void RegisterMenus(MenuStrip parentMenu, string rootMenuText)
         {
+            this.menuStrip = parentMenu;
             ToolStripMenuItem rootMenuItem = new ToolStripMenuItem(rootMenuText);//parentMenu.Items.Add("仓储管理");
             rootMenuItem.Click += LoadMainform_MenuHandler;
             parentMenu.Items.Add(rootMenuItem);
@@ -45,6 +68,10 @@ namespace ModuleCrossPnP
         public virtual List<string> GetLogsrcList()
         {
             return null;
+        }
+        public virtual bool RoleEnabled()
+        {
+            return true;
         }
         #endregion
         /// <summary>

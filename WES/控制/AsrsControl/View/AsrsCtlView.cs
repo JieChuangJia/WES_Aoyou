@@ -31,10 +31,16 @@ namespace AsrsControl
             InitializeComponent();
             this.Text = captionText;
            // presenter = new AsrsCtlPresenter(this);
-           
+
             this.ctlTaskView = new CtlTaskView("控制任务");
-            portBufView = new PortBufferView("入库口缓存信息");
+            portBufView = new PortBufferView("入库口缓存数据");
             this.gsStaView = new GsStatisticsView("出入库统计");
+            this.childViewDic[this.ctlTaskView.Text] = this.ctlTaskView;
+            this.childViewDic[this.portBufView.Text] = this.portBufView;
+            this.childViewDic[this.gsStaView.Text] = this.gsStaView;
+            //this.childViews.Add(this.ctlTaskView);
+           // this.childViews.Add(portBufView);
+            //this.childViews.Add(gsStaView);
         }
         #region 公有接口
           public void SetTaskNodeNames(IDictionary<string,string> nodeMap)
@@ -114,26 +120,33 @@ namespace AsrsControl
             ToolStripMenuItem rootMenuItem = new ToolStripMenuItem(rootMenuText);//parentMenu.Items.Add("仓储管理");
             //rootMenuItem.Click += LoadMainform_MenuHandler;
             parentMenu.Items.Add(rootMenuItem);
-            string[] menuItems = new string[] { "控制任务管理", "入库口缓存管理", "出入库统计" };
-            foreach(string menuStr in menuItems)
+            foreach(string strKey in childViewDic.Keys)
             {
-                ToolStripItem menuItem = rootMenuItem.DropDownItems.Add(menuStr);
+                ToolStripItem menuItem = rootMenuItem.DropDownItems.Add(strKey);
                 menuItem.Click += LoadView_MenuHandler;
             }
+           
           
         }
         public override void SetParent(/*Control parentContainer, Form parentForm, */IParentModule parentPnP)
         {
             this.parentPNP = parentPnP;
-            ctlTaskView.SetParent(parentPnP);
+            foreach(string strKey in childViewDic.Keys)
+            {
+                childViewDic[strKey].SetParent(parentPnP);
+            }
+           
             
         }
         public override void SetLoginterface(ILogRecorder logRecorder)
         {
             this.logRecorder = logRecorder;
          //   lineMonitorPresenter.SetLogRecorder(logRecorder);
-            this.ctlTaskView.SetLoginterface(logRecorder);
-            this.portBufView.SetLoginterface(logRecorder);
+            foreach(string strKey in childViewDic.Keys)
+            {
+                childViewDic[strKey].SetLoginterface(logRecorder);
+            }
+            
         }
         #endregion
         #region 私有接口
@@ -148,26 +161,36 @@ namespace AsrsControl
             {
                 return;
             }
-            switch (menuItem.Text)
+            if (childViewDic.Keys.Contains(menuItem.Text))
             {
-                case "控制任务管理":
-                    {
-                        this.parentPNP.AttachModuleView(this.ctlTaskView);
-                        break;
-                    }
-                case "入库口缓存管理":
-                    {
-                        this.parentPNP.AttachModuleView(this.portBufView);
-                        break;
-                    }
-                case "出入库统计":
-                    {
-                        this.parentPNP.AttachModuleView(this.gsStaView);
-                        break;
-                    }
-                default:
-                    break;
+                BaseChildView childView= childViewDic[menuItem.Text];
+                if(!childView.RoleEnabled())
+                {
+                    MessageBox.Show("没有权限!");
+                    return;
+                }
+                this.parentPNP.AttachModuleView(childView);
             }
+            //switch (menuItem.Text)
+            //{
+            //    case "控制任务管理":
+            //        {
+            //            this.parentPNP.AttachModuleView(this.ctlTaskView);
+            //            break;
+            //        }
+            //    case "入库口缓存管理":
+            //        {
+            //            this.parentPNP.AttachModuleView(this.portBufView);
+            //            break;
+            //        }
+            //    case "出入库统计":
+            //        {
+            //            this.parentPNP.AttachModuleView(this.gsStaView);
+            //            break;
+            //        }
+            //    default:
+            //        break;
+            //}
 
 
         }
