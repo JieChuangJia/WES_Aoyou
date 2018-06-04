@@ -621,7 +621,7 @@ namespace AsrsControl
             List<ControlTaskModel> runningTasks = ctlTaskBll.GetRelatedRunningTask(this.houseName, cell.GetStr());
             if(runningTasks != null && runningTasks.Count()>0)
             {
-                Console.WriteLine("{0}:{1}存在待执行或执行中的任务", houseName, cell.GetStr());
+                Console.WriteLine("生成出库任务失败,{0}:{1}存在待执行或执行中的任务", houseName, cell.GetStr());
                 return false;
             }
             asrsTask = new ControlTaskModel();
