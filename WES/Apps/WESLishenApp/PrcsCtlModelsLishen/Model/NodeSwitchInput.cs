@@ -254,7 +254,14 @@ namespace PrcsCtlModelsLishen
                     //  return false;
                 }
             }
-            
+            else
+            {
+                if (this.db1ValsToSnd[1] != 3)
+                {
+                    logRecorder.AddDebugLog(nodeName, string.Format("因为空筐出口处于有料状态,无{0}空框{1}可以出库,{2}", shopName, strCataName, reStr));
+                }
+                this.db1ValsToSnd[1] = 3;
+            }
         
            
             if (switchRe == 2)

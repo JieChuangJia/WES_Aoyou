@@ -169,6 +169,37 @@ namespace WESLishen
         }
         #endregion
         #region 立库逻辑扩展
+        private List<CtlDBAccess.Model.ControlTaskModel> GetRunningTask(int taskType,string shop,int palletCata,ref string reStr)
+        {
+            CtlDBAccess.BLL.ControlTaskBll ctlTaskBll = new CtlDBAccess.BLL.ControlTaskBll();
+            string strWhere = string.Format("(TaskStatus = '待执行' or TaskStatus='执行中') and TaskType={0}", taskType);
+            List<CtlDBAccess.Model.ControlTaskModel> runningList=ctlTaskBll.GetModelList(strWhere);
+            List<CtlDBAccess.Model.ControlTaskModel> reTaskList = new List<CtlDBAccess.Model.ControlTaskModel>();
+            foreach(CtlDBAccess.Model.ControlTaskModel task in runningList)
+            {
+                AsrsControl.AsrsTaskParamModel asrsParam = new AsrsControl.AsrsTaskParamModel();
+                if(!asrsParam.ParseParam((SysCfg.EnumAsrsTaskType)taskType, task.TaskParam, ref reStr))
+                {
+                    continue;
+                }
+                if(asrsParam.InputCellGoods.Count()>0)
+                {
+                    string targetShop="";
+                    short targetCata=0;
+                    string strCataName="";
+                    string palletID=asrsParam.InputCellGoods[0];
+                    if (!PrcsCtlModelsLishen.NodeSwitchInput.ParsePalletID(palletID, ref targetShop, ref targetCata, ref strCataName, ref reStr))
+                    {
+                        continue;
+                    }
+                    if(targetShop.Trim()== shop && targetCata== palletCata)
+                    {
+                        reTaskList.Add(task);
+                    }
+                }
+            }
+            return reTaskList;
+        }
         private bool AsrsOutportBusiness(AsrsControl.AsrsPortalModel port, ref string reStr)
         {
             try
@@ -237,6 +268,13 @@ namespace WESLishen
                 {
                     shopRequire="3号车间";
                 }
+                //检查是否存在未执行完的任务
+                List<CtlDBAccess.Model.ControlTaskModel> unFinishedTasks = GetRunningTask((int)SysCfg.EnumAsrsTaskType.产品出库, shopRequire, palletCata, ref reStr);
+                if(unFinishedTasks != null && unFinishedTasks.Count()>0)
+                {
+                    return true;
+                }
+               
                 int r = 1, c = 1, L = 1;
                 for (r = 1; r < asrsCtl.AsrsRow + 1; r++)
                 {
