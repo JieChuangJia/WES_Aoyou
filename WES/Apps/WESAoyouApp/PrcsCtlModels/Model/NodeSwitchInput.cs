@@ -186,7 +186,7 @@ namespace PrcsCtlModelsAoyou
                                 {
                                     break;
                                 }
-                                 AsrsModel.CellCoordModel requireCell = null;
+                                AsrsModel.CellCoordModel requireCell = null;
                                 AsrsControl.AsrsCtlModel asrsCtl = port.AsrsCtl;
                                 AsrsInterface.IAsrsManageToCtl asrsResManage = port.AsrsCtl.AsrsResManage;
                                 string logicArea = "通用分区";

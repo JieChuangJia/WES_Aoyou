@@ -22,9 +22,10 @@ namespace AsrsControl
     /// </summary>
     public class AsrsCtlModel : CtlNodeBaseModel
     {
-        public delegate ControlTaskModel DelegateGetTaskTorun(AsrsControl.AsrsCtlModel asrsCtl,IAsrsManageToCtl asrsResManage, IList<ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType);
-        public delegate bool DlgtAsrsportBusiness(AsrsPortalModel port, ref string reStr);
-        public delegate bool DlgtAsrsOutTaskPortBusiness(AsrsPortalModel port, AsrsControl.AsrsTaskParamModel taskParam, ref string reStr);
+        //委托获取待执行任务
+        public delegate ControlTaskModel DelegateAsrsCheckoutTaskTorun(AsrsControl.AsrsCtlModel asrsCtl,IAsrsManageToCtl asrsResManage, IList<ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType);//选择出库任务
+        public delegate bool DlgtAsrsportBusiness(AsrsPortalModel port, ref string reStr); //委托，出入口状态交互
+        public delegate bool DlgtAsrsOutTaskPortBusiness(AsrsPortalModel port, AsrsControl.AsrsTaskParamModel taskParam, ref string reStr); //出库后任务处理
         public delegate string DlgtGetAsrsLogicArea(string palletID,AsrsCtlModel asrsCtl,int curStep);
         public delegate bool DlgtUpdateStepAfterCheckin(string palletID,AsrsCtlModel asrsCtl, int curStep);
         public delegate bool DlgtAsrsTasktypeTorun(AsrsPortalModel port, ref SysCfg.EnumAsrsTaskType taskType, ref string logicArea,ref string reStr); //委托：将要申请的任务类型
@@ -56,7 +57,7 @@ namespace AsrsControl
         #region 公共接口
         public DlgtAsrsportBusiness dlgtAsrsOutportBusiness = null;
         public DlgtAsrsOutTaskPortBusiness dlgtAsrsOutTaskPost = null; //出库后任务处理
-        public DelegateGetTaskTorun dlgtGetTaskTorun = null;
+        public DelegateAsrsCheckoutTaskTorun dlgtGetAsrsCheckoutTaskTorun = null;
         public DlgtGetAsrsLogicArea dlgtGetLogicArea = null;
         public DlgtUpdateStepAfterCheckin dlgtUpdateStep = null;
         public DlgtAsrsTasktypeTorun dlgtAsrsTasktypeToCheckin = null;
@@ -1680,9 +1681,9 @@ namespace AsrsControl
         private ControlTaskModel GetTaskTorun(IList<ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType)
         {
             
-            if ((dlgtGetTaskTorun != null) && (taskType == SysCfg.EnumAsrsTaskType.产品出库 || taskType ==SysCfg.EnumAsrsTaskType.空筐出库))
+            if ((dlgtGetAsrsCheckoutTaskTorun != null) && (taskType == SysCfg.EnumAsrsTaskType.产品出库 || taskType ==SysCfg.EnumAsrsTaskType.空筐出库))
             {
-                return dlgtGetTaskTorun(this,asrsResManage, taskList, taskType);
+                return dlgtGetAsrsCheckoutTaskTorun(this, asrsResManage, taskList, taskType);
             }
             else
             {

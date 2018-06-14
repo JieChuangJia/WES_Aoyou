@@ -100,9 +100,9 @@ namespace WESAoyou
                 foreach (AsrsControl.AsrsCtlModel asrsCtl in asrsPresenter.AsrsCtls)
                 {
                     asrsCtl.dlgtAsrsOutportBusiness = AsrsOutportBusiness;
-                    if(asrsCtl.HouseName == "A1库房" || asrsCtl.HouseName == "A2库房")
+                    if(asrsCtl.HouseName == "A1库房" || asrsCtl.HouseName == "A2库房" || asrsCtl.HouseName == "C1库房" || asrsCtl.HouseName=="C2库房" || asrsCtl.HouseName=="C3库房")
                     {
-                        asrsCtl.dlgtGetTaskTorun = AsrsGetCheckoutOfGaowen;
+                        asrsCtl.dlgtGetAsrsCheckoutTaskTorun = AsrsCheckoutTaskTorun;
                     }
                     asrsCtl.dlgtGetLogicArea = AsrsAreaToCheckin;
                     if(asrsCtl.HouseName=="B1库房")
@@ -372,7 +372,7 @@ namespace WESAoyou
             }
             
         }
-        public CtlDBAccess.Model.ControlTaskModel AsrsGetCheckoutOfGaowen(AsrsControl.AsrsCtlModel asrsCtl, IAsrsManageToCtl asrsResManage, IList<CtlDBAccess.Model.ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType)
+        public CtlDBAccess.Model.ControlTaskModel AsrsCheckoutTaskTorun(AsrsControl.AsrsCtlModel asrsCtl, IAsrsManageToCtl asrsResManage, IList<CtlDBAccess.Model.ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType)
         {
             try
             {
@@ -380,19 +380,7 @@ namespace WESAoyou
                 {
                     return null;
                 }
-                //AsrsPortalModel port = null;
-                //if(asrsCtl.HouseName == AsrsModel.EnumStoreHouse.A1库房.ToString())
-                //{
-                //    port = ctlNodeManager.GetNodeByID("2002") as AsrsPortalModel;
-                //}
-                //else if (asrsCtl.HouseName == AsrsModel.EnumStoreHouse.A2库房.ToString())
-                //{
-                //    port = ctlNodeManager.GetNodeByID("2006") as AsrsPortalModel;
-                //}
-                //else
-                //{
-                //    return null;
-                //}
+               
                  string houseName = asrsCtl.HouseName;
                  CtlDBAccess.Model.ControlTaskModel task = null;
                 foreach (CtlDBAccess.Model.ControlTaskModel t in taskList)
@@ -410,27 +398,41 @@ namespace WESAoyou
                     AsrsPortalModel port = asrsCtl.Ports[paramModel.OutputPort-1];
                     int switchPathSeq = 1;
                     CellCoordModel cell = paramModel.CellPos1;
-                    string area = "注液高温区";
-                    if(!this.asrsResManage.GetLogicAreaName(houseName, cell, ref area))
+                    if(asrsCtl.NodeName=="A1库房" || asrsCtl.HouseName=="A2库房")
                     {
-                        continue;
+                        string area = "注液高温区";
+                        if (!this.asrsResManage.GetLogicAreaName(houseName, cell, ref area))
+                        {
+                            continue;
+                        }
+                        if (area == "注液高温区")
+                        {
+                            switchPathSeq = 1;
+                        }
+                        else if (area == "化成高温区")
+                        {
+                            switchPathSeq = 2;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        if (port.Db2Vals[switchPathSeq] != 1)
+                        {
+                            continue;
+                        }
                     }
-                    if(area == "注液高温区")
+                    else if(asrsCtl.HouseName=="C1库房" || asrsCtl.HouseName=="C2库房" || asrsCtl.HouseName=="C3库房")
                     {
-                        switchPathSeq = 1;
+                        if(taskType== SysCfg.EnumAsrsTaskType.空筐出库)
+                        {
+                            if (port.Db2Vals[switchPathSeq] != 1)
+                            {
+                                continue;
+                            }
+                        }
                     }
-                    else if (area == "化成高温区")
-                    {
-                        switchPathSeq = 2;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                    if(port.Db2Vals[switchPathSeq] !=1)
-                    {
-                        continue;
-                    }
+                    
                     AsrsModel.EnumGSEnabledStatus cellEnabledStatus = AsrsModel.EnumGSEnabledStatus.启用;
                     if (!asrsResManage.GetCellEnabledStatus(houseName, paramModel.CellPos1, ref cellEnabledStatus))
                     {
@@ -521,26 +523,32 @@ namespace WESAoyou
         /// <returns></returns>
         private bool AsrsCheckinGroupEnabled(AsrsPortalModel port,string palletID,ref string reStr)
         {
+            int step=0;
+            if (!port.MesAcc.GetStep(palletID, out step, ref reStr))
+            {
+                Console.WriteLine("在组盘入库判断过程中，查询托盘步号失败，因为：" + reStr);
+                return false;
+            }
             if (port.PortinBufCapacity<2)
             {
                 return true;
             }
             else //只有入口最大允许缓存数量大于1时才考虑库区，批次
             {
+                
                 if (port.PalletBuffer.Count() > 0)
                 {
+                  
                     //1 判断是否同一个库区
                     string lastPalletID = port.PalletBuffer[0];
+                    string lastCata = lastPalletID.Substring(0, 4);
+                    string cata = palletID.Substring(0, 4);
                     int lastStep = 0;
                     if (!port.MesAcc.GetStep(lastPalletID, out lastStep, ref reStr))
                     {
                         return false;
                     }
-                    int step = 0;
-                    if (!port.MesAcc.GetStep(palletID, out step, ref reStr))
-                    {
-                        return false;
-                    }
+                   
                     string areaLast = port.AsrsCtl.GetAreaToCheckin(lastPalletID, lastStep).ToString();// AsrsModel.EnumLogicArea.注液高温区.ToString();
                     // areaLast=SysCfg.SysCfgModel.asrsStepCfg.AsrsAreaSwitch(lastStep);
                     string areaCur = port.AsrsCtl.GetAreaToCheckin(palletID, step).ToString();//AsrsModel.EnumLogicArea.注液高温区.ToString(); ;
@@ -551,29 +559,63 @@ namespace WESAoyou
                         reStr = string.Format("托盘{0}待进入的立库分区{1},跟当前缓存托盘待进入的分区{2}不同", palletID, areaCur, areaLast);
                         return false;
                     }
-                    //2 是否同批
-                    string batchLast = "";
-                    string batch = "";
-                    if (!port.MesAcc.GetTrayCellLotNO(palletID, out batch, ref reStr))
+                    if(step>0)
                     {
-                        return false;
+                        //2 是否同批
+                        string batchLast = "";
+                        string batch = "";
+                        if (!port.MesAcc.GetTrayCellLotNO(palletID, out batch, ref reStr))
+                        {
+                            return false;
+                        }
+                        if (!port.MesAcc.GetTrayCellLotNO(lastPalletID, out batchLast, ref reStr))
+                        {
+                            return false;
+                        }
+                        if (batchLast != batch)
+                        {
+                            reStr = string.Format("托盘{0} 批次{1},与入口缓存的托盘{2} 批次{3}不同", palletID, batch, lastPalletID, batchLast);
+                            return false;
+                        }
+                        //3 是否同型号
+                       
+                        if (lastCata != cata)
+                        {
+                            return false;
+                        }
                     }
-                    if (!port.MesAcc.GetTrayCellLotNO(lastPalletID, out batchLast, ref reStr))
+                    else
                     {
-                        return false;
+                        //空筐，只判断筐子类型
+                        MesDBAccess.BLL.BatteryCataBll batteryCataBll = new MesDBAccess.BLL.BatteryCataBll();
+                        MesDBAccess.Model.BatteryCataModel batCata = batteryCataBll.GetModel(cata);
+                        if(batCata == null)
+                        {
+                            reStr = "不存在的电池型号配置:" + cata;
+                            Console.Write(reStr);
+                            return false;
+                        }
+                        if(batCata.palletCataID=="A筐")
+                        {
+                            if((port.NodeID != "2013") && (port.NodeID != "2017"))
+                            {
+                                return false;
+                            }
+                        }
+                        else if(batCata.palletCataID=="B筐")
+                        {
+                            if (port.NodeID != "2021")
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            reStr = "不存在的筐类型配置:" + batCata.palletCataID;
+                            return false;
+                        }
                     }
-                    if (batchLast != batch)
-                    {
-                        reStr = string.Format("托盘{0} 批次{1},与入口缓存的托盘{2} 批次{3}不同", palletID, batch, lastPalletID, batchLast);
-                        return false;
-                    }
-                    //3 是否同型号
-                    string lastCata = lastPalletID.Substring(0, 4);
-                    string cata = palletID.Substring(0, 4);
-                    if(lastCata != cata)
-                    {
-                        return false;
-                    }
+                   
                     return true;
                 }
                 return true;
