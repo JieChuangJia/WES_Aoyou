@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using FlowCtlBaseModel;
@@ -60,6 +61,20 @@ namespace PrcsCtlModelsAoyou
                             currentTaskDescribe = "读料条码失败，没有读到条码";
                             break;
                         }
+                        this.rfidUID = this.rfidUID.Trim(new char[] { '\0', '\r', '\n', '\t', ' ' });
+
+                        string palletPattern = @"^[a-z|A-Z|0-9]{4}TP[0-9]{4,}";
+                        if (!Regex.IsMatch(this.rfidUID, palletPattern))
+                        {
+                            if (this.db1ValsToSnd[0] != barcodeFailedStat)
+                            {
+                                logRecorder.AddDebugLog(nodeName, "读料框条码不符合规则，" + this.rfidUID);
+                                this.currentTaskDescribe = "读料框条码不符合规则，" + this.rfidUID;
+                            }
+                            this.db1ValsToSnd[0] = barcodeFailedStat;
+                            break;
+                        }
+
                         if(this.nodeID=="4008" || this.nodeID=="4009")
                         {
                             /*if(this.rfidUID.Length!= 9) //检测条码长度

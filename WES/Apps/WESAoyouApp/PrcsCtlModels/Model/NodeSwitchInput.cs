@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using FlowCtlBaseModel;
 using AsrsControl;
 namespace PrcsCtlModelsAoyou
@@ -80,11 +81,25 @@ namespace PrcsCtlModelsAoyou
                                
                             }
                         }
+                       
                         if (string.IsNullOrWhiteSpace(this.rfidUID))
                         {
                             if (this.db1ValsToSnd[0] != barcodeFailedStat)
                             {
                                 logRecorder.AddDebugLog(nodeName, "读料框条码失败");
+                            }
+                            this.db1ValsToSnd[0] = barcodeFailedStat;
+                            break;
+                        }
+                        this.rfidUID = this.rfidUID.Trim(new char[] { '\0', '\r', '\n', '\t', ' ' });
+                       
+                        string palletPattern = @"^[a-z|A-Z|0-9]{4}TP[0-9]{4,}";
+                        if(!Regex.IsMatch(this.rfidUID,palletPattern))
+                        {
+                            if (this.db1ValsToSnd[0] != barcodeFailedStat)
+                            {
+                                logRecorder.AddDebugLog(nodeName, "读料框条码不符合规则，" + this.rfidUID);
+                                this.currentTaskDescribe = "读料框条码不符合规则，" + this.rfidUID;
                             }
                             this.db1ValsToSnd[0] = barcodeFailedStat;
                             break;
@@ -172,6 +187,7 @@ namespace PrcsCtlModelsAoyou
                         {
                             switchRe = 0; //无可用路径，等待
                             this.db1ValsToSnd[0] = (short)switchRe;
+                            this.currentTaskDescribe = reStr;
                             break;
                         }
                         else
@@ -283,7 +299,7 @@ namespace PrcsCtlModelsAoyou
             }
             if(validPathList.Count()==0)
             {
-                reStr = "没有可用分流路径";
+                reStr = "没有可用分流路径，"+reStr;
                 return null;
             }
             //排序

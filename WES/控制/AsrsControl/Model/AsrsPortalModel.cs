@@ -160,6 +160,23 @@ namespace AsrsControl
                 }
                 lock (portBufLock)
                 {
+                    int palletStep = 0;
+                    if (!MesAcc.GetStep(palletID, out palletStep, ref reStr))
+                    {
+                        return false;
+                    }
+
+                    if (palletStep == 0)
+                    {
+                        //判断第一个料框是否空筐
+                       
+                        if (!EmptyPalletInputEnabled)
+                        {
+                            reStr = "系统已配置禁止空筐入库";
+                            return false;
+                        }
+                    }
+
                     //先判断入口实际信号
                     bool portCrowd = true;
                     for (int i = 0; i < PortinBufCapacity; i++)
@@ -174,6 +191,7 @@ namespace AsrsControl
                     {
                         return false;
                     }
+
                     //再判断数据
                     if (this.palletBuffer.Count() >= PortinBufCapacity)
                     {
