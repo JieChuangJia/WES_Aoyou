@@ -578,11 +578,14 @@ namespace WESAoyou
                             return false;
                         }
                         //3 是否同型号
-                       
-                        if (lastCata != cata)
+                        if (port.NodeID == "2011" || port.NodeID == "2015" || port.NodeID == "2019")
                         {
-                            return false;
+                            if (lastCata != cata)
+                            {
+                                return false;
+                            }
                         }
+                        
                     }
                     else
                     {

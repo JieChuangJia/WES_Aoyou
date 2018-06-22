@@ -24,7 +24,7 @@ namespace WESAoyou
     {
         #region 数据
         private string appTitle = "锂电WES系统-捷创嘉智能物流";
-        private string version = "系统版本:1.1.16  2018-6-20";
+        private string version = "系统版本:1.1.17  2018-6-22";
         private int roleID = 3;
         private string userName = "操作员";
         const int CLOSE_SIZE = 10;

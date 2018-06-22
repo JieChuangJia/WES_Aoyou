@@ -230,6 +230,7 @@ namespace AsrsControl
                                     reStr = string.Format("托盘{0}待进入的立库分区{1},跟当前缓存托盘待进入的分区{2}不同", palletID, areaCur, areaLast);
                                     return false;
                                 }
+
                                 //2 是否同批
                                 string batchLast = "";
                                 string batch = "";
@@ -250,8 +251,7 @@ namespace AsrsControl
                                     reStr = string.Format("托盘{0} 批次{1},与入口缓存的托盘{2} 批次{3}不同", palletID, batch, lastPalletID, batchLast);
                                     return false;
                                 }
-                                //3 是否同型号
-                               //string lastCata = lastPalletID.Substring(0, 4);
+                             
 
                             }
                         }
