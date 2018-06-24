@@ -167,7 +167,7 @@
         <DB2Addr addrStart="D3325" blockNum="5">DB2数据区地址信息</DB2Addr>
       </BaseDatainfo>
       <SelfDatainfo >
-        <Db1Desc>0：复位,1：读码失败,2：流向C1库,3:流向C2库，4:流向C3库，5:等待</Db1Desc>
+        <Db1Desc>0：复位,1：读码失败,2：流向C1库,3:流向C2库，4:流向C3库，5:等待;条码后4位</Db1Desc>
         <Db2Desc>入口状态,1:无板，2:有板</Db2Desc>
         <SwitchPath>2013,2017,2021</SwitchPath>
       </SelfDatainfo>
@@ -539,8 +539,8 @@
         </BaseDatainfo>
         <SelfDatainfo portSeq="3" bindedTask="产品入库"  capacity="2" emptyPalletCheckIn="true">
           <PortType>1</PortType>
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用</Db1Desc>
-         <Db2Desc>位置1有板状态,1:无板，2:有板;位置2有板状态,1:无板，2:有板;手动入库请求,1:复位,2:手动入库请求</Db2Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用，4:条码校验失败</Db1Desc>
+         <Db2Desc>位置1有板状态,1:无板，2:有板;位置2有板状态,1:无板，2:有板;手动入库请求,1:复位,2:手动入库请求;位置1条码后4位;位置2条码后4位</Db2Desc>
           <SwitchPath>1004</SwitchPath>
         </SelfDatainfo>
       </Node>
@@ -598,8 +598,8 @@
         </BaseDatainfo>
         <SelfDatainfo portSeq="3" bindedTask="产品入库"  capacity="2" emptyPalletCheckIn="true">
           <PortType>1</PortType>
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用</Db1Desc>
-         <Db2Desc>位置1有板状态,1:无板，2:有板;位置2有板状态,1:无板，2:有板;手动入库请求,1:复位,2:手动入库请求</Db2Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用,4:条码校验失败</Db1Desc>
+         <Db2Desc>位置1有板状态,1:无板，2:有板;位置2有板状态,1:无板，2:有板;手动入库请求,1:复位,2:手动入库请求;位置1条码后4位;位置2条码后4位</Db2Desc>
           <SwitchPath>1005</SwitchPath>
         </SelfDatainfo>
       </Node>
@@ -657,8 +657,8 @@
         </BaseDatainfo>
         <SelfDatainfo portSeq="3" bindedTask="产品入库"  capacity="2" emptyPalletCheckIn="true">
           <PortType>1</PortType>
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用</Db1Desc>
-          <Db2Desc>位置1有板状态,1:无板，2:有板;位置2有板状态,1:无板，2:有板;手动入库请求,1:复位,2:手动入库请求</Db2Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用,4:条码校验失败</Db1Desc>
+          <Db2Desc>位置1有板状态,1:无板，2:有板;位置2有板状态,1:无板，2:有板;手动入库请求,1:复位,2:手动入库请求;位置1条码后4位;位置2条码后4位</Db2Desc>
           <SwitchPath>1006</SwitchPath>
         </SelfDatainfo>
       </Node>

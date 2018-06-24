@@ -110,10 +110,17 @@ namespace WESAoyou
                         asrsCtl.dlgtAsrsOutTaskPost = AsrsOutTaskBusiness;
                         
                     }
+                    
                     foreach(AsrsPortalModel port in asrsCtl.Ports)
                     {
                         port.dlgtGroupEnabled = AsrsCheckinGroupEnabled;
+                        if (asrsCtl.NodeName == "C1库房" || asrsCtl.NodeName == "C2库房" || asrsCtl.NodeName == "C3库房")
+                        {
+                            port.dlgtBarcodeCheck = AsrsPortBarcodeCheck;//条码校验
+                        }
+                        
                     }
+                    
                 }
 
                 //4 初始化流水线控制系统
@@ -577,14 +584,14 @@ namespace WESAoyou
                             reStr = string.Format("托盘{0} 批次{1},与入口缓存的托盘{2} 批次{3}不同", palletID, batch, lastPalletID, batchLast);
                             return false;
                         }
-                        //3 是否同型号
-                        if (port.NodeID == "2011" || port.NodeID == "2015" || port.NodeID == "2019")
-                        {
-                            if (lastCata != cata)
-                            {
-                                return false;
-                            }
-                        }
+                        ////3 是否同型号
+                        //if (port.NodeID == "2011" || port.NodeID == "2015" || port.NodeID == "2019")
+                        //{
+                        //    if (lastCata != cata)
+                        //    {
+                        //        return false;
+                        //    }
+                        //}
                         
                     }
                     else
@@ -622,6 +629,55 @@ namespace WESAoyou
                     return true;
                 }
                 return true;
+            }
+        }
+        private bool AsrsPortBarcodeCheck(AsrsPortalModel port,ref string reStr)
+        {
+            try
+            {
+                string[] checkNodeids = new string[] {"2013","2017","2021" };
+                if(!checkNodeids.Contains(port.NodeID))
+                {
+                    return true;
+                }
+                bool re = true;
+                for(int i=0;i<port.PortinBufCapacity;i++)
+                {
+                    if(port.Db2Vals[i] ==2)
+                    {
+                       if(port.PalletBuffer.Count<i+1)
+                       {
+                           re = false;
+                           reStr = reStr+"系统记录的缓存托盘数量跟实际不符，缓存托盘数量：" + port.PalletBuffer.Count.ToString();
+                           break;
+                       }
+                       string strBarcodeRail = port.PalletBuffer[i].Substring(port.PalletBuffer[i].Length - 4, 4);
+                       int iBarcode = 0;
+                       if(!int.TryParse(strBarcodeRail,out iBarcode))
+                       {
+                           reStr = reStr + "条码校验失败,解析条码后4位错误,条码："+port.PalletBuffer[i];
+                           re = false;
+                           break;
+                       }
+                       if(iBarcode != port.Db2Vals[i+3])
+                       {
+                           re = false;
+                           reStr = reStr + string.Format("条码校验失败,缓存条码后4位{0},PLC系统反馈条码后4位{1}", iBarcode, port.Db2Vals[i + 3]);
+
+                           break;
+                       }
+                    }
+                }
+                if(!re)
+                {
+                    port.Db1ValsToSnd[0] = 4;
+                }
+                return re;
+            }
+            catch (Exception ex)
+            {
+                reStr = ex.Message;
+                return false;
             }
         }
         #endregion

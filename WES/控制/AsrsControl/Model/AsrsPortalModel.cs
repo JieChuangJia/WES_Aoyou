@@ -13,6 +13,7 @@ namespace AsrsControl
     /// </summary>
     public class AsrsPortalModel : CtlNodeBaseModel
     {
+        public delegate bool DlgtAsrsPortBarcodeCheck(AsrsPortalModel port, ref string reStr); //委托，入口条码校验
         public delegate bool DlgtGroupEnabled(AsrsPortalModel port, string palletID, ref string reStr); //是否同组入库判断
       //  private IrfidRW rfidRW = null;
       //  public IrfidRW RfidRW { get { return rfidRW; } set { rfidRW = value; } }
@@ -29,6 +30,7 @@ namespace AsrsControl
         private AsrsCtlModel asrsCtlModel = null;
         private string emptyPalletCheckoutMode = "自动";
         public DlgtGroupEnabled dlgtGroupEnabled;
+        public DlgtAsrsPortBarcodeCheck dlgtBarcodeCheck = null;//委托对象，条码校验
         public int PortCata { get { return portCata; } set { portCata = value; } }
         public int PortSeq { get { return portSeq; } }
         
@@ -391,7 +393,7 @@ namespace AsrsControl
                 {
                     if (this.PortinBufCapacity > 1)
                     {
-                        //缓存满，并且入口有料，并且手动强制入库
+                        //并且入口有料，并且手动强制入库
                         if (this.db2Vals[this.PortinBufCapacity] == 2)
                         {
                             if ((this.palletBuffer.Count() > 0) && (this.db2Vals[0]==2 || this.db2Vals[1]==2) )
@@ -403,8 +405,17 @@ namespace AsrsControl
                                 return false;
                             }
                         }
-                        else if (this.palletBuffer.Count() >= this.PortinBufCapacity) 
+                        else if (this.palletBuffer.Count() >= this.PortinBufCapacity) //缓存满
                         {
+                            if (PalletBuffer.Count() >= PortinBufCapacity && dlgtBarcodeCheck != null)//条码校验
+                            {
+                                string reStr = "";
+                                if (!dlgtBarcodeCheck(this, ref reStr))
+                                {
+                                    CurrentTaskDescribe = reStr;
+                                    return false;
+                                }
+                            }
                             for (int j = 0; j < Math.Min(PalletBuffer.Count(), PortinBufCapacity); j++)
                             {
                                 if (this.Db2Vals[j] != 2)

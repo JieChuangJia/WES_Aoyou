@@ -29,6 +29,7 @@ namespace AsrsControl
         public delegate string DlgtGetAsrsLogicArea(string palletID,AsrsCtlModel asrsCtl,int curStep);
         public delegate bool DlgtUpdateStepAfterCheckin(string palletID,AsrsCtlModel asrsCtl, int curStep);
         public delegate bool DlgtAsrsTasktypeTorun(AsrsPortalModel port, ref SysCfg.EnumAsrsTaskType taskType, ref string logicArea,ref string reStr); //委托：将要申请的任务类型
+       
         #region 数据
        // protected  Dictionary<int, string> mesStepLocalMap = new Dictionary<int, string>();
         private short asrsCheckInFailed = 3; //入库申请失败应答
@@ -61,6 +62,7 @@ namespace AsrsControl
         public DlgtGetAsrsLogicArea dlgtGetLogicArea = null;
         public DlgtUpdateStepAfterCheckin dlgtUpdateStep = null;
         public DlgtAsrsTasktypeTorun dlgtAsrsTasktypeToCheckin = null;
+      
         public int AsrsRow { get { return asrsRow; } }
         public int AsrsCol { get { return asrsCol; } }
         public int AsrsLayer { get { return asrsLayer; } }
@@ -944,6 +946,7 @@ namespace AsrsControl
                 #endregion
                 #region 入库申请
                 string checkinArea = string.Empty;
+               
                 if(dlgtAsrsTasktypeToCheckin != null)
                 {
                     if (port.PalletBuffer.Count()<1)
@@ -970,7 +973,7 @@ namespace AsrsControl
                             taskType = SysCfg.EnumAsrsTaskType.空筐入库;
                             if (!port.EmptyPalletInputEnabled)
                             {
-                                port.CurrentTaskDescribe = "空筐入库申请失败，请检查配置空筐是否允许出库";
+                                port.CurrentTaskDescribe = "空筐入库申请失败，请检查配置空筐是否允许入库";
                                 continue;
                             }
                         }
@@ -978,6 +981,8 @@ namespace AsrsControl
                 }
                 if (port.AsrsInputEnabled(ref taskType))
                 {
+                    
+
                     string[] cellGoods = null;
                     if (port.PalletBuffer.Count > 0)
                     {

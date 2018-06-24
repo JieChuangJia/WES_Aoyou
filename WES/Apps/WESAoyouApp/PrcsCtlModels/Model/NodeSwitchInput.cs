@@ -243,12 +243,17 @@ namespace PrcsCtlModelsAoyou
                             {
                                 switchRe = switchPath.PathSeq + 1;
                             }
+                           
+                            this.db1ValsToSnd[0] = (short)switchRe;
+                            if(this.nodeID=="4006") //OCV后入库分流时，把条码后4位以整形发给PLC
+                            {
+                                this.db1ValsToSnd[1] = short.Parse(this.rfidUID.Substring(this.rfidUID.Length - 4, 4));
+                            }
                             if (node.GetType().ToString() == "AsrsControl.AsrsPortalModel")
                             {
                                 (node as AsrsControl.AsrsPortalModel).PushPalletID(this.rfidUID);
 
                             }
-                            this.db1ValsToSnd[0] = (short)switchRe;
                             string logStr = string.Format("{0}分流，进入{1}", this.rfidUID, switchPath.NodeList[0].NodeName);
                             logRecorder.AddDebugLog(nodeName, logStr);
                             AddProduceRecord(this.rfidUID, logStr);
