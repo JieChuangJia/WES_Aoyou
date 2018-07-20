@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using ModuleCrossPnP;
 using AsrsModel;
 using ASRSStorManage.Presenter;
- 
 using AsrsInterface;
 using LogInterface;
 using AsrsStorDBAcc.Model;

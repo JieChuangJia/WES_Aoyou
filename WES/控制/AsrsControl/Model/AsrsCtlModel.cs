@@ -726,7 +726,12 @@ namespace AsrsControl
         {
             try
             {
-               
+                List<ControlTaskModel> runningTasks = ctlTaskBll.GetRelatedRunningTask(this.houseName, cell.GetStr());
+                if (runningTasks != null && runningTasks.Count() > 0)
+                {
+                    Console.WriteLine("生成出库任务失败,{0}:{1}存在待执行或执行中的任务", houseName, cell.GetStr());
+                    return false;
+                }
                 ControlTaskModel asrsTask = new ControlTaskModel();
                 asrsTask.DeviceID = this.stacker.NodeID;
                 if (autoTaskMode)
@@ -974,6 +979,7 @@ namespace AsrsControl
                             if (!port.EmptyPalletInputEnabled)
                             {
                                 port.CurrentTaskDescribe = "空筐入库申请失败，请检查配置空筐是否允许入库";
+                                port.Db1ValsToSnd[0] = 3;
                                 continue;
                             }
                         }
@@ -1391,7 +1397,7 @@ namespace AsrsControl
                         {
                             port.Db1ValsToSnd[0] = 1;
                             this.asrsCheckInRow = 0;
-                            this.currentTaskDescribe = "";
+                            port.CurrentTaskDescribe = "";
                         }
                     }
                     Array.Copy(port.Db2Vals, port.Db2ValsLast, port.Db2Vals.Count());

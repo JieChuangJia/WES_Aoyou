@@ -47,6 +47,8 @@ namespace AsrsControl
             bs.DataSource = dt;
             bindingNavigator1.BindingSource = bs;
             dataGridView1.DataSource = bs;
+            dataGridView1.Columns["创建时间"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss";
+            dataGridView1.Columns["完成时间"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss";
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
@@ -83,7 +85,7 @@ namespace AsrsControl
                 SysCfg.EnumAsrsTaskType.空筐出库.ToString(), 
                 SysCfg.EnumAsrsTaskType.移库.ToString(),
                 SysCfg.EnumAsrsTaskType.托盘装载.ToString(),
-                SysCfg.EnumAsrsTaskType.OCV测试分拣.ToString()});
+                SysCfg.EnumAsrsTaskType.分拣.ToString()});
 
             this.comboBox3.Items.AddRange(new string[] { "所有", SysCfg.EnumTaskStatus.待执行.ToString(), SysCfg.EnumTaskStatus.执行中.ToString(), SysCfg.EnumTaskStatus.已完成.ToString(), SysCfg.EnumTaskStatus.超时.ToString(), SysCfg.EnumTaskStatus.任务撤销.ToString() });
             this.comboBoxOrderType.Items.AddRange(new string[] { "无","由高到低","由低到高"});

@@ -244,21 +244,21 @@
         <!--<SwitchPath>2011,2015,2019</SwitchPath>-->
       </SelfDatainfo>
     </Node>
-    <Node className="PrcsCtlModelsAoyou.NodeGrasp" id="6001" enabled="false">
+    <Node className="PrcsCtlModelsAoyou.NodeGrasp" id="6001" enabled="true">
       <BaseDatainfo plcID="8" mesStep="7" barcodeScanner="9">
         <NodeName>分拣1(分容后）</NodeName>
         <DB1Addr addrStart="D2400" blockNum="40">DB1数据区地址信息</DB1Addr>
         <DB2Addr addrStart="D3400" blockNum="5">DB2数据区地址信息</DB2Addr>
       </BaseDatainfo>
     </Node>
-    <Node className="PrcsCtlModelsAoyou.NodeGrasp" id="6002" enabled="false">
+    <Node className="PrcsCtlModelsAoyou.NodeGrasp" id="6002" enabled="true">
       <BaseDatainfo plcID="9" mesStep="10" barcodeScanner="8">
         <NodeName>分拣2（OCV1之后)</NodeName>
         <DB1Addr addrStart="D2440" blockNum="40">DB1数据区地址信息</DB1Addr>
         <DB2Addr addrStart="D3405" blockNum="5">DB2数据区地址信息</DB2Addr>
       </BaseDatainfo>
     </Node>
-    <Node className="PrcsCtlModelsAoyou.NodeGrasp" id="6003" enabled="false">
+    <Node className="PrcsCtlModelsAoyou.NodeGrasp" id="6003" enabled="true">
       <BaseDatainfo plcID="9" mesStep="13" barcodeScanner="10">
         <NodeName>分拣3（OCV2之后)</NodeName>
         <DB1Addr addrStart="D2480" blockNum="40">DB1数据区地址信息</DB1Addr>
@@ -479,7 +479,7 @@
         </BaseDatainfo>
         <SelfDatainfo portSeq="1" bindedTask="产品入库" capacity="1" emptyPalletCheckIn="false">
           <PortType>1</PortType>
-          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用</Db1Desc>
+          <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:库区不存在或者没有货位可用;1:复位,2:取放货完成</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <SwitchPath>1003</SwitchPath>
         </SelfDatainfo>

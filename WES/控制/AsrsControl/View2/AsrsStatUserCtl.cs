@@ -30,6 +30,7 @@ namespace AsrsControl
             //    itemLabel.AutoSize = false;
             //    this.flowLayoutPanel1.Controls.Add(itemLabel);
             //}
+            this.label4.Text = ID;
             label1.Text = statItems[1].statDesc;
             label1.BackColor = statItems[1].bkgColor;
             label2.Text = statItems[0].statDesc;

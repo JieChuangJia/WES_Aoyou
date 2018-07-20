@@ -36,8 +36,8 @@ namespace AsrsControl
         /// </summary>
        // protected ControlTaskBll ctlTaskBll = null;
        // public short DevRunningStatus { get { return devRunningStatus; } }
-        public DlgtTaskCompleted dlgtTaskCompleted = null;
-        public DlgtAsrsPnPBusiness dlgtAsrsPnPCompleted = null;
+        public DlgtTaskCompleted dlgtTaskCompleted = null;  //任务完成委托处理
+        public DlgtAsrsPnPBusiness dlgtAsrsPnPCompleted = null; //取放货完成，委托处理
         public IrfidRW RfidReader { get { return rfidReader; } set { rfidReader = value; } }
       
         public string HouseName { get { return houseName; } set { houseName = value; } }

@@ -45,6 +45,10 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.btnStart = new System.Windows.Forms.ToolStripButton();
+            this.btnPause = new System.Windows.Forms.ToolStripButton();
+            this.btnExit = new System.Windows.Forms.ToolStripButton();
             this.panelCenterview = new System.Windows.Forms.Panel();
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -53,16 +57,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.btnStart = new System.Windows.Forms.ToolStripButton();
-            this.btnPause = new System.Windows.Forms.ToolStripButton();
-            this.btnExit = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel5.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.panelCenterview.SuspendLayout();
             this.panel2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -72,7 +73,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList1
@@ -132,7 +132,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1631, 75);
+            this.panel3.Size = new System.Drawing.Size(1631, 73);
             this.panel3.TabIndex = 2;
             // 
             // richTextBoxLog
@@ -144,7 +144,7 @@
             this.richTextBoxLog.Location = new System.Drawing.Point(0, 29);
             this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(1629, 48);
+            this.richTextBoxLog.Size = new System.Drawing.Size(1629, 46);
             this.richTextBoxLog.TabIndex = 0;
             this.richTextBoxLog.Text = "";
             // 
@@ -159,7 +159,7 @@
             this.panel4.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
             this.panel4.Location = new System.Drawing.Point(779, 4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(846, 41);
+            this.panel4.Size = new System.Drawing.Size(846, 42);
             this.panel4.TabIndex = 0;
             // 
             // label6
@@ -230,7 +230,7 @@
             this.panel5.Location = new System.Drawing.Point(1, 1);
             this.panel5.Margin = new System.Windows.Forms.Padding(0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(350, 47);
+            this.panel5.Size = new System.Drawing.Size(350, 48);
             this.panel5.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -249,9 +249,65 @@
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1629, 47);
             this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.AutoSize = false;
+            this.toolStrip2.BackColor = System.Drawing.Color.Transparent;
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnStart,
+            this.btnPause,
+            this.btnExit});
+            this.toolStrip2.Location = new System.Drawing.Point(354, 1);
+            this.toolStrip2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(419, 48);
+            this.toolStrip2.TabIndex = 3;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // btnStart
+            // 
+            this.btnStart.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStart.BackgroundImage")));
+            this.btnStart.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
+            this.btnStart.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.btnStart.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(129, 45);
+            this.btnStart.Text = "         启动";
+            this.btnStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStart.ToolTipText = "系统启动";
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPause.BackgroundImage")));
+            this.btnPause.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
+            this.btnPause.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.btnPause.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnPause.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(129, 45);
+            this.btnPause.Text = "         暂停";
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
+            this.btnExit.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
+            this.btnExit.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.btnExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(122, 45);
+            this.btnExit.Text = "        退出";
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // panelCenterview
             // 
@@ -261,7 +317,7 @@
             this.panelCenterview.Location = new System.Drawing.Point(1, 95);
             this.panelCenterview.Margin = new System.Windows.Forms.Padding(1);
             this.panelCenterview.Name = "panelCenterview";
-            this.panelCenterview.Size = new System.Drawing.Size(1629, 407);
+            this.panelCenterview.Size = new System.Drawing.Size(1629, 409);
             this.panelCenterview.TabIndex = 2;
             // 
             // MainTabControl
@@ -273,7 +329,7 @@
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.Padding = new System.Drawing.Point(0, 0);
             this.MainTabControl.SelectedIndex = 0;
-            this.MainTabControl.Size = new System.Drawing.Size(1629, 407);
+            this.MainTabControl.Size = new System.Drawing.Size(1629, 409);
             this.MainTabControl.TabIndex = 0;
             // 
             // panel2
@@ -336,7 +392,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1631, 503);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1631, 505);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // splitContainer1
@@ -357,65 +413,9 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel3);
             this.splitContainer1.Size = new System.Drawing.Size(1635, 588);
-            this.splitContainer1.SplitterDistance = 507;
+            this.splitContainer1.SplitterDistance = 509;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 1;
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.AutoSize = false;
-            this.toolStrip2.BackColor = System.Drawing.Color.Transparent;
-            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnStart,
-            this.btnPause,
-            this.btnExit});
-            this.toolStrip2.Location = new System.Drawing.Point(354, 1);
-            this.toolStrip2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(419, 47);
-            this.toolStrip2.TabIndex = 3;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // btnStart
-            // 
-            this.btnStart.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnStart.BackgroundImage")));
-            this.btnStart.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
-            this.btnStart.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.btnStart.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(129, 44);
-            this.btnStart.Text = "         启动";
-            this.btnStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnStart.ToolTipText = "系统启动";
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
-            // btnPause
-            // 
-            this.btnPause.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPause.BackgroundImage")));
-            this.btnPause.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
-            this.btnPause.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.btnPause.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnPause.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(129, 44);
-            this.btnPause.Text = "         暂停";
-            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
-            // 
-            // btnExit
-            // 
-            this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
-            this.btnExit.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F);
-            this.btnExit.ForeColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.btnExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnExit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(122, 44);
-            this.btnExit.Text = "        退出";
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // MonitorMainForm
             // 
@@ -423,8 +423,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1635, 588);
             this.Controls.Add(this.splitContainer1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MonitorMainForm";
-            this.Text = "Form1";
+            this.Text = "WES远程监控";
             this.Load += new System.EventHandler(this.MonitorMainForm_Load);
             this.Click += new System.EventHandler(this.MonitorMainForm_Click);
             this.toolStrip1.ResumeLayout(false);
@@ -437,6 +438,8 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.panelCenterview.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
@@ -447,8 +450,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
 
         }

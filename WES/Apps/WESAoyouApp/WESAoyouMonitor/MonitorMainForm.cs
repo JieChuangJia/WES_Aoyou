@@ -26,7 +26,7 @@ namespace WESAoyouMonitor
     {
         #region 数据
         private string appTitle = "捷创嘉锂电WES监控终端";
-        private string version = "系统版本:1.1.7  2018-2-6";
+        private string version = "系统版本:1.1.8  2018-7-6";
         private int roleID = 3;
         private string userName = "操作员";
         const int CLOSE_SIZE = 10;
@@ -99,6 +99,17 @@ namespace WESAoyouMonitor
             childView.Size = this.panelCenterview.Size;
             childView.Show();
 
+        }
+        public void RemoveModuleView(System.Windows.Forms.Form childView)
+        {
+            TabPage tabPage = null;
+            if (this.childList.Contains(childView.Text))
+            {
+                tabPage = this.MainTabControl.TabPages[childView.Text];
+                this.childList.Remove(childView.Text);
+                this.MainTabControl.TabPages.Remove(tabPage);
+
+            }
         }
         #endregion
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -422,6 +433,8 @@ namespace WESAoyouMonitor
                     string logSrcStr = root.Element("sysSet").Element("ExtLogSrc").Value.ToString();
                     ExtLogSrc = logSrcStr.Split(new string[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries);
                 }
+                SysCfg.SysCfgModel.AsrsHouseList.AddRange(new string[] { "C1库房", "C2库房", "C3库房" });
+
                 return true;
             }
             catch (Exception ex)

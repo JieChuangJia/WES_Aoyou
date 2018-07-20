@@ -105,95 +105,18 @@ namespace PrcsCtlModelsAoyou
             {
                 return true;
             }
-            /*
+            
             switch(this.currentTaskPhase)
             {
                 case 1:
                     {
                         currentTaskDescribe = "开始执行分拣任务";
                       
-                      
-                       // int ocvProcessID = 1;//zwx,临时
-                        List<int> ocvTestSeqIDS = new List<int>();
-                        int testValStIndex = 2;
                         
-						ANCStepResult stepRe = MesAcc.GetStep(this.rfidUID);
-                        if (stepRe.ResultCode != 0)
-                        {
-                            this.currentTaskDescribe = "查询MES托盘步次失败:" + stepRe.ResultMsg;
-                            break;
-                        }
-						
-                       if(this.nodeID=="6002")
-                       {
-					      
-					      //查询MES，当前步次，是OCV2还是OCV4分拣
-                           testValStIndex = 3;
-                           if(stepRe.Step<19)
-                           {
-                               this.db1ValsToSnd[2] = 1; //OCV2
-                              
-                           }
-                           else
-                           {
-                                this.db1ValsToSnd[2] = 2; //OCV4
-                           }
-                           #region 判断本地工艺步号
-                          
-                           #endregion
-
-                       }
-                     
-                       #endregion
-                      
-                      
-					   //查询MES分拣数据
-                       vals = new List<int>();
-                       if (SysCfg.SysCfgModel.SimMode)
-                       {
-                           for (int i = 0; i < 36; i++)
-                           {
-                               vals.Add(1);
-                           }
-                       }
-                       else
-                       {   
-                           int step = 0;
-                           if(this.nodeID == "6001")
-                           {
-                               step = 9;
-                           }
-                           else if(this.nodeID == "6002")
-                           {
-                               if(stepRe.Step<14)
-                               {
-                                    step = 13;
-                               }
-                               else
-                               {
-                                   step=19;
-                               }
-                           }
-                           else
-                           {
-                               step=16;
-                           }
-                           
-                           if (!MESGetGraspVals(step, this.rfidUID, ref vals, ref reStr))
-                           {
-                               this.currentTaskDescribe = reStr;
-                               break;
-                           }
-                       }
-					   
-                        //发送分拣参数
-                        for (int i = 0; i < Math.Max(channelSum, vals.Count()); i++)
-                        {
-                            Int16 re =(short)vals[i];
-                            db1ValsToSnd[testValStIndex + i] = re;
-                        }
+                       // int ocvProcessID = 1;//zwx,临时
+                       
                         db1ValsToSnd[0] = 2;
-                        AddGraspRecord(this.rfidUID, vals); //记录分拣发送详细
+                        
                         currentTaskDescribe = "分拣参数发送完成";
                         this.currentTaskPhase++;
                         this.currentTask.TaskPhase = this.currentTaskPhase;
@@ -209,27 +132,8 @@ namespace PrcsCtlModelsAoyou
                         {
                             break;
                         }
-                        if (this.db2Vals[1] == 4)
-                        {
-                            AddProduceRecord(this.rfidUID, string.Format("无需分拣模式:{0}", nodeName));
-                            logRecorder.AddDebugLog(nodeName, string.Format("由人工处理，{0}无需挑选放行", this.rfidUID));
-                          
-                        }
                         
-                        //if (db2Vals[1] == 2)
-                        //{
-                        //    ANCStepResult stepRe = MesAcc.GetStep(this.rfidUID);
-                        //    if (stepRe.ResultCode != 0)
-                        //    {
-                        //        this.currentTaskDescribe = "查询MES托盘步次失败:" + stepRe.ResultMsg;
-                        //        logRecorder.AddDebugLog(nodeName, this.currentTaskDescribe);
-                        //        break; //zwx,11-16
-                        //    }
-                           
-                        //}
-                       
-                        UpdateOnlineProductInfo(this.rfidUID);
-                       
+
                         this.currentTaskPhase++;
                       
                         this.currentTask.TaskPhase = this.currentTaskPhase;
@@ -241,54 +145,28 @@ namespace PrcsCtlModelsAoyou
                     {
                         //更新MES步号
                         
-                        ANCStepResult stepRe = MesAcc.GetStep(this.rfidUID);
-                        if (stepRe.ResultCode != 0)
-                        {
-                            this.currentTaskDescribe = "查询MES托盘步次失败:" + stepRe.ResultMsg;
-                            logRecorder.AddDebugLog(nodeName, this.currentTaskDescribe);
-                            break; //zwx,11-16
-                        }
-
                         int stepUp = 0;
                         if (this.nodeID == "6001")
                         {
-                            stepUp = 10;
+                            stepUp = 7;
                         }
                         else if (this.nodeID == "6002")
                         {
-                            if (stepRe.Step <=14)
-                            {
-                                stepUp = 14;
-                            }
-                            else
-                            {
-                                stepUp = 20;
-                            }
+                            stepUp = 10;
                         }
                         else
                         {
-                            stepUp = 17;
+                            stepUp = 13;
                         }
-                        VMResult re = MesAcc.UpdateStep(stepUp, this.rfidUID);
-                        if(re.ResultCode != 0)
+                        if (!MesAcc.UpdateStep(stepUp, this.rfidUID, ref reStr))
                         {
-                            this.currentTaskDescribe = "更新MES步号失败," + re.ResultMsg;
-                            logRecorder.AddDebugLog(nodeName, this.currentTaskDescribe);
-                            break; //zwx,11-16
+                            currentTaskDescribe = "更新MES工步失败:" + reStr;
+                            break;
                         }
-                      
-
                         db1ValsToSnd[1] = 2;
                         string grasp = "";
-                        if (stepRe.Step < 20)
-                        {
-                            grasp = string.Format("OCV2 分拣完成,更新步次{0}", stepUp);
-                        }
-                        else
-                        {
-                            grasp = string.Format("OCV4 分拣完成,更新步次{0}", stepUp);
-                        }
-                        AddProduceRecord(this.rfidUID, string.Format("正常分拣:{0}", grasp));
+                        
+                        AddProduceRecord(this.rfidUID, string.Format("正常分拣:{0}", nodeName));
                         logRecorder.AddDebugLog(nodeName, string.Format("{0},分拣完成,{1}", this.rfidUID, grasp));
 
                         this.currentTaskPhase++;
@@ -317,7 +195,7 @@ namespace PrcsCtlModelsAoyou
                     }
                 default:
                     break;
-            }*/
+            }
             return true;
         }
        
@@ -377,8 +255,8 @@ namespace PrcsCtlModelsAoyou
                     return true;
                 }
                 this.rfidUID = this.rfidUID.Trim(new char[] { '\0', '\r', '\n', '\t', ' ' });
-                string pattern = @"^[a-zA-Z0-9]*$"; //匹配所有字符都在字母和数字之间  
-                if (!System.Text.RegularExpressions.Regex.IsMatch(this.rfidUID, pattern))
+                string palletPatten = @"^[a-z|A-Z|0-9]{4}TP[0-9]{4,}";
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.rfidUID, palletPatten))
                 {
                     if (this.db1ValsToSnd[1] != 3)
                     {
@@ -387,25 +265,46 @@ namespace PrcsCtlModelsAoyou
                     this.db1ValsToSnd[1] = 3;
                     return true;
                 }
-                if (this.rfidUID.Length < 9)
-                {
-                    if (this.db1ValsToSnd[0] != 3)
-                    {
-                        logRecorder.AddDebugLog(nodeName, "读料框RFID错误，长度不足9字符！");
-                    }
-                    this.db1ValsToSnd[0] = 3;
-                    return true;
-                }
+                //if (this.rfidUID.Length < 9)
+                //{
+                //    if (this.db1ValsToSnd[0] != 3)
+                //    {
+                //        logRecorder.AddDebugLog(nodeName, "读料框RFID错误，长度不足9字符！");
+                //    }
+                //    this.db1ValsToSnd[0] = 3;
+                //    return true;
+                //}
 
-                if (this.rfidUID.Length > 9)
-                {
-                    this.rfidUID = this.rfidUID.Substring(0, 9);
-                }
+                //if (this.rfidUID.Length > 9)
+                //{
+                //    this.rfidUID = this.rfidUID.Substring(0, 9);
+                //}
                 if(db1ValsToSnd[0] == 1 || db1ValsToSnd[0] == 3)
                 {
                     logRecorder.AddDebugLog(this.nodeName, "读到托盘号:" + this.rfidUID);
                     this.currentTaskDescribe = "读到托盘号:" + this.rfidUID;
                 }
+                if (this.nodeID == "6002") //ocv1分拣处判断步号，如果大于10，报错
+                {
+                    int step = 0;
+                    if (!MesAcc.GetStep(this.rfidUID, out step, ref reStr))
+                    {
+                        currentTaskDescribe = "查询MES工步失败:" + reStr;
+                        return false;
+                    }
+                    if (step > 10)
+                    {
+                        if (db1ValsToSnd[0] != 5)
+                        {
+                            logRecorder.AddDebugLog(nodeName, string.Format("{0}步号错误，当前步号：{1}，当前工位不能超过10，请检查是否使用了OCV2测试后的料筐", rfidUID, step));
+                        }
+                        this.currentTaskDescribe = string.Format("{0}步号错误，当前步号：{1}，当前工位不能超过10，请检查是否使用了OCV2测试后的料筐", rfidUID, step);
+                        db1ValsToSnd[0] = 5;
+                        reStr = this.currentTaskDescribe;
+                        return false;
+                    }
+                }
+
                /*
                 List<MesDBAccess.Model.ProductOnlineModel> bindedProducts = productOnlineBll.GetProductsInPallet(this.rfidUID);
                 if(bindedProducts == null || bindedProducts.Count()<1)
@@ -422,7 +321,7 @@ namespace PrcsCtlModelsAoyou
                 task.CreateTime = System.DateTime.Now;
                 task.TaskID = System.Guid.NewGuid().ToString("N");
                 task.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
-                task.TaskType = (int)SysCfg.EnumAsrsTaskType.OCV测试分拣;
+                task.TaskType = (int)SysCfg.EnumAsrsTaskType.分拣;
                 task.TaskParam = this.rfidUID;
                 task.TaskPhase = this.currentTaskPhase;
                 task.TaskStatus = SysCfg.EnumTaskStatus.执行中.ToString();
