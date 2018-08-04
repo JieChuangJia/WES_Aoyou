@@ -12,7 +12,7 @@ namespace AsrsUtil
 {
     public partial class Form1 : Form,IMainView
     {
-        private string version = "系统版本:1.0.0  2018-3-7";
+        private string version = "系统版本:1.0.1  2018-8-4";
         private delegate void DlgtRefreshPLCComm();
         MainPresenter presenter = null;
         public Form1()
@@ -311,9 +311,11 @@ namespace AsrsUtil
             try
             {
                 AsrsTaskModel task = new AsrsTaskModel();
+                task.ControlTaskID = Int16.Parse(this.textBoxCtlTaskID.Text);
                 string reStr = "";
                 task.TaskPhase = 0;
                 task.TaskStatus = "待执行";
+               
                 EnumAsrsTaskType taskType = (EnumAsrsTaskType)Enum.Parse(typeof(EnumAsrsTaskType), this.comboBoxTasks.Text);
                 task.TaskType = (int)taskType;
                 if(taskType == EnumAsrsTaskType.产品入库)

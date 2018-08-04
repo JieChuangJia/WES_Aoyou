@@ -30,7 +30,7 @@ namespace AsrsUtil
 
     public class AsrsTaskModel
     {
-
+        
         public string Taskid { get; set; }
         public int TaskType { get; set; }
         public int targetPortID { get; set; }
@@ -59,6 +59,7 @@ namespace AsrsUtil
         /// 完成时间
         /// </summary>
         public DateTime? FinishTime{get;set;}
+        public Int16 ControlTaskID { get; set; }
        
     }
 }

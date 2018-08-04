@@ -86,6 +86,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -95,7 +96,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.timerNodeStatus = new System.Windows.Forms.Timer(this.components);
-            this.labelVersion = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBoxCtlTaskID = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -135,7 +137,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel3);
             this.splitContainer1.Size = new System.Drawing.Size(1438, 812);
-            this.splitContainer1.SplitterDistance = 627;
+            this.splitContainer1.SplitterDistance = 679;
             this.splitContainer1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -150,7 +152,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1438, 627);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1438, 679);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // splitContainer2
@@ -168,8 +170,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel3);
-            this.splitContainer2.Size = new System.Drawing.Size(1432, 562);
-            this.splitContainer2.SplitterDistance = 333;
+            this.splitContainer2.Size = new System.Drawing.Size(1432, 614);
+            this.splitContainer2.SplitterDistance = 398;
             this.splitContainer2.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -187,7 +189,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 203F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 164F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(331, 560);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(396, 612);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel4
@@ -201,7 +203,9 @@
             this.panel4.Controls.Add(this.label9);
             this.panel4.Controls.Add(this.textBoxRow);
             this.panel4.Controls.Add(this.label7);
+            this.panel4.Controls.Add(this.textBoxCtlTaskID);
             this.panel4.Controls.Add(this.textBoxPortID);
+            this.panel4.Controls.Add(this.label12);
             this.panel4.Controls.Add(this.label6);
             this.panel4.Controls.Add(this.label5);
             this.panel4.Controls.Add(this.comboBoxTasks);
@@ -209,7 +213,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 370);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(325, 187);
+            this.panel4.Size = new System.Drawing.Size(390, 239);
             this.panel4.TabIndex = 2;
             // 
             // panelSim
@@ -274,14 +278,14 @@
             // 
             // textBoxLayer
             // 
-            this.textBoxLayer.Location = new System.Drawing.Point(199, 117);
+            this.textBoxLayer.Location = new System.Drawing.Point(199, 146);
             this.textBoxLayer.Name = "textBoxLayer";
             this.textBoxLayer.Size = new System.Drawing.Size(81, 28);
             this.textBoxLayer.TabIndex = 3;
             // 
             // textBoxCol
             // 
-            this.textBoxCol.Location = new System.Drawing.Point(106, 117);
+            this.textBoxCol.Location = new System.Drawing.Point(106, 146);
             this.textBoxCol.Name = "textBoxCol";
             this.textBoxCol.Size = new System.Drawing.Size(81, 28);
             this.textBoxCol.TabIndex = 3;
@@ -289,7 +293,7 @@
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.SpringGreen;
-            this.button4.Location = new System.Drawing.Point(141, 154);
+            this.button4.Location = new System.Drawing.Point(141, 183);
             this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(114, 41);
@@ -301,7 +305,7 @@
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.SpringGreen;
-            this.button3.Location = new System.Drawing.Point(12, 154);
+            this.button3.Location = new System.Drawing.Point(12, 183);
             this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(114, 41);
@@ -313,7 +317,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(193, 96);
+            this.label9.Location = new System.Drawing.Point(193, 125);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(62, 18);
             this.label9.TabIndex = 2;
@@ -321,7 +325,7 @@
             // 
             // textBoxRow
             // 
-            this.textBoxRow.Location = new System.Drawing.Point(14, 117);
+            this.textBoxRow.Location = new System.Drawing.Point(14, 146);
             this.textBoxRow.Name = "textBoxRow";
             this.textBoxRow.Size = new System.Drawing.Size(81, 28);
             this.textBoxRow.TabIndex = 3;
@@ -329,7 +333,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(100, 96);
+            this.label7.Location = new System.Drawing.Point(100, 125);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(62, 18);
             this.label7.TabIndex = 2;
@@ -345,7 +349,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 96);
+            this.label6.Location = new System.Drawing.Point(8, 125);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(62, 18);
             this.label6.TabIndex = 2;
@@ -395,7 +399,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(325, 197);
+            this.panel1.Size = new System.Drawing.Size(390, 197);
             this.panel1.TabIndex = 0;
             // 
             // buttonClosePlc
@@ -551,7 +555,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(3, 206);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(325, 158);
+            this.panel5.Size = new System.Drawing.Size(390, 158);
             this.panel5.TabIndex = 3;
             // 
             // richTextBoxMultiDBVal
@@ -658,7 +662,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 140F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1093, 560);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1028, 612);
             this.tableLayoutPanel3.TabIndex = 10;
             // 
             // groupBox1
@@ -666,11 +670,11 @@
             this.tableLayoutPanel3.SetColumnSpan(this.groupBox1, 2);
             this.groupBox1.Controls.Add(this.richTextBoxTaskInfo);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(4, 424);
+            this.groupBox1.Location = new System.Drawing.Point(4, 476);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1085, 132);
+            this.groupBox1.Size = new System.Drawing.Size(1020, 132);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "流程详细";
@@ -682,7 +686,7 @@
             this.richTextBoxTaskInfo.Location = new System.Drawing.Point(4, 25);
             this.richTextBoxTaskInfo.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBoxTaskInfo.Name = "richTextBoxTaskInfo";
-            this.richTextBoxTaskInfo.Size = new System.Drawing.Size(1077, 103);
+            this.richTextBoxTaskInfo.Size = new System.Drawing.Size(1012, 103);
             this.richTextBoxTaskInfo.TabIndex = 0;
             this.richTextBoxTaskInfo.Text = "";
             // 
@@ -702,18 +706,18 @@
             this.dataGridViewDevDB1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewDevDB1.Name = "dataGridViewDevDB1";
             this.dataGridViewDevDB1.RowTemplate.Height = 23;
-            this.dataGridViewDevDB1.Size = new System.Drawing.Size(538, 378);
+            this.dataGridViewDevDB1.Size = new System.Drawing.Size(506, 430);
             this.dataGridViewDevDB1.TabIndex = 3;
             // 
             // dataGridViewDevDB2
             // 
             this.dataGridViewDevDB2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewDevDB2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewDevDB2.Location = new System.Drawing.Point(550, 38);
+            this.dataGridViewDevDB2.Location = new System.Drawing.Point(518, 38);
             this.dataGridViewDevDB2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridViewDevDB2.Name = "dataGridViewDevDB2";
             this.dataGridViewDevDB2.RowTemplate.Height = 23;
-            this.dataGridViewDevDB2.Size = new System.Drawing.Size(539, 378);
+            this.dataGridViewDevDB2.Size = new System.Drawing.Size(506, 430);
             this.dataGridViewDevDB2.TabIndex = 4;
             // 
             // label8
@@ -725,7 +729,7 @@
             this.label8.Location = new System.Drawing.Point(4, 0);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(538, 34);
+            this.label8.Size = new System.Drawing.Size(506, 34);
             this.label8.TabIndex = 5;
             this.label8.Text = "DB1";
             // 
@@ -735,10 +739,10 @@
             this.label10.BackColor = System.Drawing.Color.Orange;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(550, 0);
+            this.label10.Location = new System.Drawing.Point(518, 0);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(539, 34);
+            this.label10.Size = new System.Drawing.Size(506, 34);
             this.label10.TabIndex = 6;
             this.label10.Text = "DB2";
             // 
@@ -766,6 +770,16 @@
             this.label11.Size = new System.Drawing.Size(135, 24);
             this.label11.TabIndex = 1;
             this.label11.Text = "当前任务：";
+            // 
+            // labelVersion
+            // 
+            this.labelVersion.AutoSize = true;
+            this.labelVersion.ForeColor = System.Drawing.Color.Yellow;
+            this.labelVersion.Location = new System.Drawing.Point(1203, 17);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(70, 24);
+            this.labelVersion.TabIndex = 1;
+            this.labelVersion.Text = "版本 ";
             // 
             // label3
             // 
@@ -797,7 +811,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1438, 181);
+            this.panel3.Size = new System.Drawing.Size(1438, 129);
             this.panel3.TabIndex = 3;
             // 
             // toolStrip1
@@ -850,7 +864,7 @@
             this.richTextBoxLog.Location = new System.Drawing.Point(0, 29);
             this.richTextBoxLog.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(1436, 154);
+            this.richTextBoxLog.Size = new System.Drawing.Size(1436, 102);
             this.richTextBoxLog.TabIndex = 0;
             this.richTextBoxLog.Text = "";
             this.richTextBoxLog.TextChanged += new System.EventHandler(this.richTextBoxLog_TextChanged);
@@ -860,15 +874,22 @@
             this.timerNodeStatus.Interval = 200;
             this.timerNodeStatus.Tick += new System.EventHandler(this.timerNodeStatus_Tick);
             // 
-            // labelVersion
+            // label12
             // 
-            this.labelVersion.AutoSize = true;
-            this.labelVersion.ForeColor = System.Drawing.Color.Yellow;
-            this.labelVersion.Location = new System.Drawing.Point(1203, 17);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(70, 24);
-            this.labelVersion.TabIndex = 1;
-            this.labelVersion.Text = "版本 ";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(8, 88);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(62, 18);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "任务号";
+            // 
+            // textBoxCtlTaskID
+            // 
+            this.textBoxCtlTaskID.Location = new System.Drawing.Point(100, 85);
+            this.textBoxCtlTaskID.Name = "textBoxCtlTaskID";
+            this.textBoxCtlTaskID.Size = new System.Drawing.Size(121, 28);
+            this.textBoxCtlTaskID.TabIndex = 3;
+            this.textBoxCtlTaskID.Text = "1000";
             // 
             // Form1
             // 
@@ -983,6 +1004,8 @@
         private System.Windows.Forms.Button buttonDB2SimSet;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.TextBox textBoxCtlTaskID;
+        private System.Windows.Forms.Label label12;
 
     }
 }

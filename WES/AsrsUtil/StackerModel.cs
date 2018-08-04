@@ -154,8 +154,8 @@ namespace AsrsUtil
             this.dicCommuDataDB1[1].DataDescription = "参数写入标志，1：复位，2：写入完成";
             this.dicCommuDataDB1[2].DataDescription = "任务处理完成标志，1：复位，2：处理完成,3:撤销处理完成";
             this.dicCommuDataDB1[3].DataDescription = "任务类型标志，1：产品入库，2：空筐入库,3:产品出库，4：空筐出库，5：移库";
-            this.dicCommuDataDB1[4].DataDescription = "入口编号（从1开始）";
-            this.dicCommuDataDB1[5].DataDescription = "出口编号（从1开始）";
+            this.dicCommuDataDB1[4].DataDescription = "入口站台";
+            this.dicCommuDataDB1[5].DataDescription = "出口站台";
             this.dicCommuDataDB1[6].DataDescription = "货位编号 ：排（从1开始）";
             this.dicCommuDataDB1[7].DataDescription = "货位编号 ：列（从1开始）";
             this.dicCommuDataDB1[8].DataDescription = "货位编号 ：层（从1开始）";
@@ -164,7 +164,7 @@ namespace AsrsUtil
             this.dicCommuDataDB1[10].DataDescription = "货位编号2 （移库时用）：列（从1开始）";
             this.dicCommuDataDB1[11].DataDescription = "位编号2（移库时用） ：层（从1开始）";
             this.dicCommuDataDB1[12].DataDescription = "1:故障处理未完成,2：故障处理完成";
-            this.dicCommuDataDB1[13].DataDescription = "预留参数1";
+            this.dicCommuDataDB1[13].DataDescription = "任务号";
             this.dicCommuDataDB1[14].DataDescription = "预留参数2";
             this.dicCommuDataDB1[15].DataDescription = "预留参数3";
             return true;
@@ -549,6 +549,7 @@ namespace AsrsUtil
             this.db1ValsToSnd[6] = (short)this.currentTask.CellA.Col;
             this.db1ValsToSnd[7] = (short)this.currentTask.CellA.Layer;
 
+            this.db1ValsToSnd[12] = this.currentTask.ControlTaskID;
             return true;
         }
       

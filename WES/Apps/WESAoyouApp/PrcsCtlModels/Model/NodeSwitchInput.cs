@@ -138,6 +138,21 @@ namespace PrcsCtlModelsAoyou
                             currentTaskDescribe = "查询MES工步失败:" + reStr;
                             break;
                         }
+                        if(this.nodeID=="4001")
+                        {
+                            if(step==0)
+                            {
+                                currentTaskDescribe = string.Format("{0} 入库分流失败，步号为0，禁止入库", this.rfidUID);
+                                if(this.db1ValsToSnd[0] != 4)
+                                {
+                                    logRecorder.AddDebugLog(nodeName, string.Format("{0} 入库分流失败，步号为0，禁止入库", this.rfidUID));
+
+                                }
+                                this.db1ValsToSnd[0] = 4; //
+
+                                break;
+                            }
+                        }
                         if(this.nodeID=="4004")
                         {
                             step = 5;
@@ -245,10 +260,11 @@ namespace PrcsCtlModelsAoyou
                             }
                            
                             this.db1ValsToSnd[0] = (short)switchRe;
+                            /*
                             if(this.nodeID=="4006") //OCV后入库分流时，把条码后4位以整形发给PLC
                             {
                                 this.db1ValsToSnd[1] = short.Parse(this.rfidUID.Substring(this.rfidUID.Length - 4, 4));
-                            }
+                            }*/
                             if (node.GetType().ToString() == "AsrsControl.AsrsPortalModel")
                             {
                                 (node as AsrsControl.AsrsPortalModel).PushPalletID(this.rfidUID);

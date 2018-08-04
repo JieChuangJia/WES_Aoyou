@@ -194,13 +194,23 @@ namespace LogManage
         {
             view.RefreshLogQueryStat("正在查询中...");
             DateTime dt1 = System.DateTime.Now;
-            DataSet ds = logBll.GetModelsByPage(pageSize, curlogPage, strWhere, false);//logBll.GetList(strWhere.ToString());
-            DateTime dt2 = System.DateTime.Now;
-            TimeSpan timeSpan = dt2 - dt1;
-            string strTimespan = string.Format("查询完成，用时：{0}:{1}:{2}.{3}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
-            view.RefreshLogDisp(ds.Tables[0], strTimespan,curlogPage);
-            this.curLogPageDT = ds.Tables[0];
-            return strTimespan;
+            try
+            {
+                DataSet ds = logBll.GetModelsByPage(pageSize, curlogPage, strWhere, false);//logBll.GetList(strWhere.ToString());
+                DateTime dt2 = System.DateTime.Now;
+                TimeSpan timeSpan = dt2 - dt1;
+                string strTimespan = string.Format("查询完成，用时：{0}:{1}:{2}.{3}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+                view.RefreshLogDisp(ds.Tables[0], strTimespan, curlogPage);
+                this.curLogPageDT = ds.Tables[0];
+                return strTimespan;
+            }
+            catch (Exception ex)
+            {
+                AddDebugLog("日志查询", ex.ToString());
+                return ex.Message;
+               
+            }
+          
         }
         #endregion
 

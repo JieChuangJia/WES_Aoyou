@@ -407,6 +407,7 @@ namespace AsrsControl
                         }
                         else if (this.palletBuffer.Count() >= this.PortinBufCapacity) //缓存满
                         {
+                            /* 屏蔽条码校验
                             if (PalletBuffer.Count() >= PortinBufCapacity && dlgtBarcodeCheck != null)//条码校验
                             {
                                 string reStr = "";
@@ -415,7 +416,7 @@ namespace AsrsControl
                                     CurrentTaskDescribe = reStr;
                                     return false;
                                 }
-                            }
+                            }*/
                             for (int j = 0; j < Math.Min(PalletBuffer.Count(), PortinBufCapacity); j++)
                             {
                                 if (this.Db2Vals[j] != 2)

@@ -51,29 +51,37 @@ namespace ProductRecordView
         private void OnRecordQuery()
         {
 
+            try
+            {
+                string strWhere = string.Format("productID='{0}' and productCata='{1}' order by recordTime asc ", queryFilter.BarCode, queryFilter.Cata);
+                DataSet ds = modRecordBll.GetList(strWhere);
+                this.dataGridView1.DataSource = ds.Tables[0];
 
-            string strWhere = string.Format("productID='{0}' and productCata='{1}' order by recordTime asc ", queryFilter.BarCode,queryFilter.Cata);
-            DataSet ds = modRecordBll.GetList(strWhere);
-            this.dataGridView1.DataSource = ds.Tables[0];
+                this.dataGridView1.Columns["recordID"].Visible = false;
+                this.dataGridView1.Columns["stationID"].Visible = false;
+                this.dataGridView1.Columns["recordCata"].Visible = false;
+                this.dataGridView1.Columns["tag2"].Visible = false;
+                this.dataGridView1.Columns["tag3"].Visible = false;
+                this.dataGridView1.Columns["tag4"].Visible = false;
+                this.dataGridView1.Columns["tag5"].Visible = false;
+
+                this.dataGridView1.Columns["checkResult"].HeaderText = "检测结果";
+                this.dataGridView1.Columns["productID"].HeaderText = "条码";
+                this.dataGridView1.Columns["productID"].Width = 200;
+                this.dataGridView1.Columns["productCata"].HeaderText = "物料类别";
+                this.dataGridView1.Columns["tag1"].HeaderText = "记录信息";
+                this.dataGridView1.Columns["tag1"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                this.dataGridView1.Columns["tag2"].HeaderText = "料框条码";
+                this.dataGridView1.Columns["recordTime"].HeaderText = "记录时间";
+                this.dataGridView1.Columns["recordTime"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss";
+                this.dataGridView1.Columns["recordTime"].Width = 200;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+           
             
-            this.dataGridView1.Columns["recordID"].Visible = false;
-            this.dataGridView1.Columns["stationID"].Visible = false;
-            this.dataGridView1.Columns["recordCata"].Visible = false;
-            this.dataGridView1.Columns["tag2"].Visible = false;
-            this.dataGridView1.Columns["tag3"].Visible = false;
-            this.dataGridView1.Columns["tag4"].Visible = false;
-            this.dataGridView1.Columns["tag5"].Visible = false;
-
-            this.dataGridView1.Columns["checkResult"].HeaderText = "检测结果";
-            this.dataGridView1.Columns["productID"].HeaderText = "条码";
-            this.dataGridView1.Columns["productID"].Width = 200;
-            this.dataGridView1.Columns["productCata"].HeaderText = "物料类别";
-            this.dataGridView1.Columns["tag1"].HeaderText = "记录信息";
-            this.dataGridView1.Columns["tag1"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridView1.Columns["tag2"].HeaderText = "料框条码";
-            this.dataGridView1.Columns["recordTime"].HeaderText = "记录时间";
-            this.dataGridView1.Columns["recordTime"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss";
-            this.dataGridView1.Columns["recordTime"].Width = 200;
         }
         #endregion
 
