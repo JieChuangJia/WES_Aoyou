@@ -34,8 +34,7 @@ namespace AsrsUtil
         public string Taskid { get; set; }
         public int TaskType { get; set; }
         public int targetPortID { get; set; }
-        public int InputPort { get; set; }
-        public int OutputPort { get; set; }
+        public int Port { get; set; }
         public CellCoordModel CellA { get; set; }
         public CellCoordModel CellB{ get; set; }
         public string TaskStatus

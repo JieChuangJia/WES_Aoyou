@@ -12,7 +12,7 @@ namespace AsrsUtil
 {
     public partial class Form1 : Form,IMainView
     {
-        private string version = "系统版本:1.0.1  2018-8-4";
+        private string version = "系统版本:1.1.0  2018-8-4";
         private delegate void DlgtRefreshPLCComm();
         MainPresenter presenter = null;
         public Form1()
@@ -318,14 +318,8 @@ namespace AsrsUtil
                
                 EnumAsrsTaskType taskType = (EnumAsrsTaskType)Enum.Parse(typeof(EnumAsrsTaskType), this.comboBoxTasks.Text);
                 task.TaskType = (int)taskType;
-                if(taskType == EnumAsrsTaskType.产品入库)
-                {
-                    task.InputPort = int.Parse(this.textBoxPortID.Text);
-                }
-                else
-                {
-                    task.OutputPort = int.Parse(this.textBoxPortID.Text);
-                }
+                task.Port = int.Parse(this.textBoxPortID.Text);
+              
                 task.CellA = new CellCoordModel(int.Parse(textBoxRow.Text),int.Parse(textBoxCol.Text),int.Parse(textBoxLayer.Text));
                
                 if (presenter.Stacker.FillTask(task, ref reStr))

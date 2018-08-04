@@ -154,8 +154,8 @@ namespace AsrsUtil
             this.dicCommuDataDB1[1].DataDescription = "参数写入标志，1：复位，2：写入完成";
             this.dicCommuDataDB1[2].DataDescription = "任务处理完成标志，1：复位，2：处理完成,3:撤销处理完成";
             this.dicCommuDataDB1[3].DataDescription = "任务类型标志，1：产品入库，2：空筐入库,3:产品出库，4：空筐出库，5：移库";
-            this.dicCommuDataDB1[4].DataDescription = "入口站台";
-            this.dicCommuDataDB1[5].DataDescription = "出口站台";
+            this.dicCommuDataDB1[4].DataDescription = "站台号低16位";
+            this.dicCommuDataDB1[5].DataDescription = "站台号高16位";
             this.dicCommuDataDB1[6].DataDescription = "货位编号 ：排（从1开始）";
             this.dicCommuDataDB1[7].DataDescription = "货位编号 ：列（从1开始）";
             this.dicCommuDataDB1[8].DataDescription = "货位编号 ：层（从1开始）";
@@ -429,6 +429,12 @@ namespace AsrsUtil
                 currentTaskDescribe = "设备故障";
                 return true;
             }
+            if (currentTask == null)
+            {
+                currentTaskPhase = 0;
+                currentTaskDescribe = "等待新的任务";
+                return true;
+            }
             switch (currentTaskPhase)
             {
                 case 0:
@@ -542,8 +548,8 @@ namespace AsrsUtil
             //1 任务类型码
             this.db1ValsToSnd[2] = (short)this.currentTask.TaskType;
 
-            this.db1ValsToSnd[3] = (short)this.currentTask.InputPort;
-            this.db1ValsToSnd[4] = (short)this.currentTask.OutputPort;
+            this.db1ValsToSnd[3] = (short)(this.currentTask.Port&0xffff);
+            this.db1ValsToSnd[4] = (short)(this.currentTask.Port>>16);
 
             this.db1ValsToSnd[5] = (short)this.currentTask.CellA.Row;
             this.db1ValsToSnd[6] = (short)this.currentTask.CellA.Col;
