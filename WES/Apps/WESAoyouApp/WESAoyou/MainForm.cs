@@ -174,7 +174,8 @@ namespace WESAoyou
                 MesDBAccess.DBUtility.DbHelperSQL.SetConnstr(dbConn2);
                 AsrsStorDBAcc.DbHelperSQL.SetConnstr(string.Format(@"{0}Initial Catalog=AoyouWMSDB;User ID=sa;Password=123456;", dbSrc));
                 #endregion
-
+                string mesAddr = ConfigurationManager.AppSettings["MesSvcAddr"];
+                PrcsCtlModelsAoyou.WShelper.url = mesAddr;
                 presenter = new MainPresenter(this);
                 childList = new List<string>();
                 childViews = new List<BaseChildView>();

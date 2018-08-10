@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="PrsCtlnodeManage.cs" />
     <Compile Include="Model\ViewThemColor.cs" />
+    <Compile Include="WShelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\控制\CtlDBAccess\CtlDBAccess.csproj">
