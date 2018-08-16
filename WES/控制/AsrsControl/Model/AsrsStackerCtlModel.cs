@@ -206,6 +206,7 @@ namespace AsrsControl
                             string logInfo = string.Format("开始执行任务:{0},{1}-{2}-{3},{4}", ((SysCfg.EnumAsrsTaskType)currentTask.TaskType).ToString(), taskParamModel.CellPos1.Row, taskParamModel.CellPos1.Col, taskParamModel.CellPos1.Layer,currentTask.TaskParam);
                             logRecorder.AddDebugLog(nodeName, logInfo);
                             //  logRecorder.AddDebugLog(nodeName, "开始执行任务：" + ((EnumAsrsTaskType)currentTask.TaskType).ToString());
+                            this.currentTask.FinishTime = DateTime.Now;
                             if(WriteTaskParam(this.currentTask))
                             {
                                 this.currentTaskPhase++;
@@ -318,6 +319,20 @@ namespace AsrsControl
                         Array.Clear(this.db1ValsToSnd, 0, this.db1ValsToSnd.Count());
                         this.db1ValsToSnd[0] = 1;
                         this.db1ValsToSnd[1] = 1;
+                        currentTask.TaskStatus = SysCfg.EnumTaskStatus.已完成.ToString();
+                        currentTask.TaskPhase = 3;
+                       
+                        TimeSpan ts = DateTime.Now-(DateTime)currentTask.FinishTime;
+                        currentTask.FinishTime = System.DateTime.Now;
+                        currentTask.tag3 = ts.TotalSeconds.ToString("f2");
+                        currentTask.FinishTime = DateTime.Now;
+                        string debugLog = string.Format("任务:{0},{1}-{2}-{3}耗时,{4}秒", ((SysCfg.EnumAsrsTaskType)currentTask.TaskType).ToString(), taskParamModel.CellPos1.Row, taskParamModel.CellPos1.Col, taskParamModel.CellPos1.Layer, currentTask.tag3);
+                        logRecorder.AddDebugLog(nodeName, debugLog);
+                        if (!ctlTaskBll.Update(currentTask))
+                        {
+                            Console.WriteLine("更新任务{0}状态失败", currentTask.TaskID);
+                            break;
+                        }
 
                         currentTask = null;
                         currentTaskPhase = 0;

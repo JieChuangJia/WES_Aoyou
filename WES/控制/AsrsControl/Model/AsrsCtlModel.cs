@@ -702,8 +702,8 @@ namespace AsrsControl
                     taskParam.InputCellGoods = cellStoreProducts.ToArray();
                     asrsTask.TaskParam = taskParam.ConvertoStr(taskType);
                     asrsTask.tag1 = houseName;
-                    asrsTask.tag2 = string.Format("{0}-{1}-{2}", cell.Row, cell.Col, cell.Layer);
-                    asrsTask.tag3 = string.Format("{0}-{1}-{2}", cell2.Row, cell2.Col, cell2.Layer);
+                    asrsTask.tag2 = string.Format("{0}-{1}-{2}:{3}-{4}-{5}", cell.Row, cell.Col, cell.Layer,cell2.Row, cell2.Col, cell2.Layer);
+
                     asrsTask.Remark = taskType.ToString();
 
                     ctlTaskBll.Add(asrsTask);
@@ -919,34 +919,42 @@ namespace AsrsControl
                 #region 判断是否需要读条码
                 if(port.BarcodeScanRequire)
                 {
-                    if((port.Db2Vals[0]==2) && (port.Db1ValsToSnd[0] !=2))
+                    if (port.Db2Vals[0] == 2 &&(port.Db1ValsToSnd[0] != 2)) //入库请求
                     {
-                        if(SysCfg.SysCfgModel.SimMode)
+                        if(port.Db1ValsToSnd[0] != 3) //非入库申请失败
                         {
-                            palletID = port.SimRfidUID;
-                        }
-                        else
-                        {
-                            if (port.BarcodeRW != null)
+                            if (SysCfg.SysCfgModel.SimMode)
                             {
-                                palletID = port.BarcodeRW.ReadBarcode();
+                                palletID = port.SimRfidUID;
                             }
-                        }
-                        if(string.IsNullOrWhiteSpace(palletID))
-                        {
-                            port.Db1ValsToSnd[0] = 5;
-                            port.CurrentTaskDescribe = "读条码失败";
-                            continue;
-                        }
-                        else
-                        {
-                            port.CurrentTaskDescribe = "读条码成功";
-                            port.Db1ValsToSnd[0] = 1;
-                        }
+                            else
+                            {
+                                if (port.BarcodeRW != null)
+                                {
+                                    palletID = port.BarcodeRW.ReadBarcode();
+                                }
+                            }
+                            if (string.IsNullOrWhiteSpace(palletID))
+                            {
+                                port.Db1ValsToSnd[0] = 5;
+                                port.CurrentTaskDescribe = "读条码失败";
+                                continue;
+                            }
+                            else
+                            {
+                                port.CurrentTaskDescribe = "读条码成功";
+                                port.Db1ValsToSnd[0] = 1;
+                            }
 
-                        //Console.WriteLine("{0} 扫码结果：{1}", nodeName, palletID);
-                        port.PushPalletID(palletID);
+                            //Console.WriteLine("{0} 扫码结果：{1}", nodeName, palletID);
+                            port.PushPalletID(palletID);
+                        }
                     }
+                    //if((port.Db2Vals[0]==2) && (port.Db1ValsToSnd[0] !=2) && (port.PalletBuffer.Count<port.PortinBufCapacity))
+                    //{
+                        
+                       
+                    //}
                 }
                 #endregion
                 #region 入库申请
@@ -979,7 +987,7 @@ namespace AsrsControl
                             if (!port.EmptyPalletInputEnabled)
                             {
                                 port.CurrentTaskDescribe = "空筐入库申请失败，请检查配置空筐是否允许入库";
-                                port.Db1ValsToSnd[0] = 3;
+                                port.Db1ValsToSnd[0] = asrsCheckInFailed;
                                 continue;
                             }
                         }

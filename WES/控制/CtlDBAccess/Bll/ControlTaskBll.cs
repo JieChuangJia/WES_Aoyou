@@ -36,6 +36,7 @@ namespace CtlDBAccess.BLL
         /// </summary>
         public bool Update(CtlDBAccess.Model.ControlTaskModel model)
         {
+           
             return dal.Update(model);
         }
 
@@ -208,13 +209,13 @@ namespace CtlDBAccess.BLL
             }
             return dal.DataRowToModel(ds.Tables[0].Rows[0]);
         }
-        public void ClearHistorydata(string[] taskStats)
+        public void ClearHistorydata(string[] taskStats,int reserveDays)
         {
 //if (dal.GetRecordCount("") > 10000)
             //{
             foreach(string taskStat in taskStats)
             {
-                  System.TimeSpan ts = new TimeSpan(30, 0, 0, 0); 
+                System.TimeSpan ts = new TimeSpan(reserveDays, 0, 0, 0); 
                 System.DateTime delDate = System.DateTime.Now - ts;
                 string strWhere = string.Format("delete from  ControlTask where CreateTime<'{0}' and TaskStatus='{1}'", delDate.ToString("yyyy-MM-dd"), taskStat);
 

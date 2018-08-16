@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Data;
+using FlowCtlBaseModel;
 using CtlMonitorInterface;
 using AsrsModel;
 using AsrsInterface;
@@ -26,7 +27,7 @@ namespace WESAoyou
         private CtlManage.CommDevManage devCommManager = null; //通信设备管理对象
         private FlowCtlBaseModel.MesAccWrapper mesAcc = null;
         private AsrsInterface.IAsrsManageToCtl asrsResManage = null;
-     
+       // private ThreadBaseModel historyDataClearThread = null; //历史数据清理线程
        // private HkFenrongSvc hkFenrongSvc = null;
         #endregion
         #region 公有方法
@@ -159,7 +160,11 @@ namespace WESAoyou
                     Console.WriteLine("分配线程时出现错误");
                     return false;
                 }
+                //historyDataClearThread = new ThreadBaseModel("历史数据集清理");
 
+                //historyDataClearThread.SetThreadRoutine(ClearHistoryLoop);
+                //historyDataClearThread.LoopInterval = 5000;
+                //historyDataClearThread.TaskInit();
                 
                 return true;
             }
@@ -210,6 +215,11 @@ namespace WESAoyou
         {
             this.ctlNodeManager.StartNodeRun();
             asrsPresenter.StartRun();
+            //string reStr = "";
+            //if (!this.historyDataClearThread.TaskStart(ref reStr))
+            //{
+            //    Console.WriteLine("历史数据清理线程启动失败," + reStr);
+            //}
         }
         public void PauseRun()
         {
@@ -220,6 +230,8 @@ namespace WESAoyou
         {
             try
             {
+                string reStr = "";
+               // this.historyDataClearThread.TaskExit(ref reStr);
                 this.ctlNodeManager.ExitRun();
                 asrsPresenter.ExitRun();
             }
@@ -333,6 +345,12 @@ namespace WESAoyou
         #endregion
        
         #region 立库逻辑扩展
+        /// <summary>
+        /// 立库出口信号交互逻辑
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="reStr"></param>
+        /// <returns></returns>
         private bool AsrsOutportBusiness(AsrsControl.AsrsPortalModel port, ref string reStr)
         {
             try
@@ -379,7 +397,16 @@ namespace WESAoyou
             }
             
         }
-        public CtlDBAccess.Model.ControlTaskModel AsrsCheckoutTaskTorun(AsrsControl.AsrsCtlModel asrsCtl, IAsrsManageToCtl asrsResManage, IList<CtlDBAccess.Model.ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType)
+       
+         /// <summary>
+         /// 判断物流线是否堵塞，选择出库任务
+         /// </summary>
+         /// <param name="asrsCtl"></param>
+         /// <param name="asrsResManage"></param>
+         /// <param name="taskList"></param>
+         /// <param name="taskType"></param>
+         /// <returns></returns>
+         public CtlDBAccess.Model.ControlTaskModel AsrsCheckoutTaskTorun(AsrsControl.AsrsCtlModel asrsCtl, IAsrsManageToCtl asrsResManage, IList<CtlDBAccess.Model.ControlTaskModel> taskList, SysCfg.EnumAsrsTaskType taskType)
         {
             try
             {
@@ -463,7 +490,15 @@ namespace WESAoyou
            
            
         }
-        private string AsrsAreaToCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl,int step)
+        
+         /// <summary>
+         /// 选择库区
+         /// </summary>
+         /// <param name="palletID"></param>
+         /// <param name="asrsCtl"></param>
+         /// <param name="step"></param>
+         /// <returns></returns>
+         private string AsrsAreaToCheckin(string palletID,AsrsControl.AsrsCtlModel asrsCtl,int step)
         {
             string area = "";
             if (step == 0)
@@ -774,6 +809,31 @@ namespace WESAoyou
            return true;
        }
         #endregion
+        /*
+        private void ClearHistoryLoop()
+        {
+            //throw new NotImplementedException();
+            try
+            {
+                // if(!SysCfg.SysCfgModel.SimMode)
+                {
+                    CtlDBAccess.BLL.SysLogBll logBll = new CtlDBAccess.BLL.SysLogBll();
+                    logBll.ClearHistorydata(60);
+                    CtlDBAccess.BLL.ControlTaskBll ctlTaskBll = new CtlDBAccess.BLL.ControlTaskBll();
+                    ctlTaskBll.ClearHistorydata(new string[] { "已完成", "错误", "任务撤销" },60);
+                    MesDBAccess.BLL.ProduceRecordBll recordBll = new MesDBAccess.BLL.ProduceRecordBll();
+                    recordBll.ClearHistorydata(60);
+                    this.asrsResManage.DeletePreviousData(30);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
+         */
 
     }
 }

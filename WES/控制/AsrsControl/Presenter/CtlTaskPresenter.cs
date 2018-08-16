@@ -91,7 +91,8 @@ namespace AsrsControl
             dt.Columns["tag1"].ColumnName = "库房";
             dt.Columns["tag2"].ColumnName = "货位";
             dt.Columns["tag4"].ColumnName = "优先级";
-            dt.Columns.Remove("tag3");
+            dt.Columns["tag3"].ColumnName = "任务耗时(秒)";
+            //dt.Columns.Remove("tag3");
           
             dt.Columns.Remove("tag5");
             dt.Columns["Remark"].ColumnName = "备注";

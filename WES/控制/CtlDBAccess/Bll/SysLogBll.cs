@@ -120,11 +120,11 @@ namespace CtlDBAccess.BLL
             }
             return ds;
         }
-        public void ClearHistorydata()
+        public void ClearHistorydata(int reserveDays)
         {
             if (dal.GetRecordCount("") > 10000)
             {
-                System.TimeSpan ts = new TimeSpan(30, 0, 0, 0); //15天
+                System.TimeSpan ts = new TimeSpan(reserveDays, 0, 0, 0); //15天
                 System.DateTime delDate = System.DateTime.Now - ts;
                 string strWhere = string.Format("delete from SysLog where LogTime<'{0}'", delDate.ToString("yyyy-MM-dd"));
 
