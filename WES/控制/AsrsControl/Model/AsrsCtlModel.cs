@@ -2043,9 +2043,9 @@ namespace AsrsControl
                     default:
                         break;
                 }
-                ctlTask.FinishTime = System.DateTime.Now;
-                ctlTask.TaskStatus = SysCfg.EnumTaskStatus.已完成.ToString();
-                return ctlTaskBll.Update(ctlTask);
+                return true;
+                //ctlTask.TaskStatus = SysCfg.EnumTaskStatus.已完成.ToString();
+                //return ctlTaskBll.Update(ctlTask);
             }
             catch (Exception ex)
             {

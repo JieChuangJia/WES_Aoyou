@@ -291,7 +291,7 @@ namespace AsrsControl
                             currentTaskDescribe = "任务完成";
                             this.currentTaskPhase++;
                         }
-                       
+                        currentTask.TaskStatus = SysCfg.EnumTaskStatus.已完成.ToString();
                         currentTask.TaskPhase = currentTaskPhase;
                         ctlTaskBll.Update(currentTask);
                         break;
@@ -320,8 +320,7 @@ namespace AsrsControl
                         this.db1ValsToSnd[0] = 1;
                         this.db1ValsToSnd[1] = 1;
                         currentTask.TaskStatus = SysCfg.EnumTaskStatus.已完成.ToString();
-                        currentTask.TaskPhase = 3;
-                       
+                        currentTask.TaskPhase = currentTaskPhase;
                         TimeSpan ts = DateTime.Now-(DateTime)currentTask.FinishTime;
                         currentTask.FinishTime = System.DateTime.Now;
                         currentTask.tag3 = ts.TotalSeconds.ToString("f2");

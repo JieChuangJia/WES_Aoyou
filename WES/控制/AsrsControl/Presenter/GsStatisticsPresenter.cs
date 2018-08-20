@@ -59,10 +59,7 @@ namespace AsrsControl
                          }
                      }
                 }
-                else
-                {
-
-                }
+               
 
                 DataTable gsData = new DataTable();
                 gsData.Columns.Add("库房名称");
@@ -74,10 +71,7 @@ namespace AsrsControl
                 for (int i = 0; i < gsOperList.Count;i++ )
                 {
                     string[] palletIDArr = gsOperList[i].TaskParam.Split(';');
-                    if(palletIDArr.Length <4)
-                    {
-                        continue;
-                    }
+                  
                     string palletID = palletIDArr[3];
                     DataRow dr= gsData.NewRow();
                     dr["库房名称"] = gsOperList[i].tag1;

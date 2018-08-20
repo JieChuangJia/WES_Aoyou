@@ -181,10 +181,6 @@
       <Project>{4863621a-2226-4318-8b40-cceb8feb390c}</Project>
       <Name>CtlMonitorInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DevManage\CtlManage.csproj">
-      <Project>{8784b37e-5893-4914-83ab-37be05054128}</Project>
-      <Name>CtlManage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MesDBAccess\MesDBAccess.csproj">
       <Project>{6861ee48-2c2c-4034-8930-181ebe48cc7a}</Project>
       <Name>MesDBAccess</Name>
