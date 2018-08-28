@@ -47,6 +47,7 @@ namespace AsrsControl
         public int PortinBufCapacity { get; set; }
         public bool EmptyPalletInputEnabled { get; set; }
         public bool BarcodeScanRequire { get; set; }
+        public int AsrsTaskPri = 0; //相关立库出入任务优先级
         public AsrsPortalModel(AsrsCtlModel asrsCtl)
         {
             PortinBufCapacity = 1; //默认最大容量是1
@@ -90,7 +91,10 @@ namespace AsrsControl
             }
             XElement selfDataXE = xe.Element("SelfDatainfo");
             this.portCata = int.Parse(selfDataXE.Element("PortType").Value.ToString());
-            
+            if (selfDataXE.Attribute("pri") != null)
+            {
+                this.AsrsTaskPri = int.Parse(selfDataXE.Attribute("pri").Value);
+            }
             
             if (selfDataXE.Attribute("portSeq")!=null)
             {

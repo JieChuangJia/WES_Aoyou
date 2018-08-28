@@ -167,7 +167,14 @@ namespace CtlDBAccess.BLL
         public List<ControlTaskModel> GetTaskToRunList(int taskType, string taskStatus, string devID,bool priOrder=false)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.AppendFormat("TaskType={0} and TaskStatus='{1}' and DeviceID='{2}' ", taskType, taskStatus, devID);
+            if(taskType>0)
+            {
+                strSql.AppendFormat("TaskType={0} and TaskStatus='{1}' and DeviceID='{2}' ", taskType, taskStatus, devID);
+            }
+            else
+            {
+                strSql.AppendFormat(" TaskStatus='{0}' and DeviceID='{1}' ", taskStatus, devID);
+            }
             if(priOrder)
             {
                 strSql.AppendFormat(" order by cast(tag4 as INTEGER) desc,CreateTime asc");

@@ -39,6 +39,7 @@ namespace AsrsControl
         private AsrsStackerCtlModel stacker;
         private List<ThreadRunModel> threadList = null;
         private IAsrsManageToCtl asrsResManage = null; //立库管理层接口对象
+        private bool taskCataBalance = true; //待执行任务类型是否均衡
       //  private CtlDBAccess.BLL.ControlTaskBll ctlTaskBll = null;
        // private CtlDBAccess.BLL.BatteryModuleBll batModuleBll = null;
        
@@ -281,7 +282,7 @@ namespace AsrsControl
                 asrsTask.TaskStatus = SysCfg.EnumTaskStatus.待执行.ToString();
                 asrsTask.TaskType = (int)taskType;
                 AsrsTaskParamModel taskParam = new AsrsTaskParamModel();
-
+                asrsTask.tag4 = port.AsrsTaskPri.ToString();
                 taskParam.CellPos1 = requireCell;
                 taskParam.InputPort = port.PortSeq;
                 taskParam.InputCellGoods = palletIDS;
@@ -480,6 +481,10 @@ namespace AsrsControl
                 if (root.Attribute("asrsOutputMode") != null)
                 {
                     this.asrsCheckoutMode = (EnumAsrsCheckoutMode)Enum.Parse(typeof(EnumAsrsCheckoutMode), root.Attribute("asrsOutputMode").Value.ToString());
+                }
+                if (root.Attribute("taskCataBalance") != null)
+                {
+                    this.taskCataBalance = bool.Parse(root.Attribute("taskCataBalance").Value);
                 }
                 this.nodeName=root.Attribute("name").Value.ToString();
                 this.houseName = this.nodeName;
@@ -1621,8 +1626,18 @@ namespace AsrsControl
                     //ControlTaskModel task = ctlTaskBll.GetTaskToRun((int)taskType, EnumTaskStatus.待执行.ToString(),stacker.NodeID);
                    
                     //遍历所有可执行任务，找到第一个可用的
-                    List<ControlTaskModel> taskList = ctlTaskBll.GetTaskToRunList((int)taskType, SysCfg.EnumTaskStatus.待执行.ToString(), stacker.NodeID,true);
-                    ControlTaskModel task = GetTaskTorun(taskList, (SysCfg.EnumAsrsTaskType)taskType);
+                    ControlTaskModel task = null;
+                    if(this.taskCataBalance)
+                    {
+                        List<ControlTaskModel> taskList = ctlTaskBll.GetTaskToRunList((int)taskType, SysCfg.EnumTaskStatus.待执行.ToString(), stacker.NodeID, true);
+                        task = GetTaskTorun(taskList, (SysCfg.EnumAsrsTaskType)taskType);
+                    }
+                    else
+                    {
+                        List<ControlTaskModel> taskList = ctlTaskBll.GetTaskToRunList(0, SysCfg.EnumTaskStatus.待执行.ToString(), stacker.NodeID, true);
+                        task = GetTaskTorun(taskList, (SysCfg.EnumAsrsTaskType)taskType);
+                    }
+                 
                     /*ControlTaskModel task = null;
                    if(taskList != null)
                     {

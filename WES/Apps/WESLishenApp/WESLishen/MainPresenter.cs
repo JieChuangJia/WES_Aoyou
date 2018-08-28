@@ -347,7 +347,7 @@ namespace WESLishen
                     int col = int.Parse(strCellArray[1]);
                     int layer = int.Parse(strCellArray[2]);
                     AsrsModel.CellCoordModel cell = new AsrsModel.CellCoordModel(row, col, layer);
-                   if(asrsCtl.GenerateOutputTask(cell, port.BindedTaskOutput, true,port.PortSeq, ref reStr,new List<short>{ palletCata}))
+                   if(asrsCtl.GenerateOutputTask(cell, port.BindedTaskOutput, true,port.PortSeq, ref reStr,new List<short>{ palletCata},port.AsrsTaskPri))
                     {
                         port.Db1ValsToSnd[0] = 2;
                     }

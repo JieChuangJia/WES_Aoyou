@@ -375,7 +375,7 @@ namespace PrcsCtlModelsLishen
                 int col = int.Parse(strCellArray[1]);
                 int layer = int.Parse(strCellArray[2]);
                 AsrsModel.CellCoordModel cell = new AsrsModel.CellCoordModel(row, col, layer);
-                if (AsrsCtl.GenerateOutputTask(cell, SysCfg.EnumAsrsTaskType.空筐出库, true, AsrsPort.PortSeq, ref reStr, new List<short> { palletCata }))
+                if (AsrsCtl.GenerateOutputTask(cell, SysCfg.EnumAsrsTaskType.空筐出库, true, AsrsPort.PortSeq, ref reStr, new List<short> { palletCata },AsrsPort.AsrsTaskPri))
                 {
                  //   AsrsPort.Db1ValsToSnd[0] = 2; //
                     return true;
