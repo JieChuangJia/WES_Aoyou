@@ -1,0 +1,6 @@
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\ConfigManage\obj\x86\Debug\ConfigManage.csprojResolveAssemblyReference.cache
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\ConfigManage\obj\x86\Debug\ConfigManage.Properties.Resources.resources
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\ConfigManage\obj\x86\Debug\ConfigManage.ConfiManageView.resources
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\ConfigManage\obj\x86\Debug\ConfigManage.SysSettingView.resources
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\ConfigManage\obj\x86\Debug\ConfigManage.UserManageView.resources
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\ConfigManage\obj\x86\Debug\ConfigManage.csproj.GenerateResource.Cache

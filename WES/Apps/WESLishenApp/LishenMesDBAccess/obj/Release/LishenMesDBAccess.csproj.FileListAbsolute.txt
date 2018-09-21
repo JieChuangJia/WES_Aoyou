@@ -1,0 +1,5 @@
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\LishenMesDBAccess\bin\Release\LishenMesDBAccess.dll
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\LishenMesDBAccess\bin\Release\LishenMesDBAccess.pdb
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\LishenMesDBAccess\obj\Release\LishenMesDBAccess.csproj.CoreCompileInputs.cache
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\LishenMesDBAccess\obj\Release\LishenMesDBAccess.dll
+E:\workspace\项目\之信遨优项目\代码\Git_WESAoyou\WES_Aoyou\WES\Apps\WESLishenApp\LishenMesDBAccess\obj\Release\LishenMesDBAccess.pdb

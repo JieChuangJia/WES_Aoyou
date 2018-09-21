@@ -151,9 +151,9 @@
   
   </ThreadAlloc>
   <AsrsNodes>
-    <!--asrsOutputMode：出库模式，计时出库，条件出库,其它-->
-    <Asrs name="A1库房" asrsOutputMode="条件出库">
-      <Node className="AsrsControl.AsrsStackerCtlModel" id="1001" enabled="true">
+    <!--asrsOutputMode：出库模式，计时出库，条件出库,其它,taskCataBalance:出入库任务是否均衡-->
+    <Asrs name="A1库房" asrsOutputMode="条件出库" taskCataBalance="false">
+      <Node className="AsrsControl.AsrsStackerCtlModel" id="1001" enabled="true" >
         <BaseDatainfo plcID="1" >
           <NodeName>A1库</NodeName>
           <DB1Addr addrStart="D2001" blockNum="20">DB1数据区地址信息</DB1Addr>
@@ -166,7 +166,7 @@
           <DB1Addr addrStart="D2021" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3011" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="1" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false" barcodeScanRequire="false">
+        <SelfDatainfo portSeq="1" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false" barcodeScanRequire="false" pri="600">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>
@@ -180,7 +180,7 @@
           <DB1Addr addrStart="D2026" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3016" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="2" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false" barcodeScanRequire="false">
+        <SelfDatainfo portSeq="2" bindedTask="产品入库" capacity="1"  emptyPalletCheckIn="false" barcodeScanRequire="false" pri="500">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求，5：入库申请失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求</Db2Desc>
           <PortType>1</PortType>
@@ -193,7 +193,7 @@
           <DB1Addr addrStart="D2031" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3021" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="3" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
+        <SelfDatainfo portSeq="3" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true" pri="700">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:入库请求失败,5：读码失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求;空筐、NG物料区分,1:空筐,2:NG物料,3:重新烘烤物料</Db2Desc>
           <PortType>1</PortType>
@@ -206,7 +206,7 @@
           <DB1Addr addrStart="D2036" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3026" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="4" bindedTask="产品出库" capacity="1">
+        <SelfDatainfo portSeq="4" bindedTask="产品出库" capacity="1" pri="900">
           <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
           <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;物料出库请求,1:复位，2:出库请求;物料种类需求,1:正极,2:隔膜,3:负极</Db2Desc>
           <PortType>2</PortType>
@@ -219,7 +219,7 @@
           <DB1Addr addrStart="D2041" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3031" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="5" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
+        <SelfDatainfo portSeq="5" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true" pri="700">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:入库请求失败,5：读码失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求;空筐、NG物料区分,1:空筐,2:NG物料,3:重新烘烤物料</Db2Desc>
           <PortType>1</PortType>
@@ -232,7 +232,7 @@
           <DB1Addr addrStart="D2046" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3036" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="6" bindedTask="产品出库" capacity="1">
+        <SelfDatainfo portSeq="6" bindedTask="产品出库" capacity="1" pri="900">
           <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
           <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;物料出库请求,1:复位，2:出库请求;物料种类需求,1:正极,2:隔膜,3:负极</Db2Desc>
           <PortType>2</PortType>
@@ -244,7 +244,7 @@
           <DB1Addr addrStart="D2051" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3041" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="7" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true">
+        <SelfDatainfo portSeq="7" bindedTask="空筐入库" capacity="1" barcodeScanRequire="true" pri="700">
           <Db1Desc>收到产品入库请求,1:复位，2：收到入库请求,3:入库请求失败,5：读码失败</Db1Desc>
           <Db2Desc>入口状态,1:复位，2:入库请求;空筐、NG物料区分,1:空筐,2:NG物料,3:重新烘烤物料</Db2Desc>
           <PortType>1</PortType>
@@ -257,7 +257,7 @@
           <DB1Addr addrStart="D2056" blockNum="5">DB1数据区地址信息</DB1Addr>
           <DB2Addr addrStart="D3046" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
-        <SelfDatainfo portSeq="8" bindedTask="产品出库" capacity="1">
+        <SelfDatainfo portSeq="8" bindedTask="产品出库" capacity="1" pri="900">
           <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
           <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;物料出库请求,1:复位，2:出库请求;物料种类需求,1:正极,2:隔膜,3:负极</Db2Desc>
           <PortType>2</PortType>
@@ -270,7 +270,7 @@
           <DB2Addr addrStart="D3051" blockNum="5">DB2数据区地址信息</DB2Addr>
         </BaseDatainfo>
         <!--emptyPalletCheckoutMode： 空筐出库模式，自动，手动，条件-->
-        <SelfDatainfo portSeq="9" bindedTask="空筐出库" emptyPalletCheckoutMode="条件" capacity="1">
+        <SelfDatainfo portSeq="9" bindedTask="空筐出库" emptyPalletCheckoutMode="条件" capacity="1" pri="800">
           <Db1Desc>收到产品出库请求,1:复位，2：收到出库请求</Db1Desc>
           <Db2Desc>物料出口状态，1：禁止出库，2:允许出库;</Db2Desc>
           <PortType>2</PortType>
