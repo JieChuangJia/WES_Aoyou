@@ -259,10 +259,10 @@ namespace AsrsExtctlSvc
                     //logRecorder.AddDebugLog(objectName, "充电完成事件错误," + reStr);
                     return false;
                 }
-                if (cellTaskStat == EnumGSTaskStatus.出库允许)
-                {
-                    return true;
-                }
+                //if (cellTaskStat == EnumGSTaskStatus.出库允许) //modify by zwx,2018-09-08
+                //{
+                //    return true;
+                //}
                 if (cellTaskStat == EnumGSTaskStatus.锁定)
                 {
                     reStr = string.Format("货位任务锁定：{0},{1}-{2}-{3},", houseName, row, col, layer) + reStr;

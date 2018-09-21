@@ -111,13 +111,30 @@ namespace PrcsCtlModelsAoyou
                 case 1:
                     {
                         currentTaskDescribe = "开始执行分拣任务";
-                      
-                        
+
+                        if (SysCfg.SysCfgModel.SimMode || SysCfg.SysCfgModel.RfidSimMode)
+                        {
+                            this.rfidUID = this.SimRfidUID;
+                        }
+                        else
+                        {
+                            this.rfidUID = this.barcodeRW.ReadBarcode();
+
+                        }
+                        if (string.IsNullOrWhiteSpace(this.rfidUID))
+                        {
+                            if (this.db1ValsToSnd[0] != 3)
+                            {
+                                logRecorder.AddDebugLog(nodeName, "读料框条码失败");
+                            }
+                            this.db1ValsToSnd[0] = 3;
+                            break;
+                        }
+
                        // int ocvProcessID = 1;//zwx,临时
                        
-                        db1ValsToSnd[0] = 2;
-                        
-                        currentTaskDescribe = "分拣参数发送完成";
+
+
                         this.currentTaskPhase++;
                         this.currentTask.TaskPhase = this.currentTaskPhase;
                         this.ctlTaskBll.Update(this.currentTask);
@@ -126,16 +143,15 @@ namespace PrcsCtlModelsAoyou
               
                 case 2:
                     {
-                        //等待任务完成
-                        currentTaskDescribe = "等待分拣完成";
-                        if(this.db2Vals[1] != 2 && this.db2Vals[1] != 4)
-                        {
-                            break;
-                        }
-                        
+                        //查询MES 不良电芯数据
+
+                        //写入PLC
+
+
+                        db1ValsToSnd[0] = 2;
+                        currentTaskDescribe = "分拣参数发送完成";
 
                         this.currentTaskPhase++;
-                      
                         this.currentTask.TaskPhase = this.currentTaskPhase;
                         this.ctlTaskBll.Update(this.currentTask);
                        
@@ -143,6 +159,13 @@ namespace PrcsCtlModelsAoyou
                     }
                 case 3:
                     {
+                        //等待任务完成
+                        currentTaskDescribe = "等待分拣完成";
+                        if (this.db2Vals[1] != 2 && this.db2Vals[1] != 4)
+                        {
+                            break;
+                        }
+                        
                         //更新MES步号
                         
                         int stepUp = 0;

@@ -22,7 +22,7 @@ namespace WESLishen
     {
         #region 数据
         private string appTitle = "力神锂电WES系统";
-        private string version = "系统版本:1.0.7  2018-6-6";
+        private string version = "系统版本:1.0.8  2018-8-28";
         private int roleID = 3;
         private string userName = "操作员";
         const int CLOSE_SIZE = 10;

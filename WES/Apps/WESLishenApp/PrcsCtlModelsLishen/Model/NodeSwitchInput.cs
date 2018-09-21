@@ -394,8 +394,14 @@ namespace PrcsCtlModelsLishen
         }
         private bool Switch4003()
         {
-            int switchRe = 0;
             string reStr = "";
+            if(!MesAcc.UpdateStep(1,this.rfidUID,ref reStr))
+            {
+                Console.WriteLine("{0} 更新步号错误,{1}", nodeName, reStr);
+                return false;
+            }
+            int switchRe = 0;
+         
             FlowPathModel switchPath = FindFirstValidPath(this.rfidUID, ref reStr);
             if (switchPath == null)
             {
