@@ -211,6 +211,7 @@ namespace ASRSStorManage.View
         {
             string houseName = this.tscb_StoreHouseName.Text;
             this.presenter.ChangeHouse(houseName);
+            this.storageControl1.selectPositions = null;
             if(this.innerForm!= null)//切换库房时清除移库参数
             {
                 this.innerForm.ClearMoveParam();
@@ -421,7 +422,7 @@ namespace ASRSStorManage.View
             }
             else
             { }
-
+            this.storageControl1.selectPositions = null;
             this.presenter.RefreshPos(this.tscb_StoreHouseName.Text, queryRow);
         }
 
