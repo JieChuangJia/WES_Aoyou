@@ -87,7 +87,9 @@ namespace ASRSStorManage.View
 
         private void bt_Cancel_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
+            this.tb_EndPos.Text = "";
+            this.tb_StartPos.Text = "";
+            //this.Visible = false;
         }
     }
 }

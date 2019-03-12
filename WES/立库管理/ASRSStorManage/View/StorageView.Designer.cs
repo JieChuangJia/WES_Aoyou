@@ -807,6 +807,7 @@
             this.storageControl1.Size = new System.Drawing.Size(552, 334);
             this.storageControl1.TabIndex = 0;
             this.storageControl1.PositionsClick += new Storage.StorageControl.ClickPositionsEventHandler(this.storageControl1_PositionsClick);
+            this.storageControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.storageControl1_MouseClick);
             // 
             // gb_Model
             // 
